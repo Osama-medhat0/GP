@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+/* Sidebar Styling */
+.sidebar {
+    width: 16rem; /* w-64 */
+    height: 100vh; /* Ensure full height */
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0; /* Ensure it extends to the bottom */
+    border-right: 1px solid #ddd;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    border-bottom: 1px solid #ddd; /* border-b */
+    padding: 1rem; /* p-4 */
+    font-size: 1.25rem; /* text-lg */
+    font-weight: bold;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+    padding: 0.5rem; /* p-2 */
+}
+
+/* Sidebar Items */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+    padding: 0.5rem; /* p-2 */
+    border-radius: 0.25rem; /* rounded */
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar-item:hover {
+    background-color: #f3f3f3; /* hover:bg-gray-200 */
+}
+
+/* Sidebar Toggler */
+.sidebar-footer {
+    border-top: 1px solid #ddd; /* border-t */
+    padding: 1rem; /* p-4 */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 1.5rem; /* p-6 */
+    margin-left: 16rem; /* ml-64 */
+}

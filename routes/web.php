@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,8 +27,11 @@ Route::middleware('auth')->group(function () {
 });
 
 //Admin Route
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    Route::get('/dashboard/users', [AdminController::class, 'usersList'])->name('admin.users');
+    Route::delete('/dashboard/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    // Route::get('admin/dashboard/users/{id}',[AdminController::class, 'user'])->name('admin.user');
 });
 
 

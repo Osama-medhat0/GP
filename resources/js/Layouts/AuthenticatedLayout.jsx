@@ -9,7 +9,6 @@ export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
-    // console.log(usePage().props.auth);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -23,10 +22,10 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="ml-2 hidden space-x-8 sm:-my-px sm:ms-20 sm:flex">
                                 <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("admin.dashboard")}
+                                    active={route().current("admin.dashboard")}
                                 >
                                     Dashboard
                                 </NavLink>

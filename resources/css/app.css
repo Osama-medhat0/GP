@@ -7,10 +7,12 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 /* Sidebar Styling */
 .sidebar {
+    /* flex: 1 1 250px;
+    min-width: 200px; */
     width: 16rem; /* w-64 */
     height: 100vh; /* Ensure full height */
     position: fixed;
@@ -63,4 +65,17 @@ body {
     flex: 1;
     padding: 1.5rem; /* p-6 */
     margin-left: 16rem; /* ml-64 */
+}
+
+.fairwheels-logo {
+    font-size: 32px;
+}
+
+.fair {
+    color: #ffffff; /* Eye-catching Red */
+}
+
+.wheels {
+    color: #ffffff; /* Trustworthy Blue */
+    font-weight: 700;
 }

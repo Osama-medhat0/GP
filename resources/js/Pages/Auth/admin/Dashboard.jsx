@@ -1,25 +1,25 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Sidebar from "@/Components/Sidebar";
+import Sidebar from "@/Components/AdminSidebar";
+import UsersTable from "@/Components/UsersTable";
 import { CSidebarHeader } from "@coreui/react";
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import "../../../../css/app.css";
+
 export default function Dashboard() {
+    const { url } = usePage();
     return (
         <AuthenticatedLayout>
             <div className="flex h-screen">
                 <Sidebar />
-                <div className="main-content flex-1 p-6 overflow-auto">
-                    <Head title="Dashboard" />
-                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        Dashboard
-                    </h2>
+                <div className="main-content flex-1 p-6 overflow-auto ml-[250px]">
+                    <Head title="Admin Dashboard" />
                     <div className="py-12">
                         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                <div className="p-6 text-gray-900">
-                                    You're logged in!
-                                </div>
+                                {url === "/admin/dashboard/users" && (
+                                    <UsersTable />
+                                )}
                             </div>
                         </div>
                     </div>

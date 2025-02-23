@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Sidebar from "@/Components/AdminSidebar";
+import Sidebar from "@/Components/UserSidebar";
 import { CSidebarHeader } from "@coreui/react";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Head } from "@inertiajs/react";
@@ -11,6 +11,7 @@ export default function Dashboard() {
                 <Sidebar />
                 <div className="main-content flex-1 p-6 overflow-auto">
                     <Head title="Dashboard" />
+                    Your List
                 </div>
             </div>
         </AuthenticatedLayout>

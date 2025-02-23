@@ -2,7 +2,7 @@ import { usePage, router } from "@inertiajs/react";
 
 const UsersTable = () => {
     const { users } = usePage().props;
-    console.log(users);
+    // console.log(users);
     const filteredUsers = users?.filter((user) => user.role === "user") || [];
 
     const handleDelete = (userId) => {

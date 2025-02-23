@@ -19,7 +19,7 @@ import {
     cilSpeedometer,
 } from "@coreui/icons";
 
-export const AdminSidebar = () => {
+export const UserSidebar = () => {
     return (
         <CSidebar
             className="border-end sidebar-top"
@@ -40,14 +40,14 @@ export const AdminSidebar = () => {
                 <CNavTitle>Dashboard</CNavTitle>
                 <CNavItem>
                     <Link
-                        href="/admin/dashboard/users"
+                        // href="/admin/dashboard/users"
                         className="nav-link flex items-center"
                     >
                         <CIcon
                             customClassName="nav-icon"
                             icon={cilSpeedometer}
                         />
-                        <span className="ml-2">Manage Users</span>
+                        <span className="ml-2">List car</span>
                     </Link>
                 </CNavItem>
 
@@ -64,4 +64,4 @@ export const AdminSidebar = () => {
     );
 };
 
-export default AdminSidebar;
+export default UserSidebar;

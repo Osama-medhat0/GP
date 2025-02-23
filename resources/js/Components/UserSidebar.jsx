@@ -53,7 +53,7 @@ export const UserSidebar = () => {
 
                 <CNavItem href="#">
                     <CIcon customClassName="nav-icon" icon={cilSpeedometer} />{" "}
-                    Manage car listings
+                    Modify car listings
                 </CNavItem>
                 <CNavItem href="https://coreui.io">
                     <CIcon customClassName="nav-icon" icon={cilCloudDownload} />{" "}

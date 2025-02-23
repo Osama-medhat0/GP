@@ -15,56 +15,60 @@ const UsersTable = () => {
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">User List</h2>
-            <div className="overflow-x-auto w-full">
-                <div className="inline-block min-w-full">
-                    <table className="min-w-full w-full table-auto bg-white border border-gray-200">
-                        <thead>
-                            <tr className="bg-gray-100">
-                                <th className="py-2 px-4 border text-left">
-                                    ID
-                                </th>
-                                <th className="py-2 px-4 border text-left">
-                                    Name
-                                </th>
-                                <th className="py-2 px-4 border text-left">
-                                    Email
-                                </th>
-                                <th className="py-2 px-4 border text-left">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredUsers.map((user) => (
-                                <tr
-                                    key={user.id}
-                                    className="border-b hover:bg-gray-50"
-                                >
-                                    <td className="py-2 px-4 border">
-                                        {user.id}
-                                    </td>
-                                    <td className="py-2 px-4 border truncate max-w-[150px]">
-                                        {user.name}
-                                    </td>
-                                    <td className="py-2 px-4 border truncate max-w-[200px]">
-                                        {user.email}
-                                    </td>
-                                    <td className="py-2 px-4 border">
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(user.id)
-                                            }
-                                            className="text-red-600 hover:underline"
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
+        <div className="p-3 flex justify-center items-start min-h-screen">
+            <div className="p-4 bg-white rounded-lg shadow-md w-full max-w-4xl">
+                <h2 className="text-xl font-semibold mb-4 text-center">
+                    User List
+                </h2>
+                <div className="overflow-x-auto w-full">
+                    <div className="inline-block min-w-full">
+                        <table className="min-w-full w-full table-auto bg-white border border-gray-200">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="py-2 px-4 border text-left">
+                                        ID
+                                    </th>
+                                    <th className="py-2 px-4 border text-left">
+                                        Name
+                                    </th>
+                                    <th className="py-2 px-4 border text-left">
+                                        Email
+                                    </th>
+                                    <th className="py-2 px-4 border text-left">
+                                        Actions
+                                    </th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {filteredUsers.map((user) => (
+                                    <tr
+                                        key={user.id}
+                                        className="border-b hover:bg-gray-50"
+                                    >
+                                        <td className="py-2 px-4 border">
+                                            {user.id}
+                                        </td>
+                                        <td className="py-2 px-4 border truncate max-w-[150px]">
+                                            {user.name}
+                                        </td>
+                                        <td className="py-2 px-4 border truncate max-w-[200px]">
+                                            {user.email}
+                                        </td>
+                                        <td className="py-2 px-4 border">
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(user.id)
+                                                }
+                                                className="text-red-600 hover:underline"
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

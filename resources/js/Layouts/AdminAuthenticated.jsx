@@ -19,14 +19,6 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex sm:hidden  shrink-0 items-center">
-                                {/* <Link href={"/"}>
-                                    <img
-                                        src="/logo.png"
-                                        alt="FairWheels Logo"
-                                        className="h-10 w-auto"
-                                    />
-                                </Link> */}
-
                                 <Link href="/" className="block">
                                     <h1 className="fairwheels-logo">
                                         <span className="fair text-black">
@@ -36,6 +28,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                             Wheels
                                         </span>
                                     </h1>
+                                </Link>
+                                <Link href={"/"}>
+                                    <img
+                                        src="/logo.png"
+                                        alt="FairWheels Logo"
+                                        className="ml-1 h-7 w-auto"
+                                    />
                                 </Link>
                             </div>
                             <div className="pl-20 hidden space-x-4 sm:-my-px sm:ms-20 sm:flex">

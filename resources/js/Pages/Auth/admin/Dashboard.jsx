@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/AdminAuthenticated";
 import Sidebar from "@/Components/AdminSidebar";
 import UsersTable from "@/Components/UsersTable";
 import { CSidebarHeader } from "@coreui/react";

@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/UserAhuthenticated";
 import Sidebar from "@/Components/UserSidebar";
 import { CSidebarHeader } from "@coreui/react";
 import "@coreui/coreui/dist/css/coreui.min.css";

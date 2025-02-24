@@ -38,6 +38,17 @@ export const AdminSidebar = () => {
 
             <CSidebarNav>
                 <CNavTitle>Dashboard</CNavTitle>
+
+                <CNavItem>
+                    <Link
+                        href="/profile"
+                        className="nav-link flex items-center"
+                    >
+                        <CIcon customClassName="nav-icon" icon={cilUser} />
+                        Profile
+                    </Link>
+                </CNavItem>
+
                 <CNavItem>
                     <Link
                         href="/admin/dashboard/users"

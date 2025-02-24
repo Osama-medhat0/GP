@@ -47,7 +47,7 @@ export const AdminSidebar = () => {
                             customClassName="nav-icon"
                             icon={cilSpeedometer}
                         />
-                        <span className="ml-2">Manage Users</span>
+                        Manage Users
                     </Link>
                 </CNavItem>
 

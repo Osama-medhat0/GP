@@ -20,7 +20,7 @@ import {
     cilUser,
 } from "@coreui/icons";
 
-export const UserSidebar = () => {
+export const AdminSidebar = () => {
     return (
         <CSidebar
             className="border-end sidebar-top"
@@ -39,6 +39,7 @@ export const UserSidebar = () => {
 
             <CSidebarNav>
                 <CNavTitle>Dashboard</CNavTitle>
+
                 <CNavItem>
                     <Link
                         href="/profile"
@@ -48,26 +49,31 @@ export const UserSidebar = () => {
                         Profile
                     </Link>
                 </CNavItem>
+
                 <CNavItem>
                     <Link
-                        // href="/admin/dashboard/users"
+                        href="/admin/dashboard/users"
                         className="nav-link flex items-center"
                     >
                         <CIcon
                             customClassName="nav-icon"
                             icon={cilSpeedometer}
                         />
-                        List car
+                        Manage Users
                     </Link>
                 </CNavItem>
 
                 <CNavItem href="#">
                     <CIcon customClassName="nav-icon" icon={cilSpeedometer} />{" "}
-                    Modify car listings
+                    Manage car listings
+                </CNavItem>
+                <CNavItem href="https://coreui.io">
+                    <CIcon customClassName="nav-icon" icon={cilCloudDownload} />{" "}
+                    Mangage Q&A Forum
                 </CNavItem>
             </CSidebarNav>
         </CSidebar>
     );
 };
 
-export default UserSidebar;
+export default AdminSidebar;

@@ -17,9 +17,10 @@ import {
     cilLayers,
     cilPuzzle,
     cilSpeedometer,
+    cilUser,
 } from "@coreui/icons";
 
-export const AdminSidebar = () => {
+export const UserSidebar = () => {
     return (
         <CSidebar
             className="border-end sidebar-top"
@@ -28,17 +29,25 @@ export const AdminSidebar = () => {
             position="fixed"
         >
             <CSidebarHeader className="border-bottom">
-                <Link href="/" className="block">
-                    <h1 className="fairwheels-logo">
-                        <span className="fair">Fair</span>
-                        <span className="wheels">Wheels</span>
-                    </h1>
-                </Link>
+                <div className="flex items-center">
+                    <Link href="/" className="block">
+                        <h1 className="fairwheels-logo">
+                            <span className="fair">Fair</span>
+                            <span className="wheels">Wheels</span>
+                        </h1>
+                    </Link>
+                    <Link href={"/"}>
+                        <img
+                            src="/logo.png"
+                            alt="FairWheels Logo"
+                            className="ml-1 h-7 w-auto"
+                        />
+                    </Link>
+                </div>
             </CSidebarHeader>
 
             <CSidebarNav>
                 <CNavTitle>Dashboard</CNavTitle>
-
                 <CNavItem>
                     <Link
                         href="/profile"
@@ -48,31 +57,26 @@ export const AdminSidebar = () => {
                         Profile
                     </Link>
                 </CNavItem>
-
                 <CNavItem>
                     <Link
-                        href="/admin/dashboard/users"
+                        // href="/admin/dashboard/users"
                         className="nav-link flex items-center"
                     >
                         <CIcon
                             customClassName="nav-icon"
                             icon={cilSpeedometer}
                         />
-                        Manage Users
+                        List car
                     </Link>
                 </CNavItem>
 
                 <CNavItem href="#">
                     <CIcon customClassName="nav-icon" icon={cilSpeedometer} />{" "}
-                    Manage car listings
-                </CNavItem>
-                <CNavItem href="https://coreui.io">
-                    <CIcon customClassName="nav-icon" icon={cilCloudDownload} />{" "}
-                    Mangage Q&A Forum
+                    Modify car listings
                 </CNavItem>
             </CSidebarNav>
         </CSidebar>
     );
 };
 
-export default AdminSidebar;
+export default UserSidebar;

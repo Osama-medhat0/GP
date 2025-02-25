@@ -6,7 +6,7 @@ import { useState } from "react";
 import { CSidebarHeader } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilCloudDownload, cilSpeedometer } from "@coreui/icons";
-import AdminSidebar from "@/Components/AdminSidebar";
+import AdminSidebar from "@/Pages/Admin/AdminSidebar";
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const [showingNavigationDropdown, setShowingNavigationDropdown] =

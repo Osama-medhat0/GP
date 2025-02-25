@@ -1,10 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AdminAuthenticated";
-import Sidebar from "@/Components/AdminSidebar";
+import Sidebar from "@/Pages/Admin/AdminSidebar";
 import UsersTable from "@/Components/UsersTable";
 import { CSidebarHeader } from "@coreui/react";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Head, usePage } from "@inertiajs/react";
-import "../../../../css/app.css";
+import "../../../css/app.css";
 import { useState, useEffect } from "react";
 
 export default function Dashboard() {

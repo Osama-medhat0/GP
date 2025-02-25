@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AdminAuthenticated";
 import Sidebar from "@/Pages/Admin/AdminSidebar";
-import UsersTable from "@/Components/UsersTable";
+import UsersTable from "@/Pages/Admin/UsersTable";
 import { CSidebarHeader } from "@coreui/react";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Head, usePage } from "@inertiajs/react";

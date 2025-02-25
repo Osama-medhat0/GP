@@ -1,10 +1,12 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
-
+import { CSidebarHeader } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilCloudDownload, cilSpeedometer } from "@coreui/icons";
+import AdminSidebar from "@/Pages/Admin/AdminSidebar";
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -16,20 +18,37 @@ export default function AuthenticatedLayout({ header, children }) {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
-                            <div className="flex shrink-0 items-center">
-                                <Link href="/">
+                            <div className=" flex sm:hidden  shrink-0 items-center ml-0">
+                                <Link href={"/"} className="block">
+                                    <h1 className="fairwheels-logo ">
+                                        <span className="fair text-black">
+                                            Fair
+                                        </span>
+                                        <span className="wheels text-black">
+                                            Wheels
+                                        </span>
+                                    </h1>
+                                </Link>
+                                <Link href={"/"}>
                                     <img
                                         src="/logo.png"
                                         alt="FairWheels Logo"
-                                        className="h-10 w-auto"
+                                        className="h-8 w-auto"
                                     />
                                 </Link>
                             </div>
-
-                            <div className="ml-2 hidden space-x-8 sm:-my-px sm:ms-20 sm:flex">
+                            <div className="pl-20 hidden space-x-4 sm:-my-px sm:ms-20 sm:flex">
+                                <NavLink href={"/"}>Home</NavLink>
+                            </div>
+                            <div className="ml-2 hidden space-x-4 sm:-my-px sm:flex">
                                 <NavLink
                                     href={route("admin.dashboard")}
-                                    active={route().current("admin.dashboard")}
+                                    active={
+                                        route()
+                                            .current()
+                                            .startsWith("admin.dashboard") ||
+                                        route().current("admin.users")
+                                    }
                                 >
                                     Dashboard
                                 </NavLink>
@@ -130,11 +149,22 @@ export default function AuthenticatedLayout({ header, children }) {
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink href={"/"}>Home</ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
                             href={route("dashboard")}
                             active={route().current("dashboard")}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={"/"} //change rout
+                            // active={route().current("dashboard")}
+                        >
+                            List car
                         </ResponsiveNavLink>
                     </div>
 

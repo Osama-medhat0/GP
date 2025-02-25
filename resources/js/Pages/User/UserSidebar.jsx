@@ -17,6 +17,7 @@ import {
     cilLayers,
     cilPuzzle,
     cilSpeedometer,
+    cilUser,
 } from "@coreui/icons";
 
 export const UserSidebar = () => {
@@ -28,16 +29,34 @@ export const UserSidebar = () => {
             position="fixed"
         >
             <CSidebarHeader className="border-bottom">
-                <Link href="/" className="block">
-                    <h1 className="fairwheels-logo">
-                        <span className="fair">Fair</span>
-                        <span className="wheels">Wheels</span>
-                    </h1>
-                </Link>
+                <div className="flex items-center">
+                    <Link href="/" className="block">
+                        <h1 className="fairwheels-logo">
+                            <span className="fair">Fair</span>
+                            <span className="wheels">Wheels</span>
+                        </h1>
+                    </Link>
+                    <Link href={"/"}>
+                        <img
+                            src="/logo.png"
+                            alt="FairWheels Logo"
+                            className="ml-1 h-7 w-auto"
+                        />
+                    </Link>
+                </div>
             </CSidebarHeader>
 
             <CSidebarNav>
                 <CNavTitle>Dashboard</CNavTitle>
+                <CNavItem>
+                    <Link
+                        href="/profile"
+                        className="nav-link flex items-center"
+                    >
+                        <CIcon customClassName="nav-icon" icon={cilUser} />
+                        Profile
+                    </Link>
+                </CNavItem>
                 <CNavItem>
                     <Link
                         // href="/admin/dashboard/users"
@@ -47,17 +66,13 @@ export const UserSidebar = () => {
                             customClassName="nav-icon"
                             icon={cilSpeedometer}
                         />
-                        <span className="ml-2">List car</span>
+                        List car
                     </Link>
                 </CNavItem>
 
                 <CNavItem href="#">
                     <CIcon customClassName="nav-icon" icon={cilSpeedometer} />{" "}
                     Modify car listings
-                </CNavItem>
-                <CNavItem href="https://coreui.io">
-                    <CIcon customClassName="nav-icon" icon={cilCloudDownload} />{" "}
-                    Mangage Q&A Forum
                 </CNavItem>
             </CSidebarNav>
         </CSidebar>

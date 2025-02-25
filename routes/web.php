@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
             return redirect()->route('admin.dashboard');
         }
     }
-    return Inertia::render('Dashboard');
+    return Inertia::render('User/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

@@ -17,6 +17,7 @@ import {
     cilLayers,
     cilPuzzle,
     cilSpeedometer,
+    cilUser,
 } from "@coreui/icons";
 
 export const AdminSidebar = () => {
@@ -38,6 +39,17 @@ export const AdminSidebar = () => {
 
             <CSidebarNav>
                 <CNavTitle>Dashboard</CNavTitle>
+
+                <CNavItem>
+                    <Link
+                        href="/profile"
+                        className="nav-link flex items-center"
+                    >
+                        <CIcon customClassName="nav-icon" icon={cilUser} />
+                        Profile
+                    </Link>
+                </CNavItem>
+
                 <CNavItem>
                     <Link
                         href="/admin/dashboard/users"
@@ -47,7 +59,7 @@ export const AdminSidebar = () => {
                             customClassName="nav-icon"
                             icon={cilSpeedometer}
                         />
-                        <span className="ml-2">Manage Users</span>
+                        Manage Users
                     </Link>
                 </CNavItem>
 

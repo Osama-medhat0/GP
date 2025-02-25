@@ -13,12 +13,12 @@ class AdminController extends Controller
 
     public function AdminDashboard()
     {
-        return inertia('Auth/admin/Dashboard');
+        return inertia('Admin/Dashboard');
     }
 
     public function usersList()
     {
-        return Inertia::render('Auth/admin/Dashboard', [
+        return Inertia::render('Admin/Dashboard', [
             'users' => User::all()
         ]);
     }

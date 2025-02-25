@@ -1,9 +1,9 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Sidebar from "@/Components/UserSidebar";
+import AuthenticatedLayout from "@/Layouts/UserAhuthenticated";
+import Sidebar from "@/Pages/User/UserSidebar";
 import { CSidebarHeader } from "@coreui/react";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Head } from "@inertiajs/react";
-import "../../css/app.css";
+import "../../../css/app.css";
 export default function Dashboard() {
     return (
         <AuthenticatedLayout>

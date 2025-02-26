@@ -42,4 +42,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 });
 
 
+Route::get("/home", function () {
+    return inertia("Frontend/Components/MainLayout");
+});
 require __DIR__ . '/auth.php';

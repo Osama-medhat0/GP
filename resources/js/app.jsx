@@ -4,6 +4,8 @@ import "../css/app.css";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 // import "@coreui/coreui/dist/css/coreui.min.css";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";

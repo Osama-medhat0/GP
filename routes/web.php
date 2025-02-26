@@ -43,6 +43,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 
 Route::get("/home", function () {
-    return inertia("Frontend/Components/MainLayout");
+    return inertia("Frontend/Home");
 });
 require __DIR__ . '/auth.php';

@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return inertia('Frontend/Components/Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
             return redirect()->route('admin.dashboard');
         }
     }
-    return Inertia::render('User/Dashboard');
+    return inertia('User/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -43,6 +43,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 
 Route::get("/home", function () {
-    return inertia("Frontend/Home");
+    return inertia("Frontend/Home", [
+        'auth' => [
+            'user' => Auth::user(),
+        ],
+    ]);
 });
+
 require __DIR__ . '/auth.php';

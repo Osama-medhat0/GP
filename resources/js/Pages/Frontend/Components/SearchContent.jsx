@@ -13,7 +13,7 @@ const SearchContent = () => {
                 <div>
                     <h1
                         className="text-center"
-                        style={{ color: "#01D28E", marginBottom: "20px" }}
+                        style={{ color: "#01D28E", marginBottom: "45px" }}
                     >
                         Find a Car
                     </h1>

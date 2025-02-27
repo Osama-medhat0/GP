@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Footer from "../Pages/Frontend/Components/Footer";
-import Welcome from "../Pages/Frontend/Components/Welcome";
+import Header from "../Pages/Frontend/Components/Header";
 import { usePage } from "@inertiajs/react";
 
 const MainLayout = ({ children }) => {
@@ -87,7 +87,7 @@ const MainLayout = ({ children }) => {
                 <link rel="stylesheet" href="assets/css/style.css" />
             </Helmet>
 
-            <Welcome auth={usePage().props.auth} />
+            <Header auth={usePage().props.auth} />
 
             {/* Page Content */}
             <div>{children}</div>

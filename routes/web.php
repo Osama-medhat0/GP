@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return inertia('Frontend/Components/Welcome', [
+    return inertia('Frontend/Components/Header', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import Footer from "./Footer";
-import NavBar from "./Navbar";
+import Footer from "../Pages/Frontend/Components/Footer";
+import NavBar from "../Pages/Frontend/Components/Navbar";
 
 const MainLayout = ({ children }) => {
     useEffect(() => {
@@ -28,8 +28,6 @@ const MainLayout = ({ children }) => {
             "assets/js/bootstrap-datepicker.js",
             "assets/js/jquery.timepicker.min.js",
             "assets/js/scrollax.min.js",
-            "https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false",
-            "assets/js/google-map.js",
             "assets/js/main.js",
         ];
 

@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
-import MainLayout from "./Components/MainLayout";
+import MainLayout from "../../Layouts/MainLayout";
+import SearchContent from "./Components/SearchContent";
 const Home = () => {
     return (
         <>
@@ -46,8 +47,8 @@ const Home = () => {
                         <div className="row no-gutters">
                             <div className="col-md-12	featured-top">
                                 <div className="row no-gutters">
-                                    <div className="col-md-4 d-flex align-items-center">
-                                        <form>
+                                    {/* <div className="col-md-4 d-flex align-items-center"> */}
+                                    {/* <form>
                                             <div className="form-group">
                                                 <label
                                                     htmlFor="pick-up-location"
@@ -131,9 +132,10 @@ const Home = () => {
                                                     className="btn btn-secondary py-3 px-4"
                                                 />
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div className="col-md-8 d-flex align-items-center">
+                                        </form> */}
+                                    {/* </div> */}
+                                    <SearchContent />
+                                    {/* <div className="col-md-8 d-flex align-items-center">
                                         <div className="services-wrap rounded-right w-100">
                                             <h3 className="heading-section mb-4">
                                                 Better Way to Rent Your Perfect
@@ -189,7 +191,7 @@ const Home = () => {
                                                 </a>
                                             </p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

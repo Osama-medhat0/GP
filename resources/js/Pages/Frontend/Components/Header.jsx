@@ -79,13 +79,4 @@ export default function Header({ auth, laravelVersion, phpVersion }) {
             </Navbar>
         </>
     );
-    // return (
-    //     <div>
-    //         {auth?.user ? (
-    //             <h1>Welcome, {auth.user.name}!</h1>
-    //         ) : (
-    //             <h1>Welcome, Guest!</h1>
-    //         )}
-    //     </div>
-    // );
 }

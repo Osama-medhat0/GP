@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
-    console.log(user);
+    // console.log(user);
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -16,20 +16,6 @@ export default function AuthenticatedLayout({ header, children }) {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex items-center justify-between w-full">
-                            {/* Logo */}
-                            {/* <div className="flex shrink-0 items-center">
-                                <NavLink href="/" className="block">
-                                    <h1>
-                                        <span style={{ color: "black" }}>
-                                            Fair
-                                        </span>
-                                        <span style={{ color: "#01D28E" }}>
-                                            Wheels
-                                        </span>
-                                    </h1>
-                                </NavLink>
-                            </div> */}
-
                             {/* Navigation Links */}
                             <div className="hidden space-x-4 px sm:flex ml-auto">
                                 <NavLink

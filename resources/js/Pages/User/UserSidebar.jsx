@@ -30,18 +30,11 @@ export const UserSidebar = () => {
         >
             <CSidebarHeader className="border-bottom">
                 <div className="flex items-center">
-                    <Link href="/" className="block">
-                        <h1 className="fairwheels-logo">
-                            <span className="fair">Fair</span>
-                            <span className="wheels">Wheels</span>
+                    <Link href="/" className="block no-underline">
+                        <h1>
+                            <span style={{ color: "White" }}>Fair</span>
+                            <span style={{ color: "#01D28E" }}>Wheels</span>
                         </h1>
-                    </Link>
-                    <Link href={"/"}>
-                        <img
-                            src="/logo.png"
-                            alt="FairWheels Logo"
-                            className="ml-1 h-7 w-auto"
-                        />
                     </Link>
                 </div>
             </CSidebarHeader>

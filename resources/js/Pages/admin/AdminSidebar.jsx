@@ -30,7 +30,7 @@ export const AdminSidebar = () => {
         >
             <CSidebarHeader className="border-bottom">
                 <Link href="/" className="block">
-                    <h1 className="fairwheels-logo">
+                    <h1>
                         <span className="fair">Fair</span>
                         <span className="wheels">Wheels</span>
                     </h1>

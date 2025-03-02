@@ -1,7 +1,8 @@
+import { usePage } from "@inertiajs/react";
 import MainLayout from "../../Layouts/MainLayout";
 import SearchContent from "./Components/SearchContent";
-import Sidebar from "./Dashboard/Components/Sidebar";
 const Home = ({ children }) => {
+    console.log(usePage());
     return (
         <>
             <MainLayout>
@@ -920,7 +921,7 @@ const Home = ({ children }) => {
 
                 {/* <section className="dashboard-area"> */}
                 {/* <Sidebar /> */}
-                <div>{children}</div>
+                {/* <div>{children}</div> */}
                 {/* </section> */}
             </MainLayout>
         </>

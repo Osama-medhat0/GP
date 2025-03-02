@@ -15,7 +15,7 @@ export default function Header({ showLogo, head }) {
 
     const { sidebarActive, setSidebarActive } = useSidebarContext();
     const context = useSidebarContext();
-    console.log(context);
+    // console.log(context);
 
     return (
         <>
@@ -227,7 +227,7 @@ export default function Header({ showLogo, head }) {
                         </button>
                     </div>
 
-                    {/* <div
+                    <div
                         className={`
                             ${
                                 (showingNavigationDropdown
@@ -288,7 +288,7 @@ export default function Header({ showLogo, head }) {
                                 </ResponsiveNavLink>
                             </>
                         )}
-                    </div> */}
+                    </div>
                 </Container>
             </Navbar>
             {head && (

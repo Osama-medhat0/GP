@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Footer from "../Pages/Frontend/Components/Footer";
 import Header from "../Pages/Frontend/Components/Header";
 import { usePage } from "@inertiajs/react";
+import { SidebarProvider } from "@/Pages/Frontend/Dashboard/Components/SidebarContext";
+import Sidebar from "@/Pages/Frontend/Dashboard/Components/Sidebar";
 
 const MainLayout = ({ children }) => {
     useEffect(() => {
@@ -43,57 +45,71 @@ const MainLayout = ({ children }) => {
     }, []);
 
     return (
-        <HelmetProvider>
-            <Helmet>
-                {/* Meta Tags */}
-                <meta charSet="utf-8" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-                />
-                {/* Title */}
-                <title>FairWheels</title>
+        <SidebarProvider>
+            <HelmetProvider>
+                <Helmet>
+                    {/* Meta Tags */}
+                    <meta charSet="utf-8" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+                    />
+                    {/* Title */}
+                    <title>FairWheels</title>
 
-                {/* Fonts */}
-                <link
-                    href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
-                    rel="stylesheet"
-                />
+                    {/* Fonts */}
+                    <link
+                        href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+                        rel="stylesheet"
+                    />
 
-                {/* Css */}
-                <link
-                    rel="stylesheet"
-                    href="assets/css/open-iconic-bootstrap.min.css"
-                />
-                <link rel="stylesheet" href="assets/css/animate.css" />
-                <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
-                <link
-                    rel="stylesheet"
-                    href="assets/css/owl.theme.default.min.css"
-                />
-                <link rel="stylesheet" href="assets/css/magnific-popup.css" />
-                <link rel="stylesheet" href="assets/css/aos.css" />
-                <link rel="stylesheet" href="assets/css/ionicons.min.css" />
-                <link
-                    rel="stylesheet"
-                    href="assets/css/bootstrap-datepicker.css"
-                />
-                <link
-                    rel="stylesheet"
-                    href="assets/css/jquery.timepicker.css"
-                />
-                <link rel="stylesheet" href="assets/css/flaticon.css" />
-                <link rel="stylesheet" href="assets/css/icomoon.css" />
-                <link rel="stylesheet" href="assets/css/style.css" />
-            </Helmet>
+                    {/* Css */}
+                    <link
+                        rel="stylesheet"
+                        href="assets/css/open-iconic-bootstrap.min.css"
+                    />
+                    <link rel="stylesheet" href="assets/css/animate.css" />
+                    <link
+                        rel="stylesheet"
+                        href="assets/css/owl.carousel.min.css"
+                    />
+                    <link
+                        rel="stylesheet"
+                        href="assets/css/owl.theme.default.min.css"
+                    />
+                    <link
+                        rel="stylesheet"
+                        href="assets/css/magnific-popup.css"
+                    />
+                    <link rel="stylesheet" href="assets/css/aos.css" />
+                    <link rel="stylesheet" href="assets/css/ionicons.min.css" />
+                    <link
+                        rel="stylesheet"
+                        href="assets/css/bootstrap-datepicker.css"
+                    />
+                    <link
+                        rel="stylesheet"
+                        href="assets/css/jquery.timepicker.css"
+                    />
+                    <link rel="stylesheet" href="assets/css/flaticon.css" />
+                    <link rel="stylesheet" href="assets/css/icomoon.css" />
+                    <link rel="stylesheet" href="assets/css/style.css" />
+                </Helmet>
 
-            <Header auth={usePage().props.auth} />
+                <Header auth={usePage().props.auth} />
 
-            {/* Page Content */}
-            <div>{children}</div>
+                {/* <section className="dashboard-area"> */}
+                <Sidebar />
+                {/* Now it's inside the provider */}
+                {/* <div>{children}</div> */}
+                {/* </section> */}
 
-            <Footer />
-        </HelmetProvider>
+                {/* Page Content */}
+                <div>{children}</div>
+
+                <Footer />
+            </HelmetProvider>
+        </SidebarProvider>
     );
 };
 export default MainLayout;

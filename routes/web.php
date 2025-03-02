@@ -16,6 +16,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+// ->name("home");
 
 Route::get('/dashboard', function () {
     if (Auth::check()) {
@@ -23,7 +24,8 @@ Route::get('/dashboard', function () {
             return redirect()->route('admin.dashboard');
         }
     }
-    return inertia('User/Dashboard');
+    // return inertia('User/Dashboard');
+    return inertia('Frontend/Dashboard/DashboardLayout');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -48,6 +50,6 @@ Route::get("/home", function () {
             'user' => Auth::user(),
         ],
     ]);
-});
+})->name("home");
 
 require __DIR__ . '/auth.php';

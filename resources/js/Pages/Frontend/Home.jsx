@@ -1,7 +1,7 @@
-import { Link } from "@inertiajs/react";
 import MainLayout from "../../Layouts/MainLayout";
 import SearchContent from "./Components/SearchContent";
-const Home = () => {
+import Sidebar from "./Dashboard/Components/Sidebar";
+const Home = ({ children }) => {
     return (
         <>
             <MainLayout>
@@ -915,6 +915,13 @@ const Home = () => {
                         />
                     </svg>
                 </div>
+
+                {/* <Header showLogo={true} /> */}
+
+                {/* <section className="dashboard-area"> */}
+                {/* <Sidebar /> */}
+                <div>{children}</div>
+                {/* </section> */}
             </MainLayout>
         </>
     );

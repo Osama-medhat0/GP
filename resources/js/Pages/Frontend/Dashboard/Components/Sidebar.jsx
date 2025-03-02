@@ -3,8 +3,8 @@ import Navbar from "react-bootstrap/Navbar";
 
 const Sidebar = () => {
     const { sidebarActive, setSidebarActive } = useSidebarContext();
-    console.log("Sidebar is rendering");
-    console.log("sidebarActive:", sidebarActive);
+    // console.log("Sidebar is rendering");
+    // console.log("sidebarActive:", sidebarActive);
     return (
         <>
             <div

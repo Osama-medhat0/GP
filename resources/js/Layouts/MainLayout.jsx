@@ -4,7 +4,7 @@ import Footer from "../Pages/Frontend/Components/Footer";
 import Header from "../Pages/Frontend/Components/Header";
 import { usePage } from "@inertiajs/react";
 import { SidebarProvider } from "@/Pages/Frontend/Dashboard/Components/SidebarContext";
-import Sidebar from "@/Pages/Frontend/Dashboard/Components/Sidebar";
+import ScrollToTopButton from "@/Components/ScrollToTopButton";
 
 const MainLayout = ({ children }) => {
     useEffect(() => {
@@ -99,11 +99,11 @@ const MainLayout = ({ children }) => {
                 <Header auth={usePage().props.auth} />
 
                 {/* <section className="dashboard-area"> */}
-                <Sidebar />
+                {/* <Sidebar /> */}
                 {/* Now it's inside the provider */}
                 {/* <div>{children}</div> */}
                 {/* </section> */}
-
+                <ScrollToTopButton />
                 {/* Page Content */}
                 <div>{children}</div>
 

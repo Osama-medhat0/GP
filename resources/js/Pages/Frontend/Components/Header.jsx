@@ -187,12 +187,15 @@ export default function Header({ showLogo, head }) {
                     {/* Mobile Menu */}
                     <div className="-me-2 flex items-center sm:hidden">
                         <button
-                            // onClick={() =>
-                            //     setShowingNavigationDropdown(
-                            //         !showingNavigationDropdown
-                            //     )
-                            // }
-                            onClick={() => setSidebarActive(true)}
+                            onClick={() => {
+                                if (route().current("home")) {
+                                    setShowingNavigationDropdown(
+                                        !showingNavigationDropdown
+                                    );
+                                } else {
+                                    setSidebarActive(true);
+                                }
+                            }}
                             className="inline-flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                         >
                             <svg
@@ -247,24 +250,25 @@ export default function Header({ showLogo, head }) {
                             Home
                         </ResponsiveNavLink>
 
-                        <ResponsiveNavLink
-                            className={`mr-5 block no-underline ${
-                                route().current("dashboard")
-                                    ? "text-green-500 font-bold"
-                                    : ""
-                            }`}
-                            href={route("dashboard")}
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
-
                         {user?.role === "admin" && (
-                            <ResponsiveNavLink
-                                className="no-underline"
-                                href={route("admin.users")}
-                            >
-                                Manage Users
-                            </ResponsiveNavLink>
+                            <>
+                                <ResponsiveNavLink
+                                    className={`mr-5 block no-underline ${
+                                        route().current("dashboard")
+                                            ? "text-green-500 font-bold"
+                                            : ""
+                                    }`}
+                                    href={route("dashboard")}
+                                >
+                                    Dashboard
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    className="no-underline"
+                                    href={route("admin.users")}
+                                >
+                                    Manage Users
+                                </ResponsiveNavLink>
+                            </>
                         )}
 
                         {user && (
@@ -280,11 +284,37 @@ export default function Header({ showLogo, head }) {
                                     Profile
                                 </ResponsiveNavLink>
                                 <ResponsiveNavLink
+                                    className={`mr-5 block no-underline ${
+                                        route().current("dashboard")
+                                            ? "text-green-500 font-bold"
+                                            : ""
+                                    }`}
+                                    href={route("dashboard")}
+                                >
+                                    Dashboard
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
                                     method="post"
                                     href={route("logout")}
                                     as="button"
                                 >
                                     Log Out
+                                </ResponsiveNavLink>
+                            </>
+                        )}
+                        {!user && (
+                            <>
+                                <ResponsiveNavLink
+                                    href={route("login")}
+                                    className="no-underline"
+                                >
+                                    Log in
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route("register")}
+                                    className="no-underline"
+                                >
+                                    Register
                                 </ResponsiveNavLink>
                             </>
                         )}

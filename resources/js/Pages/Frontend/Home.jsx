@@ -383,7 +383,7 @@ const Home = ({ children }) => {
                                 className="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center"
                                 style={{
                                     backgroundImage:
-                                        "url(assets/images/about.jpg)",
+                                        "url(assets/images/porsche.jpeg)",
                                 }}
                             ></div>
                             <div className="col-md-6 wrap-about ftco-animate">
@@ -416,9 +416,8 @@ const Home = ({ children }) => {
                                         <a
                                             href="#"
                                             className="btn btn-primary py-3 px-4"
-                                        >
-                                            Search Vehicle
-                                        </a>
+                                        ></a>
+                                        Search Vehicle
                                     </p>
                                 </div>
                             </div>
@@ -507,7 +506,7 @@ const Home = ({ children }) => {
                 </section>
                 <section
                     className="ftco-section ftco-intro"
-                    style={{ backgroundImage: "url(assets/images/bg_3.jpg)" }}
+                    style={{ backgroundImage: "url(assets/images/gtr.jpg)" }}
                 >
                     <div className="overlay" />
                     <div className="container">

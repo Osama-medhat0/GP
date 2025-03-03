@@ -93,3 +93,9 @@ body {
     z-index: 1000;
     box-shadow: "0 2px 8px rgba(0, 0, 0, 0.2)";
 } */
+
+.active {
+    background-color: #01d28e;
+    color: white;
+    font-weight: bold;
+}

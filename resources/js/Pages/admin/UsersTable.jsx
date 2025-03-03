@@ -15,8 +15,8 @@ const UsersTable = () => {
     };
 
     return (
-        <div className="p-3 flex justify-center items-start min-h-screen">
-            <div className="p-4 bg-white rounded-lg shadow-md w-full max-w-4xl">
+        <div className="pt-4 pl-0 flex justify-center items-start min-h-screen">
+            <div className="p-4 bg-white rounded-lg shadow-md w-full max-w-3xl">
                 <h2 className="text-xl font-semibold mb-4 text-center">
                     User List
                 </h2>

@@ -93,7 +93,7 @@ const DashboardLayout = ({ children }) => {
             {!loading && (
                 <>
                     <SidebarProvider>
-                        <Header showLogo={true} />
+                        <Header showLogo={false} />
                         <section className="dashboard-area">
                             <Sidebar />
                             <div>{children}</div>

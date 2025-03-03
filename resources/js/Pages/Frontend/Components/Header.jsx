@@ -20,7 +20,7 @@ export default function Header({ showLogo, head }) {
     return (
         <>
             <Navbar
-                className="sticky-top shadow-sm pt-2"
+                className="sticky-top shadow-sm py-0"
                 bg="light"
                 data-bs-theme="light"
             >

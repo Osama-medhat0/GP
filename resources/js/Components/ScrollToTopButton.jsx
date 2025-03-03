@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 const ScrollToTopButton = () => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -25,7 +24,7 @@ const ScrollToTopButton = () => {
             {isVisible && (
                 <button
                     onClick={scrollToTop}
-                    className="transition duration-300 ease-in-out"
+                    className=" transition duration-300 ease-in-out"
                     style={{
                         position: "fixed",
                         bottom: "20px",
@@ -33,19 +32,21 @@ const ScrollToTopButton = () => {
                         background: "#fff",
                         color: "grey",
                         border: "none",
-                        padding: "6px 12px",
+                        padding: "3px 12px",
                         borderRadius: "50%",
                         cursor: "pointer",
-                        fontSize: "19px",
+                        fontSize: "21px",
                         zIndex: 1000,
                         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
                     }}
-                    onMouseEnter={(e) =>
-                        (e.target.style.backgroundColor = "rgb(1, 210, 142)")
-                    }
-                    onMouseLeave={(e) =>
-                        (e.target.style.backgroundColor = "#fff")
-                    }
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "rgb(1, 210, 142)";
+                        e.target.style.color = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "#fff";
+                        e.target.style.color = "grey";
+                    }}
                 >
                     ↑
                 </button>

@@ -8,13 +8,13 @@ const Footer = () => {
                             <div className="ftco-footer-widget mb-4">
                                 <h2 className="ftco-heading-2">
                                     <a href="#" className="logo">
-                                        Car<span>book</span>
+                                        Fair<span>Wheels</span>
                                     </a>
                                 </h2>
                                 <p>
-                                    Far far away, behind the word mountains, far
-                                    from the countries Vokalia and Consonantia,
-                                    there live the blind texts.
+                                    Your trusted partner for buying and selling
+                                    cars with ease. Connecting car lovers and
+                                    providing the best deals, all in one place.
                                 </p>
                                 <ul className="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                                     <li className="ftco-animate">
@@ -109,17 +109,10 @@ const Footer = () => {
                                 <div className="block-23 mb-3">
                                     <ul>
                                         <li>
-                                            <span className="icon icon-map-marker" />
-                                            <span className="text">
-                                                203 Fake St. Mountain View, San
-                                                Francisco, California, USA
-                                            </span>
-                                        </li>
-                                        <li>
                                             <a href="#">
                                                 <span className="icon icon-phone" />
                                                 <span className="text">
-                                                    +2 392 3929 210
+                                                    01553511607
                                                 </span>
                                             </a>
                                         </li>
@@ -127,7 +120,7 @@ const Footer = () => {
                                             <a href="#">
                                                 <span className="icon icon-envelope" />
                                                 <span className="text">
-                                                    info@yourdomain.com
+                                                    FairWheels@gmail.com
                                                 </span>
                                             </a>
                                         </li>

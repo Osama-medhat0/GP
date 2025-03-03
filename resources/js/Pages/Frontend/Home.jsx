@@ -1,6 +1,13 @@
 import { usePage } from "@inertiajs/react";
 import MainLayout from "../../Layouts/MainLayout";
 import SearchContent from "./Components/SearchContent";
+import {
+    FaCar,
+    FaMoneyBillWave,
+    FaTachometerAlt,
+    FaBalanceScale,
+} from "react-icons/fa";
+
 const Home = ({ children }) => {
     console.log(usePage());
     return (
@@ -15,29 +22,17 @@ const Home = ({ children }) => {
                     <div className="container">
                         <div className="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
                             <div className="col-lg-8 ftco-animate">
-                                <div className="text w-100 text-center mb-md-5 pb-md-5">
+                                <div className="text w-100 text-center mb-md-5 pb-md-5 ">
                                     <h1 className="mb-4">
-                                        Fast &amp; Easy Way To Rent A Car
+                                        Fast &amp; Easy Way To Buy or Sell a Car
                                     </h1>
-                                    <p style={{ fontSize: 18 }}>
-                                        A small river named Duden flows by their
-                                        place and supplies it with the necessary
-                                        regelialia. It is a paradisematic
-                                        country, in which roasted parts
+                                    <p className="pt-" style={{ fontSize: 18 }}>
+                                        Our platform makes car retail simple and
+                                        efficient, providing a seamless
+                                        experience for listing and exploring
+                                        cars. Find your perfect vehicle or sell
+                                        with ease.
                                     </p>
-                                    <a
-                                        href="https://vimeo.com/45830194"
-                                        className="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center"
-                                    >
-                                        <div className="icon d-flex align-items-center justify-content-center">
-                                            <span className="ion-ios-play" />
-                                        </div>
-                                        <div className="heading-title ml-5">
-                                            <span>
-                                                Easy steps for renting a car
-                                            </span>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -46,158 +41,215 @@ const Home = ({ children }) => {
                 <section className="ftco-section ftco-no-pt bg-light">
                     <div className="container">
                         <div className="row no-gutters">
-                            <div className="col-md-12	featured-top">
-                                <div className="row no-gutters">
-                                    {/* <div className="col-md-4 d-flex align-items-center"> */}
-                                    {/* <form>
-                                            <div className="form-group">
-                                                <label
-                                                    htmlFor="pick-up-location"
-                                                    className="label"
-                                                >
-                                                    Pick-up location
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="pick-up-location"
-                                                    className="form-control"
-                                                    placeholder="City, Airport, Station, etc"
-                                                />
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label
-                                                    htmlFor="drop-off-location"
-                                                    className="label"
-                                                >
-                                                    Drop-off location
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="drop-off-location"
-                                                    className="form-control"
-                                                    placeholder="City, Airport, Station, etc"
-                                                />
-                                            </div>
-
-                                            <div className="d-flex">
-                                                <div className="form-group mr-2">
-                                                    <label
-                                                        htmlFor="book_pick_date"
-                                                        className="label"
+                            <div className="col-md-12   featured-top">
+                                <section id="searchContent">
+                                    <div className="row no-gutters pt-5">
+                                        <SearchContent />
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="ftco-section ftco-no-pt bg-light">
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-md-12 heading-section text-center ftco-animate mb-5">
+                                <span className="subheading">
+                                    What we offer
+                                </span>
+                                <h2 className="mb-2">Feeatured Vehicles</h2>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="carousel-car owl-carousel">
+                                    <div className="item">
+                                        <div className="car-wrap rounded ftco-animate">
+                                            <div
+                                                className="img rounded d-flex align-items-end"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(assets/images/car-1.jpg)",
+                                                }}
+                                            ></div>
+                                            <div className="text">
+                                                <h2 className="mb-0">
+                                                    <a href="#">
+                                                        Mercedes Grand Sedan
+                                                    </a>
+                                                </h2>
+                                                <div className="d-flex mb-3">
+                                                    <span className="cat">
+                                                        Cheverolet
+                                                    </span>
+                                                    <p className="price ml-auto">
+                                                        $500 <span>/day</span>
+                                                    </p>
+                                                </div>
+                                                <p className="d-flex mb-0 d-block">
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-primary py-2 mr-1"
                                                     >
-                                                        Pick-up date
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="book_pick_date"
-                                                        placeholder="Date"
-                                                    />
-                                                </div>
-                                                <div className="form-group ml-2">
-                                                    <label
-                                                        htmlFor="book_off_date"
-                                                        className="label"
+                                                        Buy now
+                                                    </a>{" "}
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-secondary py-2 ml-1"
                                                     >
-                                                        Drop-off date
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="book_off_date"
-                                                        placeholder="Date"
-                                                    />
-                                                </div>
+                                                        Details
+                                                    </a>
+                                                </p>
                                             </div>
-
-                                            <div className="form-group">
-                                                <label
-                                                    htmlFor="time_pick"
-                                                    className="label"
-                                                >
-                                                    Pick-up time
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="time_pick"
-                                                    placeholder="Time"
-                                                />
-                                            </div>
-
-                                            <div className="form-group">
-                                                <input
-                                                    type="submit"
-                                                    value="Rent A Car Now"
-                                                    className="btn btn-secondary py-3 px-4"
-                                                />
-                                            </div>
-                                        </form> */}
-                                    {/* </div> */}
-                                    <SearchContent />
-                                    {/* <div className="col-md-8 d-flex align-items-center">
-                                        <div className="services-wrap rounded-right w-100">
-                                            <h3 className="heading-section mb-4">
-                                                Better Way to Rent Your Perfect
-                                                Cars
-                                            </h3>
-                                            <div className="row d-flex mb-4">
-                                                <div className="col-md-4 d-flex align-self-stretch ftco-animate">
-                                                    <div className="services w-100 text-center">
-                                                        <div className="icon d-flex align-items-center justify-content-center">
-                                                            <span className="flaticon-route" />
-                                                        </div>
-                                                        <div className="text w-100">
-                                                            <h3 className="heading mb-2">
-                                                                Choose Your
-                                                                Pickup Location
-                                                            </h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4 d-flex align-self-stretch ftco-animate">
-                                                    <div className="services w-100 text-center">
-                                                        <div className="icon d-flex align-items-center justify-content-center">
-                                                            <span className="flaticon-handshake" />
-                                                        </div>
-                                                        <div className="text w-100">
-                                                            <h3 className="heading mb-2">
-                                                                Select the Best
-                                                                Deal
-                                                            </h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4 d-flex align-self-stretch ftco-animate">
-                                                    <div className="services w-100 text-center">
-                                                        <div className="icon d-flex align-items-center justify-content-center">
-                                                            <span className="flaticon-rent" />
-                                                        </div>
-                                                        <div className="text w-100">
-                                                            <h3 className="heading mb-2">
-                                                                Reserve Your
-                                                                Rental Car
-                                                            </h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p>
-                                                <a
-                                                    href="#"
-                                                    className="btn btn-primary py-3 px-4"
-                                                >
-                                                    Reserve Your Perfect Car
-                                                </a>
-                                            </p>
                                         </div>
-                                    </div> */}
+                                    </div>
+                                    <div className="item">
+                                        <div className="car-wrap rounded ftco-animate">
+                                            <div
+                                                className="img rounded d-flex align-items-end"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(assets/images/car-2.jpg)",
+                                                }}
+                                            ></div>
+                                            <div className="text">
+                                                <h2 className="mb-0">
+                                                    <a href="#">
+                                                        Mercedes Grand Sedan
+                                                    </a>
+                                                </h2>
+                                                <div className="d-flex mb-3">
+                                                    <span className="cat">
+                                                        Cheverolet
+                                                    </span>
+                                                    <p className="price ml-auto">
+                                                        $500 <span>/day</span>
+                                                    </p>
+                                                </div>
+                                                <p className="d-flex mb-0 d-block">
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-primary py-2 mr-1"
+                                                    >
+                                                        Buy now
+                                                    </a>{" "}
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-secondary py-2 ml-1"
+                                                    >
+                                                        Details
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="car-wrap rounded ftco-animate">
+                                            <div
+                                                className="img rounded d-flex align-items-end"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(assets/images/car-3.jpg)",
+                                                }}
+                                            ></div>
+                                            <div className="text">
+                                                <h2 className="mb-0">
+                                                    <a href="#">
+                                                        Mercedes Grand Sedan
+                                                    </a>
+                                                </h2>
+                                                <div className="d-flex mb-3">
+                                                    <span className="cat">
+                                                        Cheverolet
+                                                    </span>
+                                                    <p className="price ml-auto">
+                                                        $500 <span>/day</span>
+                                                    </p>
+                                                </div>
+                                                <p className="d-flex mb-0 d-block">
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-primary py-2 mr-1"
+                                                    >
+                                                        Buy now
+                                                    </a>{" "}
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-secondary py-2 ml-1"
+                                                    >
+                                                        Details
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="car-wrap rounded ftco-animate">
+                                            <div
+                                                className="img rounded d-flex align-items-end"
+                                                style={{
+                                                    backgroundImage:
+                                                        "url(assets/images/car-4.jpg)",
+                                                }}
+                                            ></div>
+                                            <div className="text">
+                                                <h2 className="mb-0">
+                                                    <a href="#">
+                                                        Mercedes Grand Sedan
+                                                    </a>
+                                                </h2>
+                                                <div className="d-flex mb-3">
+                                                    <span className="cat">
+                                                        Cheverolet
+                                                    </span>
+                                                    <p className="price ml-auto">
+                                                        $500 <span>/day</span>
+                                                    </p>
+                                                </div>
+                                                <p className="d-flex mb-0 d-block">
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-primary py-2 mr-1"
+                                                    >
+                                                        Buy now
+                                                    </a>{" "}
+                                                    <a
+                                                        href="#"
+                                                        className="btn btn-secondary py-2 ml-1"
+                                                    >
+                                                        Details
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                <section
+                    className="ftco-section ftco-intro"
+                    style={{ backgroundImage: "url(assets/images/gtr.jpg)" }}
+                >
+                    <div className="overlay" />
+                    <div className="container">
+                        <div className="row justify-content-end">
+                            <div className="col-md-6 heading-section heading-section-white ftco-animate">
+                                <h2 className="mb-3">
+                                    Do You Want To Earn With Us? So Don't Be
+                                    Late.
+                                </h2>
+                                <a href="#" className="btn btn-primary btn-lg">
+                                    Become A Driver
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <section className="ftco-section ftco-no-pt bg-light">
                     <div className="container">
                         <div className="row justify-content-center">
@@ -389,35 +441,41 @@ const Home = ({ children }) => {
                             <div className="col-md-6 wrap-about ftco-animate">
                                 <div className="heading-section heading-section-white pl-md-5">
                                     <span className="subheading">About us</span>
-                                    <h2 className="mb-4">Welcome to Carbook</h2>
+                                    <h2 className="mb-4">
+                                        Welcome to FairWheels
+                                    </h2>
                                     <p>
-                                        A small river named Duden flows by their
-                                        place and supplies it with the necessary
-                                        regelialia. It is a paradisematic
-                                        country, in which roasted parts of
-                                        sentences fly into your mouth.
+                                        Welcome to Car Retail Website — your
+                                        ultimate destination for buying and
+                                        selling cars with ease and confidence.
+                                        Our platform is designed to bridge the
+                                        gap between buyers and sellers by
+                                        offering a seamless, user-friendly
+                                        experience.
                                     </p>
                                     <p>
-                                        On her way she met a copy. The copy
-                                        warned the Little Blind Text, that where
-                                        it came from it would have been
-                                        rewritten a thousand times and
-                                        everything that was left from its origin
-                                        would be the word "and" and the Little
-                                        Blind Text should turn around and return
-                                        to its own, safe country. A small river
-                                        named Duden flows by their place and
-                                        supplies it with the necessary
-                                        regelialia. It is a paradisematic
-                                        country, in which roasted parts of
-                                        sentences fly into your mouth.
+                                        With our advanced AI-powered price
+                                        recommendation system, we help both car
+                                        owners and potential buyers make
+                                        informed decisions based on accurate
+                                        market data. Our detailed car listings,
+                                        robust search filters, and intuitive
+                                        comparison feature ensure that you find
+                                        the right car at the right price.
                                     </p>
-                                    <p>
+                                    <p className="pt-3">
                                         <a
-                                            href="#"
-                                            className="btn btn-primary py-3 px-4"
-                                        ></a>
-                                        Search Vehicle
+                                            href="#searchContent"
+                                            className="btn py-3 px-4"
+                                            style={{
+                                                backgroundColor: "#1089ff",
+                                                color: "#fff",
+                                                borderRadius: 10,
+                                                fontSize: 17,
+                                            }}
+                                        >
+                                            Search Vehicle
+                                        </a>
                                     </p>
                                 </div>
                             </div>
@@ -436,16 +494,18 @@ const Home = ({ children }) => {
                             <div className="col-md-3">
                                 <div className="services services-2 w-100 text-center">
                                     <div className="icon d-flex align-items-center justify-content-center">
-                                        <span className="flaticon-wedding-car" />
+                                        <FaCar
+                                            size={40}
+                                            style={{ color: "#fff" }}
+                                        />
                                     </div>
                                     <div className="text w-100">
                                         <h3 className="heading mb-2">
-                                            Wedding Ceremony
+                                            Car Sales
                                         </h3>
                                         <p>
-                                            A small river named Duden flows by
-                                            their place and supplies it with the
-                                            necessary regelialia.
+                                            Find the perfect car for you from
+                                            our wide variety of listings.
                                         </p>
                                     </div>
                                 </div>
@@ -453,16 +513,18 @@ const Home = ({ children }) => {
                             <div className="col-md-3">
                                 <div className="services services-2 w-100 text-center">
                                     <div className="icon d-flex align-items-center justify-content-center">
-                                        <span className="flaticon-transportation" />
+                                        <FaMoneyBillWave
+                                            size={40}
+                                            style={{ color: "#fff" }}
+                                        />
                                     </div>
                                     <div className="text w-100">
                                         <h3 className="heading mb-2">
-                                            City Transfer
+                                            Price Estimation
                                         </h3>
                                         <p>
-                                            A small river named Duden flows by
-                                            their place and supplies it with the
-                                            necessary regelialia.
+                                            Get accurate car price predictions
+                                            powered by AI models.
                                         </p>
                                     </div>
                                 </div>
@@ -470,16 +532,18 @@ const Home = ({ children }) => {
                             <div className="col-md-3">
                                 <div className="services services-2 w-100 text-center">
                                     <div className="icon d-flex align-items-center justify-content-center">
-                                        <span className="flaticon-car" />
+                                        <FaTachometerAlt
+                                            size={40}
+                                            style={{ color: "#fff" }}
+                                        />
                                     </div>
                                     <div className="text w-100">
                                         <h3 className="heading mb-2">
-                                            Airport Transfer
+                                            Performance Insights
                                         </h3>
                                         <p>
-                                            A small river named Duden flows by
-                                            their place and supplies it with the
-                                            necessary regelialia.
+                                            Check car mileage, engine size, and
+                                            performance statistics.
                                         </p>
                                     </div>
                                 </div>
@@ -487,16 +551,18 @@ const Home = ({ children }) => {
                             <div className="col-md-3">
                                 <div className="services services-2 w-100 text-center">
                                     <div className="icon d-flex align-items-center justify-content-center">
-                                        <span className="flaticon-transportation" />
+                                        <FaBalanceScale
+                                            size={40}
+                                            style={{ color: "#fff" }}
+                                        />
                                     </div>
                                     <div className="text w-100">
                                         <h3 className="heading mb-2">
-                                            Whole City Tour
+                                            Compare Cars
                                         </h3>
                                         <p>
-                                            A small river named Duden flows by
-                                            their place and supplies it with the
-                                            necessary regelialia.
+                                            Compare multiple cars side-by-side
+                                            and make the best choice.
                                         </p>
                                     </div>
                                 </div>
@@ -504,6 +570,7 @@ const Home = ({ children }) => {
                         </div>
                     </div>
                 </section>
+
                 <section
                     className="ftco-section ftco-intro"
                     style={{ backgroundImage: "url(assets/images/gtr.jpg)" }}
@@ -513,11 +580,11 @@ const Home = ({ children }) => {
                         <div className="row justify-content-end">
                             <div className="col-md-6 heading-section heading-section-white ftco-animate">
                                 <h2 className="mb-3">
-                                    Do You Want To Earn With Us? So Don't Be
-                                    Late.
+                                    Ready to Sell Your Car? Don’t Wait — Start
+                                    Now!
                                 </h2>
                                 <a href="#" className="btn btn-primary btn-lg">
-                                    Become A Driver
+                                    List Your Car
                                 </a>
                             </div>
                         </div>
@@ -545,11 +612,9 @@ const Home = ({ children }) => {
                                             ></div>
                                             <div className="text pt-4">
                                                 <p className="mb-4">
-                                                    Far far away, behind the
-                                                    word mountains, far from the
-                                                    countries Vokalia and
-                                                    Consonantia, there live the
-                                                    blind texts.
+                                                    Great platform for both
+                                                    buyers and sellers. The AI
+                                                    price prediction is spot on!
                                                 </p>
                                                 <p className="name">
                                                     Roger Scott
@@ -571,11 +636,9 @@ const Home = ({ children }) => {
                                             ></div>
                                             <div className="text pt-4">
                                                 <p className="mb-4">
-                                                    Far far away, behind the
-                                                    word mountains, far from the
-                                                    countries Vokalia and
-                                                    Consonantia, there live the
-                                                    blind texts.
+                                                    I found my dream car here at
+                                                    an amazing price. Fantastic
+                                                    experience!
                                                 </p>
                                                 <p className="name">
                                                     Roger Scott
@@ -597,11 +660,9 @@ const Home = ({ children }) => {
                                             ></div>
                                             <div className="text pt-4">
                                                 <p className="mb-4">
-                                                    Far far away, behind the
-                                                    word mountains, far from the
-                                                    countries Vokalia and
-                                                    Consonantia, there live the
-                                                    blind texts.
+                                                    Great platform for both
+                                                    buyers and sellers. The AI
+                                                    price prediction is spot on!
                                                 </p>
                                                 <p className="name">
                                                     Roger Scott
@@ -623,11 +684,9 @@ const Home = ({ children }) => {
                                             ></div>
                                             <div className="text pt-4">
                                                 <p className="mb-4">
-                                                    Far far away, behind the
-                                                    word mountains, far from the
-                                                    countries Vokalia and
-                                                    Consonantia, there live the
-                                                    blind texts.
+                                                    The comparison feature
+                                                    helped me choose the best
+                                                    car for my budget.
                                                 </p>
                                                 <p className="name">
                                                     Roger Scott
@@ -649,11 +708,9 @@ const Home = ({ children }) => {
                                             ></div>
                                             <div className="text pt-4">
                                                 <p className="mb-4">
-                                                    Far far away, behind the
-                                                    word mountains, far from the
-                                                    countries Vokalia and
-                                                    Consonantia, there live the
-                                                    blind texts.
+                                                    This platform made selling
+                                                    my car so easy and fast.
+                                                    Highly recommended!
                                                 </p>
                                                 <p className="name">
                                                     Roger Scott
@@ -821,14 +878,14 @@ const Home = ({ children }) => {
                     id="section-counter"
                 >
                     <div className="overlay" />
-                    <div className="container">
+                    <div className="container pl-19">
                         <div className="row">
                             <div className="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
                                 <div className="block-18">
                                     <div className="text text-border d-flex align-items-center">
                                         <strong
                                             className="number"
-                                            data-number={60}
+                                            data-number={45}
                                         >
                                             0
                                         </strong>
@@ -844,7 +901,7 @@ const Home = ({ children }) => {
                                     <div className="text text-border d-flex align-items-center">
                                         <strong
                                             className="number"
-                                            data-number={1090}
+                                            data-number={10090}
                                         >
                                             0
                                         </strong>
@@ -860,29 +917,13 @@ const Home = ({ children }) => {
                                     <div className="text text-border d-flex align-items-center">
                                         <strong
                                             className="number"
-                                            data-number={2590}
+                                            data-number={3620}
                                         >
                                             0
                                         </strong>
                                         <span>
                                             Happy <br />
                                             Customers
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
-                                <div className="block-18">
-                                    <div className="text d-flex align-items-center">
-                                        <strong
-                                            className="number"
-                                            data-number={67}
-                                        >
-                                            0
-                                        </strong>
-                                        <span>
-                                            Total <br />
-                                            Branches
                                         </span>
                                     </div>
                                 </div>
@@ -915,13 +956,6 @@ const Home = ({ children }) => {
                         />
                     </svg>
                 </div>
-
-                {/* <Header showLogo={true} /> */}
-
-                {/* <section className="dashboard-area"> */}
-                {/* <Sidebar /> */}
-                {/* <div>{children}</div> */}
-                {/* </section> */}
             </MainLayout>
         </>
     );

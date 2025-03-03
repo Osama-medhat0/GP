@@ -15,7 +15,7 @@ export default function Dashboard() {
         <>
             <SidebarProvider>
                 <DashboardLayout>
-                    <Header showLogo={true} />
+                    {/* <Header showLogo={true} /> */}
                     <div className="flex h-screen">
                         <Sidebar />
                         <Head title="Admin Dashboard" />

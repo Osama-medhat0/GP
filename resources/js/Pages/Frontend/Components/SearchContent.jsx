@@ -21,7 +21,7 @@ const SearchContent = () => {
                         <div className="row justify-content-center">
                             <div className="col-md-4 pb-4">
                                 <div className="single-model-search">
-                                    <h6>select year</h6>
+                                    <h6>Year</h6>
                                     <div className="model-select-icon">
                                         <select
                                             className="form-control"
@@ -35,7 +35,7 @@ const SearchContent = () => {
                                             defaultValue="" // Fixes the "selected" warning
                                         >
                                             <option value="" disabled hidden>
-                                                year
+                                                Year
                                             </option>
                                             <option value={2018}>2018</option>
                                             <option value={2017}>2017</option>
@@ -44,7 +44,7 @@ const SearchContent = () => {
                                     </div>
                                 </div>
                                 <div className="single-model-search pt-5">
-                                    <h6>body style</h6>
+                                    <h6>Body style</h6>
                                     <div className="model-select-icon">
                                         <select
                                             className="form-control"
@@ -64,7 +64,7 @@ const SearchContent = () => {
                             </div>
                             <div className="col-md-4">
                                 <div className="single-model-search">
-                                    <h6>select make</h6>
+                                    <h6>Select make</h6>
                                     <div className="model-select-icon">
                                         <select
                                             className="form-control"
@@ -86,7 +86,7 @@ const SearchContent = () => {
                                     </div>
                                 </div>
                                 <div className="single-model-search pt-5">
-                                    <h6>car condition</h6>
+                                    <h6>Car condition</h6>
                                     <div className="model-select-icon">
                                         <select
                                             className="form-control"
@@ -103,7 +103,7 @@ const SearchContent = () => {
                             </div>
                             <div className="col-md-4">
                                 <div className="single-model-search">
-                                    <h6>select model</h6>
+                                    <h6>Model</h6>
                                     <div className="model-select-icon">
                                         <select
                                             className="form-control"
@@ -123,7 +123,7 @@ const SearchContent = () => {
                                     </div>
                                 </div>
                                 <div className="single-model-search pt-5">
-                                    <h6>select price</h6>
+                                    <h6>Price Range</h6>
                                     <div className="model-select-icon">
                                         <select
                                             className="form-control"

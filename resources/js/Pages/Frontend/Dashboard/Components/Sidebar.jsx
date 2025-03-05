@@ -48,7 +48,7 @@ const Sidebar = () => {
                         {" "}
                         <Link href={route("dashboard")}>
                             <svg
-                                className="mr-3"
+                                className="mr-3 pb-1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 height="20px"
                                 viewBox="0 0 24 24"
@@ -66,7 +66,7 @@ const Sidebar = () => {
                         }
                     >
                         <Link href={route("profile.edit")}>
-                            <CIcon icon={cilUser} className="mr-3 pb-1 w-6" />
+                            <CIcon icon={cilUser} className="mr-3 pb-1 w-7" />
                             My Profile
                         </Link>
                     </li>

@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
-use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -25,7 +23,7 @@ Route::get('/dashboard', function () {
         }
     }
     // return inertia('User/Dashboard');
-    return inertia('Frontend/Dashboard/DashboardLayout');
+    return inertia('Frontend/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

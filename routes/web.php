@@ -44,6 +44,11 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function ()
     Route::get('list-your-car', function () {
         return inertia('User/CarListingForm');
     })->name("car.listing");
+
+    //Car Page
+    Route::get('car', function () {
+        return inertia('Frontend/CarsPage');
+    })->name("car.page");
 }));
 
 //Admin Route

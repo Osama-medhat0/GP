@@ -70,7 +70,7 @@ export default function Header({ showLogo, head }) {
                                     fontSize: "17px",
                                 }}
                                 className="mr-5 block no-underline"
-                                href="#cars"
+                                href={route("car.page")}
                             >
                                 Cars
                             </NavLink>

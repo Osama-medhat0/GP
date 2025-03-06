@@ -132,7 +132,7 @@ body {
 } */
 
 .active {
-    background-color: #01d28e;
+    /* background-color: #01d28e; */
     color: white;
     font-weight: bold;
 }

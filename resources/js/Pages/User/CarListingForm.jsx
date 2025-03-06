@@ -120,7 +120,7 @@ const CarMakeInput = ({ formData, handleChange, setModels }) => {
 };
 
 const CarModelInput = ({ formData, handleChange, models }) => {
-    console.log(models);
+    // console.log(models);
     return (
         <div className="relative">
             <input
@@ -211,7 +211,7 @@ const NewCarListingForm = () => {
                     <input
                         type="number"
                         name="price"
-                        placeholder="Eneter the totalt price"
+                        placeholder="Enetr the total price"
                         value={formData.price}
                         onChange={handleChange}
                         required

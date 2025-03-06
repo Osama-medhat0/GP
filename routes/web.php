@@ -25,12 +25,12 @@ Route::get("/home", function () {
 });
 
 // User Routes
-Route::middleware(['auth', 'verified'])->group((function () {
+Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function () {
 
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         if (Auth::check() && Auth::user()->role === "admin") {
             return redirect()->route('admin.dashboard');
-        }
+        } else return inertia("Frontend/Dashboard");
     })->name('dashboard');
 
     //Profile Routes
@@ -39,6 +39,11 @@ Route::middleware(['auth', 'verified'])->group((function () {
         Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    //Car Listing
+    Route::get('list-your-car', function () {
+        return inertia('User/CarListingForm');
+    })->name("car.listing");
 }));
 
 //Admin Route

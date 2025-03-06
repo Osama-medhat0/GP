@@ -73,19 +73,28 @@ const DashboardLayout = ({ children }) => {
 
             {/* Preloader */}
             {loading && (
-                <div className="preloader">
-                    <div className="loader">
-                        <svg className="spinner" viewBox="0 0 50 50">
-                            <circle
-                                className="path"
-                                cx={25}
-                                cy={25}
-                                r={20}
-                                fill="none"
-                                strokeWidth={5}
-                            />
-                        </svg>
-                    </div>
+                <div id="ftco-loader" className="show fullscreen">
+                    <svg className="circular" width="48px" height="48px">
+                        <circle
+                            className="path-bg"
+                            cx={24}
+                            cy={24}
+                            r={22}
+                            fill="none"
+                            strokeWidth={4}
+                            stroke="#eeeeee"
+                        />
+                        <circle
+                            className="path"
+                            cx={24}
+                            cy={24}
+                            r={22}
+                            fill="none"
+                            strokeWidth={4}
+                            strokeMiterlimit={10}
+                            stroke="#01D28E"
+                        />
+                    </svg>
                 </div>
             )}
 

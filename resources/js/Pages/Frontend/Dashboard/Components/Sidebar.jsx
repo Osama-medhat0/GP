@@ -88,8 +88,12 @@ const Sidebar = () => {
                         </li>
                     )}
 
-                    <li>
-                        <Link>
+                    <li
+                        className={
+                            route().current("car.listing") ? "page-active" : ""
+                        }
+                    >
+                        <Link href={route("car.listing")}>
                             <CIcon icon={cilCarAlt} className="mr-3 pb-1 w-7" />
                             List your car
                         </Link>

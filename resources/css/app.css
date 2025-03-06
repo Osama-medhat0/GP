@@ -26,6 +26,43 @@ body {
     flex-direction: column;
 }
 
+#ftco-loader {
+    position: fixed; /* Sticks to the viewport */
+    top: 50%;
+    left: 50%;
+}
+
+.circular {
+    animation: rotate 2s linear infinite;
+}
+
+.path {
+    stroke-dasharray: 150, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 100, 200;
+        stroke-dashoffset: -15px;
+    }
+    100% {
+        stroke-dasharray: 150, 200;
+        stroke-dashoffset: -125px;
+    }
+}
+
 /* Sidebar Header */
 .sidebar-header {
     border-bottom: 1px solid #ddd; /* border-b */

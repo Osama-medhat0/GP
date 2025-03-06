@@ -952,7 +952,7 @@ const Home = ({ children }) => {
                             fill="none"
                             strokeWidth={4}
                             strokeMiterlimit={10}
-                            stroke="#F96D00"
+                            stroke="#01D28E"
                         />
                     </svg>
                 </div>

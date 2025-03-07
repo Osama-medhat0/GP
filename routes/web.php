@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -47,9 +48,13 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function ()
 }));
 
 //Car Page
-Route::get('car', function () {
+Route::get('/car', function () {
     return inertia('Frontend/CarsPage');
 })->name("car.page");
+
+//Car Posting
+Route::post('/car', [CarsController::class, 'store'])->name('car.store');
+
 
 //Admin Route
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {

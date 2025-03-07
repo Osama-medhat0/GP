@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Inertia } from "@inertiajs/inertia";
-import { Sidebar } from "@coreui/coreui";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
+import { router } from "@inertiajs/react";
+import { uesPage } from "@inertiajs/react";
 
 const carMakes = [
     "Toyota",
@@ -158,11 +158,11 @@ const NewCarListingForm = () => {
     });
 
     const [models, setModels] = useState([]);
+    const { flash } = usePage().props;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // console.log(formData);
     };
 
     const handleImageChange = (e) => {
@@ -171,7 +171,10 @@ const NewCarListingForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        Inertia.post("/cars", formData);
+        console.log(formData);
+        router.post("/car", formData, {
+            onError: (errors) => console.log(errors),
+        });
     };
 
     return (
@@ -181,6 +184,15 @@ const NewCarListingForm = () => {
                 <div className="text-center text-3xl font-bold mb-6 pt-9 ">
                     Sell Your Car
                 </div>
+                {flash.message && (
+                    <div
+                        className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded relative"
+                        role="alert"
+                    >
+                        {flash.message}
+                    </div>
+                )}
+
                 <form
                     onSubmit={handleSubmit}
                     className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-xl shadow-lg space-y-4 ml-10"
@@ -260,7 +272,6 @@ const NewCarListingForm = () => {
                         placeholder="Location"
                         value={formData.location}
                         onChange={handleChange}
-                        required
                         className="w-full p-2 border rounded"
                     />
                     <h6> Description</h6>
@@ -269,7 +280,6 @@ const NewCarListingForm = () => {
                         placeholder="Description"
                         value={formData.description}
                         onChange={handleChange}
-                        required
                         className="w-full p-2 border rounded"
                     />
                     <h6> Images</h6>
@@ -277,9 +287,9 @@ const NewCarListingForm = () => {
                         type="file"
                         name="images"
                         multiple
-                        accept="image/*"
+                        accept="images/*"
                         onChange={handleImageChange}
-                        required
+                        // required
                         className="w-full p-2 border rounded"
                     />
                     <button

@@ -250,7 +250,7 @@ const Home = ({ children }) => {
                     </div>
                 </section>
 
-                <section className="ftco-section ftco-no-pt bg-light">
+                {/* <section className="ftco-section ftco-no-pt bg-light">
                     <div className="container">
                         <div className="row justify-content-center">
                             <div className="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -427,7 +427,7 @@ const Home = ({ children }) => {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
                 <section className="ftco-section ftco-about">
                     <div className="container">
                         <div className="row no-gutters">

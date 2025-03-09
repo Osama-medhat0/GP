@@ -68,7 +68,7 @@ const carModels = {
     Mazda: ["CX-5", "MX-5", "Mazda3", "Mazda6"],
 };
 
-const CarMakeInput = ({ formData, handleChange, setModels }) => {
+const CarMakeInput = ({ formData, handleChange, setModels, clearModel }) => {
     const [suggestions, setSuggestions] = useState([]);
 
     const handleInputChange = (e) => {
@@ -87,6 +87,7 @@ const CarMakeInput = ({ formData, handleChange, setModels }) => {
 
     const handleSelect = (make) => {
         setModels(carModels[make] || []);
+        clearModel();
         handleChange({ target: { name: "make", value: make } });
         setSuggestions([]);
     };
@@ -155,6 +156,7 @@ const CarModelInput = ({ formData, handleChange, models }) => {
                 value={formData.model}
                 onChange={handleInputChange}
                 required
+                disabled={!models.length}
                 className="w-full border rounded sm:pl-20 lg:pr-80 lg:pl-2"
                 // style={{ paddingRight: "25rem" }}
             />
@@ -200,6 +202,8 @@ const NewCarListingForm = () => {
     const handleImageChange = (e) => {
         setFormData({ ...formData, images: [...e.target.files] });
     };
+
+    const clearModel = () => setFormData({ ...formData, model: "" });
 
     const handleSubmit = (e) => {
         // Simple client-side validation
@@ -247,6 +251,7 @@ const NewCarListingForm = () => {
                                 formData={formData}
                                 handleChange={handleChange}
                                 setModels={setModels}
+                                clearModel={clearModel}
                             />
                         </div>
                     </div>
@@ -262,7 +267,9 @@ const NewCarListingForm = () => {
                             models={models}
                         />
                     </div>
-
+                    {errors.model && (
+                        <CAlert color="danger">{errors.model}</CAlert>
+                    )}
                     <div className="flex  gap-5 pt-3">
                         <h6 className="pr-1 pt-1"> Year</h6>
                         <input
@@ -372,9 +379,8 @@ const NewCarListingForm = () => {
                             Manual
                         </button>
                     </div>
-
-                    {errors.transimission && (
-                        <CAlert color="danger">{errors.transimission}</CAlert>
+                    {errors.transmission && (
+                        <CAlert color="danger">{errors.transmission}</CAlert>
                     )}
 
                     <div className="flex  gap-2 pt-3">
@@ -401,10 +407,10 @@ const NewCarListingForm = () => {
                             onChange={handleChange}
                             className="w-full p-2 border rounded"
                         />
-                        {errors.description && (
-                            <CAlert color="danger">{errors.description}</CAlert>
-                        )}
                     </div>
+                    {errors.description && (
+                        <CAlert color="danger">{errors.description}</CAlert>
+                    )}
 
                     <div className="flex  gap-2 pt-3 pb-4">
                         <h6> Images</h6>

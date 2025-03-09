@@ -14,12 +14,12 @@ class CarsController extends Controller
         $validated = $request->validate([
             'make' => 'required|string|max:255',
             'model' => 'required|string|max:255',
-            'year' => 'required|integer|min:1900|max:2025' . date('Y'),
-            'price' => 'required|numeric|min:10000',
+            'year' => 'required|integer|min:1900|max:2025',
+            'price' => 'required|numeric|min:10000|max:50000000',
             'mileage' => 'required|integer|min:0',
             'fuelType' => 'required|string|max:50',
             'transmission' => 'required|string|max:50',
-            'location' => 'nullable|string|max:255',
+            'location' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048' // Validate individual files
         ]);

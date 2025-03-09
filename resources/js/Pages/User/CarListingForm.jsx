@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { router } from "@inertiajs/react";
-import { uesPage } from "@inertiajs/react";
+import { CAlert } from "@coreui/react";
 
 const carMakes = [
     "Toyota",
@@ -100,7 +100,12 @@ const CarMakeInput = ({ formData, handleChange, setModels }) => {
                 value={formData.make}
                 onChange={handleInputChange}
                 required
-                className="w-full p-2 border rounded"
+                className="w-full border rounded sm:pl-20 lg:pr-80 lg:pl-2"
+                style={{
+                    // paddingRight: "25rem",
+                    zIndex: 1000,
+                    // position: "absolute",
+                }}
             />
             {suggestions.length > 0 && (
                 <ul className="absolute w-full bg-white border rounded mt-1">
@@ -120,7 +125,27 @@ const CarMakeInput = ({ formData, handleChange, setModels }) => {
 };
 
 const CarModelInput = ({ formData, handleChange, models }) => {
-    // console.log(models);
+    const [suggestions, setSuggestions] = useState([]);
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        handleChange(e);
+
+        if (value) {
+            const filtered = models.filter((model) =>
+                model.toLowerCase().startsWith(value.toLowerCase())
+            );
+            setSuggestions(filtered);
+        } else {
+            setSuggestions([]);
+        }
+    };
+
+    const handleSelect = (model) => {
+        handleChange({ target: { name: "model", value: model } });
+        setSuggestions([]);
+    };
+
     return (
         <div className="relative">
             <input
@@ -128,17 +153,24 @@ const CarModelInput = ({ formData, handleChange, models }) => {
                 name="model"
                 placeholder="Select model"
                 value={formData.model}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 required
-                className="w-full p-2 border rounded"
-                list="model-options"
+                className="w-full border rounded sm:pl-20 lg:pr-80 lg:pl-2"
+                // style={{ paddingRight: "25rem" }}
             />
-
-            <datalist id="model-options">
-                {models.map((model) => (
-                    <option key={model} value={model} />
-                ))}
-            </datalist>
+            {suggestions.length > 0 && (
+                <ul className="absolute w-full bg-white border rounded mt-1">
+                    {suggestions.map((model) => (
+                        <li
+                            key={model}
+                            onClick={() => handleSelect(model)}
+                            className="p-2 hover:bg-gray-200 cursor-pointer text-black"
+                        >
+                            {model}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
@@ -158,7 +190,7 @@ const NewCarListingForm = () => {
     });
 
     const [models, setModels] = useState([]);
-    const { flash } = usePage().props;
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -170,11 +202,31 @@ const NewCarListingForm = () => {
     };
 
     const handleSubmit = (e) => {
+        // Simple client-side validation
+
         e.preventDefault();
         console.log(formData);
         router.post("/car", formData, {
-            onError: (errors) => console.log(errors),
+            preserveScroll: true,
+            onSuccess: () => {
+                alert("Car listed successfully!");
+                setFormData({
+                    make: "",
+                    model: "",
+                    year: "",
+                    price: "",
+                    mileage: "",
+                    fuelType: "",
+                    transmission: "",
+                    location: "",
+                    description: "",
+                    images: [],
+                });
+                setErrors({});
+            },
+            onError: (errors) => setErrors(errors),
         });
+        // setFormData([]);
     };
 
     return (
@@ -184,117 +236,190 @@ const NewCarListingForm = () => {
                 <div className="text-center text-3xl font-bold mb-6 pt-9 ">
                     Sell Your Car
                 </div>
-                {flash.message && (
-                    <div
-                        className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded relative"
-                        role="alert"
-                    >
-                        {flash.message}
-                    </div>
-                )}
-
                 <form
                     onSubmit={handleSubmit}
                     className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-xl shadow-lg space-y-4 ml-10"
                 >
-                    <h6> Make</h6>
-                    <CarMakeInput
-                        formData={formData}
-                        handleChange={handleChange}
-                        setModels={setModels}
-                    />
-                    <h6> Model</h6>
-                    <CarModelInput
-                        formData={formData}
-                        handleChange={handleChange}
-                        models={models}
-                    />
-                    <h6> Year</h6>
-                    <input
-                        type="number"
-                        name="year"
-                        placeholder="Year"
-                        value={formData.year}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border rounded"
-                    />
-                    <h6> Price</h6>
-                    <input
-                        type="number"
-                        name="price"
-                        placeholder="Enetr the total price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border rounded"
-                    />
-                    <h6> Kilometers</h6>
-                    <input
-                        type="number"
-                        name="mileage"
-                        placeholder="Ex:20,000"
-                        value={formData.mileage}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border rounded"
-                    />
-                    <h6> Fuel</h6>
-                    <select
-                        name="fuelType"
-                        value={formData.fuelType}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border rounded"
-                    >
-                        <option value="">Select Fuel Type</option>
-                        <option value="Petrol">Petrol</option>
-                        <option value="Diesel">Diesel</option>
-                        <option value="Electric">Electric</option>
-                        <option value="Hybrid">Hybrid</option>
-                    </select>
-                    <h6> Transmission</h6>
-                    <select
-                        name="transmission"
-                        value={formData.transmission}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border rounded"
-                    >
-                        <option value="">Select Transmission</option>
-                        <option value="Automatic">Automatic</option>
-                        <option value="Manual">Manual</option>
-                    </select>
-                    <h6> Location</h6>
-                    <input
-                        type="text"
-                        name="location"
-                        placeholder="Location"
-                        value={formData.location}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded"
-                    />
-                    <h6> Description</h6>
-                    <textarea
-                        name="description"
-                        placeholder="Description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded"
-                    />
-                    <h6> Images</h6>
-                    <input
-                        type="file"
-                        name="images"
-                        multiple
-                        accept="images/*"
-                        onChange={handleImageChange}
-                        // required
-                        className="w-full p-2 border rounded"
-                    />
+                    <div className="flex  gap-5">
+                        <h6>Make</h6>
+                        <div style={{ position: "relative", zIndex: 1 }}>
+                            <CarMakeInput
+                                formData={formData}
+                                handleChange={handleChange}
+                                setModels={setModels}
+                            />
+                        </div>
+                    </div>
+                    {errors.make && (
+                        <CAlert color="danger">{errors.make}</CAlert>
+                    )}
+
+                    <div className="flex  gap-4 pt-3">
+                        <h6 className="pr-3"> Model</h6>
+                        <CarModelInput
+                            formData={formData}
+                            handleChange={handleChange}
+                            models={models}
+                        />
+                    </div>
+
+                    <div className="flex  gap-5 pt-3">
+                        <h6 className="pr-1 pt-1"> Year</h6>
+                        <input
+                            type="number"
+                            name="year"
+                            placeholder="Enter year"
+                            value={formData.year}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2  border rounded sm:pl-20 "
+                        />
+                    </div>
+                    {errors.year && (
+                        <CAlert color="danger">{errors.year}</CAlert>
+                    )}
+
+                    <div className="flex  gap-5 pt-3">
+                        <h6> Price</h6>
+                        <input
+                            type="number"
+                            name="price"
+                            placeholder="Enter the total price"
+                            value={formData.price}
+                            onChange={handleChange}
+                            required
+                            className="w-full border rounded"
+                        />
+                    </div>
+                    {errors.price && (
+                        <CAlert color="danger">{errors.price}</CAlert>
+                    )}
+
+                    <div className="flex gap-2 pt-3">
+                        <h6> Kilometers</h6>
+                        <input
+                            type="number"
+                            name="mileage"
+                            placeholder="Ex:20,000"
+                            value={formData.mileage}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+                    {errors.mileage && (
+                        <CAlert color="danger">{errors.mileage}</CAlert>
+                    )}
+
+                    <div className="flex  gap-2 pt-3">
+                        <h6> Fuel</h6>
+                        <select
+                            name="fuelType"
+                            value={formData.fuelType}
+                            placeholder="Select Fuel Type"
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 ml-11 border rounded"
+                        >
+                            <option value="" disabled>
+                                Select Fuel Type
+                            </option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                    {errors.fuelType && (
+                        <CAlert color="danger">{errors.fuelType}</CAlert>
+                    )}
+                    <h6>Transimission</h6>
+                    <div className="w-full p-2 rounded flex justify-between gap-2">
+                        <button
+                            type="button"
+                            onClick={() =>
+                                handleChange({
+                                    target: {
+                                        name: "transmission",
+                                        value: "Automatic",
+                                    },
+                                })
+                            }
+                            className={`w-1/2 px-4 py-2 rounded transition ${
+                                formData.transmission === "Automatic"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-gray-200 hover:bg-blue-300"
+                            }`}
+                        >
+                            Automatic
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                handleChange({
+                                    target: {
+                                        name: "transmission",
+                                        value: "Manual",
+                                    },
+                                })
+                            }
+                            className={`w-1/2 px-4 py-2 rounded transition duration-300 ${
+                                formData.transmission === "Manual"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-gray-200 hover:bg-blue-300"
+                            }`}
+                        >
+                            Manual
+                        </button>
+                    </div>
+
+                    {errors.transimission && (
+                        <CAlert color="danger">{errors.transimission}</CAlert>
+                    )}
+
+                    <div className="flex  gap-2 pt-3">
+                        <h6 className="pr-3"> Location</h6>
+                        <input
+                            type="text"
+                            name="location"
+                            placeholder="Location"
+                            value={formData.location}
+                            onChange={handleChange}
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+                    {errors.location && (
+                        <CAlert color="danger">{errors.location}</CAlert>
+                    )}
+
+                    <div className="flex  gap-2 pt-3">
+                        <h6> Description</h6>
+                        <textarea
+                            name="description"
+                            placeholder="Description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            className="w-full p-2 border rounded"
+                        />
+                        {errors.description && (
+                            <CAlert color="danger">{errors.description}</CAlert>
+                        )}
+                    </div>
+
+                    <div className="flex  gap-2 pt-3 pb-4">
+                        <h6> Images</h6>
+                        <input
+                            type="file"
+                            name="images"
+                            multiple
+                            accept="images/*"
+                            onChange={handleImageChange}
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
                     <button
                         type="submit"
-                        className=" active w-full bg-blue-500 text-white p-2 rounded"
+                        className=" active w-full bg-blue-300 text-white p-2 rounded hover:bg-blue-500 transition duration-300"
                     >
                         List Car
                     </button>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('fuelType');
             $table->string('transmission');
             $table->string('location');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->json('images')->nullable();
             $table->timestamps();
         });

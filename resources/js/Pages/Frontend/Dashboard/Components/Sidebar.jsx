@@ -36,7 +36,7 @@ const Sidebar = () => {
                 </Navbar.Brand>
                 {/* end off-canvas-menu-close */}
 
-                <ul className="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px">
+                <ul className="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px ">
                     <li
                         className={
                             route().current("admin.dashboard") ||
@@ -50,7 +50,7 @@ const Sidebar = () => {
                             <svg
                                 className="mr-3 pb-1"
                                 xmlns="http://www.w3.org/2000/svg"
-                                height="20px"
+                                height="29px"
                                 viewBox="0 0 24 24"
                                 width="22px"
                             >
@@ -87,15 +87,29 @@ const Sidebar = () => {
                             </Link>
                         </li>
                     )}
-
+                    {user.role === "user" && (
+                        <li
+                            className={
+                                route().current("car.listing")
+                                    ? "page-active"
+                                    : ""
+                            }
+                        >
+                            <Link href={route("car.listing")}>
+                                <CIcon
+                                    icon={cilCarAlt}
+                                    className="mr-3 pb-1 w-7"
+                                />
+                                List your car
+                            </Link>
+                        </li>
+                    )}
                     <li
-                        className={
-                            route().current("car.listing") ? "page-active" : ""
-                        }
+                    // className={route().current("")}
                     >
-                        <Link href={route("car.listing")}>
+                        <Link href={route("manager.index")}>
                             <CIcon icon={cilCarAlt} className="mr-3 pb-1 w-7" />
-                            List your car
+                            Manage Cars
                         </Link>
                     </li>
                 </ul>

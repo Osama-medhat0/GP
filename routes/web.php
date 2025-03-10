@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CarManagerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -64,7 +65,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('/users', [AdminController::class, 'usersList'])->name('admin.users');
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
+    //Car Manager Route
+    Route::prefix('manager')->group(function () {
+        Route::get('/', [CarManagerController::class, 'index'])->name('manager.index');
+        Route::post('/make', [CarManagerController::class, 'storeMake'])->name('manager.storeMake');
+        Route::post('/model', [CarManagerController::class, 'storeModel'])->name('manager.storeModel');
+        Route::delete('/make/{id}', [CarManagerController::class, 'deleteMake'])->name('manager.deleteMake');
+        Route::delete('/model/{id}', [CarManagerController::class, 'deleteModel'])->name('manager.deleteModel');
+    });
 });
+
+
 
 // Auth Routes
 require __DIR__ . '/auth.php';

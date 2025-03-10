@@ -425,7 +425,7 @@ const NewCarListingForm = () => {
                     </div>
                     <button
                         type="submit"
-                        className=" active w-full bg-blue-300 text-white p-2 rounded hover:bg-blue-500 transition duration-300"
+                        className=" active w-full bg-blue-400 text-white p-2 rounded hover:bg-blue-500 transition duration-300"
                     >
                         List Car
                     </button>

@@ -13,7 +13,7 @@ export function useSidebarContext() {
 }
 export const SidebarProvider = ({ children }) => {
     useEffect(() => {
-        console.log("SidebarProvider mounted");
+        // console.log("SidebarProvider mounted");
     }, []);
 
     const [sidebarActive, setSidebarActive] = useState(false);

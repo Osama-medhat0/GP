@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { router, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 
@@ -79,6 +79,7 @@ const CarManager = ({ makes = [], models = [] }) => {
     return (
         <SidebarProvider>
             <DashboardLayout>
+                {console.log(makes)}
                 <div className="mt-6 pt-4 max-w-2xl mx-auto p-6 bg-gray-100 rounded-xl shadow-lg">
                     <h2 className="text-2xl font-bold mb-4 text-center">
                         Car Manager
@@ -118,7 +119,8 @@ const CarManager = ({ makes = [], models = [] }) => {
                             <option value="" disabled>
                                 Select Make
                             </option>
-                            {makes.map((make) => (
+                            {/* {console.log(makes.data)} */}
+                            {makes.data.map((make) => (
                                 <option key={make.id} value={make.id}>
                                     {make.name}
                                 </option>
@@ -154,8 +156,8 @@ const CarManager = ({ makes = [], models = [] }) => {
                         Existing Makes
                     </h3>
                     <ul className="mb-4">
-                        {makes.length > 0 ? (
-                            makes.map((make) => (
+                        {makes.data.length > 0 ? (
+                            makes.data.map((make) => (
                                 <li
                                     key={make.id}
                                     className="flex justify-between p-2 border-b"
@@ -175,15 +177,34 @@ const CarManager = ({ makes = [], models = [] }) => {
                             <p className="text-gray-500">No makes available.</p>
                         )}
                     </ul>
-
+                    <div className="flex justify-end ">
+                        {makes.links.map((link) =>
+                            link.url ? (
+                                <Link
+                                    key={link.label}
+                                    href={link.url}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                    className={`p-1 mx-1 hover:bg-blue-200 transition duration-300 rounded ${
+                                        link.active
+                                            ? "text-blue-500  font-bold w-xs"
+                                            : " text-black"
+                                    }`}
+                                />
+                            ) : (
+                                <span></span>
+                            )
+                        )}
+                    </div>
                     {/* Existing Models List */}
                     <h3 className="text-lg font-semibold mt-9 mb-3">
                         Existing Models
                     </h3>
                     <ul>
-                        {console.log(models)}
-                        {models.length > 0 ? (
-                            models.map((model) => (
+                        {/* {console.log(models)} */}
+                        {models.data.length > 0 ? (
+                            models.data.map((model) => (
                                 <li
                                     key={model.id}
                                     className="flex justify-between p-2 border-b"
@@ -205,6 +226,27 @@ const CarManager = ({ makes = [], models = [] }) => {
                             </p>
                         )}
                     </ul>
+                    {console.log(models)}
+                    <div className="flex justify-end pt-3 ">
+                        {models.links.map((link) =>
+                            link.url ? (
+                                <Link
+                                    key={link.label}
+                                    href={link.url}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                    className={`p-1 mx-1 hover:bg-blue-200 transition duration-300 rounded ${
+                                        link.active
+                                            ? "text-blue-500  font-bold w-xs"
+                                            : " text-black"
+                                    }`}
+                                />
+                            ) : (
+                                <span></span>
+                            )
+                        )}
+                    </div>
                 </div>
             </DashboardLayout>
         </SidebarProvider>

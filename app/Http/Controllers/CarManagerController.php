@@ -12,8 +12,9 @@ class CarManagerController extends Controller
     public function index()
     {
 
-        $makes = CarMake::with('models')->get();
-        $models = CarModel::with('make')->get();
+        $makes = CarMake::with('models')->paginate(5, ['*'], 'makesPage');
+        $models = CarModel::with('make')->paginate(3, ['*'], 'modelsPage');
+
         return inertia('Admin/CarManager', ['makes' => $makes, 'models' => $models]);
     }
 

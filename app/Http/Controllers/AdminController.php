@@ -18,8 +18,9 @@ class AdminController extends Controller
 
     public function usersList()
     {
-        return Inertia::render('Frontend/Dashboard', [
-            'users' => User::all()
+        $users = User::paginate(5);
+        return Inertia::render('Admin/UsersTable', [
+            'users' => $users
         ]);
     }
 

@@ -193,7 +193,13 @@ const CarManager = ({ makes = [], models = [] }) => {
                                     }`}
                                 />
                             ) : (
-                                <span></span>
+                                <span
+                                    key={link.label}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                    className=" px-2 pt-1 text-slate-300"
+                                ></span>
                             )
                         )}
                     </div>
@@ -214,7 +220,7 @@ const CarManager = ({ makes = [], models = [] }) => {
                                         onClick={() =>
                                             handleDeleteModel(model.id)
                                         }
-                                        className="text-red-500 hover:bg-red-200 transition duration-300 rounded p-1"
+                                        className="text-red-500 hover:bg-red-200 transition duration-300 rounded p-1 no-underline"
                                     >
                                         Delete
                                     </button>
@@ -243,7 +249,13 @@ const CarManager = ({ makes = [], models = [] }) => {
                                     }`}
                                 />
                             ) : (
-                                <span></span>
+                                <span
+                                    key={link.label}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                    className=" px-2 pt-1 text-slate-300"
+                                ></span>
                             )
                         )}
                     </div>

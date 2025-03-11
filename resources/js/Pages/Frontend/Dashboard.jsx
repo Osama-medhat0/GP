@@ -1,5 +1,4 @@
 import Sidebar from "@/Pages/Frontend/Dashboard/Components/Sidebar";
-import UsersTable from "@/Pages/Admin/UsersTable";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Head, usePage } from "@inertiajs/react";
 import { SidebarProvider } from "./Dashboard/Components/SidebarContext";
@@ -16,9 +15,7 @@ export default function Dashboard() {
                     <div className="flex h-screen">
                         <Sidebar />
                         <Head title="Dashboard" />
-                        <div className="container mx-auto">
-                            {url === "/admin/dashboard/users" && <UsersTable />}
-                        </div>
+                        <div className="container mx-auto"></div>
                     </div>
                 </DashboardLayout>
             </SidebarProvider>

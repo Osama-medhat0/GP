@@ -158,7 +158,6 @@ const CarModelInput = ({ formData, handleChange, models }) => {
                 required
                 disabled={!models.length}
                 className="w-full border rounded sm:pl-20 lg:pr-80 lg:pl-2"
-                // style={{ paddingRight: "25rem" }}
             />
             {suggestions.length > 0 && (
                 <ul className="absolute w-full bg-white border rounded mt-1">
@@ -201,13 +200,12 @@ const NewCarListingForm = () => {
 
     const handleImageChange = (e) => {
         setFormData({ ...formData, images: [...e.target.files] });
+        console.log(e.target.files);
     };
 
     const clearModel = () => setFormData({ ...formData, model: "" });
 
     const handleSubmit = (e) => {
-        // Simple client-side validation
-
         e.preventDefault();
         console.log(formData);
         router.post("/car", formData, {
@@ -421,6 +419,7 @@ const NewCarListingForm = () => {
                             accept="images/*"
                             onChange={handleImageChange}
                             className="w-full p-2 border rounded"
+                            required
                         />
                     </div>
                     <button

@@ -48,14 +48,14 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function ()
     })->name("car.listing");
 }));
 
-//Car Page
-Route::get('/car', function () {
-    return inertia('Frontend/CarsPage');
-})->name("car.page");
+//Join them
+Route::prefix('car')->group(function () {
 
-//Car Posting
-Route::post('/car', [CarsController::class, 'store'])->name('car.store');
-
+    //Cars Page
+    Route::get('/', [CarsController::class, 'index'])->name("car.page");
+    //Car Posting
+    Route::post('/', [CarsController::class, 'store'])->name('car.store');
+});
 
 //Admin Route
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {

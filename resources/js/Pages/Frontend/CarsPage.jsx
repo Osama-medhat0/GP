@@ -1,7 +1,9 @@
 import MainLayout from "@/Layouts/MainLayout";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 const CarsList = () => {
+    const { cars } = usePage().props;
+    console.log(cars);
     return (
         <>
             <MainLayout>
@@ -31,53 +33,105 @@ const CarsList = () => {
                         </div>
                     </div>
                 </section>
-
                 <section className="ftco-section bg-light">
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-4">
-                                <div className="car-wrap rounded ftco-animate">
-                                    <div
-                                        className="img rounded d-flex align-items-end"
-                                        style={{
-                                            backgroundImage:
-                                                "url('assets/images/bg_1.jpg')",
-                                        }}
-                                    ></div>
-                                    <div className="text">
-                                        <h2 className="mb-0">
-                                            <Link href="car-single.html">
-                                                Mercedes Grand Sedan
-                                            </Link>
-                                        </h2>
-                                        <div className="d-flex mb-3">
-                                            <span className="cat">
-                                                Cheverolet
-                                            </span>
-                                            <p className="price ml-auto">
-                                                $500 <span>/day</span>
-                                            </p>
+                            {/* {console.log(cars)} */}
+                            {cars.data.length > 0 ? (
+                                cars.data.map((car) => (
+                                    <div key={car.id} className="col-md-4">
+                                        <div className="car-wrap rounded ftco-animate">
+                                            <div
+                                                className="img rounded d-flex align-items-end"
+                                                style={{
+                                                    backgroundImage: `url('/storage/car/${
+                                                        car.images &&
+                                                        JSON.parse(car.images)
+                                                            .length > 0
+                                                            ? JSON.parse(
+                                                                  car.images
+                                                              )[0]
+                                                            : "porsche.jpeg"
+                                                    }')`,
+                                                }}
+                                            ></div>
+
+                                            <div className="text">
+                                                <h2 className="mb-0">
+                                                    <Link href="car-single.html">
+                                                        {car.make} {car.model}
+                                                    </Link>
+                                                </h2>
+                                                <div className="d-flex mb-3">
+                                                    <span className="cat">
+                                                        {car.year}
+                                                    </span>
+                                                    <p className="price ml-auto">
+                                                        Price:{" "}
+                                                        {car.price.toLocaleString(
+                                                            "en-US",
+                                                            {
+                                                                style: "currency",
+                                                                currency: "USD",
+                                                            }
+                                                        )}
+                                                        {/* i change it  */}
+                                                    </p>
+                                                </div>
+                                                <p className="d-flex mb-0 d-block">
+                                                    <Link
+                                                        href="#"
+                                                        className="btn btn-primary py-2 mr-1"
+                                                    >
+                                                        Contact Owner
+                                                    </Link>
+                                                    <Link
+                                                        href="car-single"
+                                                        // make single car page
+                                                        className="btn btn-secondary py-2 ml-1"
+                                                    >
+                                                        Details
+                                                    </Link>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <p className="d-flex mb-0 d-block">
-                                            <Link
-                                                href="#"
-                                                className="btn btn-primary py-2 mr-1"
-                                            >
-                                                Book now
-                                            </Link>{" "}
-                                            <Link
-                                                href="car-single.html"
-                                                className="btn btn-secondary py-2 ml-1"
-                                            >
-                                                Details
-                                            </Link>
-                                        </p>
                                     </div>
-                                </div>
-                            </div>
+                                ))
+                            ) : (
+                                <p>No cars</p>
+                            )}
                         </div>
                     </div>
                 </section>
+                <div
+                    className="flex justify-center pb-20"
+                    style={{ backgroundColor: "#f8f9fa" }}
+                >
+                    {cars.links.map((link) =>
+                        link.url ? (
+                            <Link
+                                key={link.label}
+                                href={link.url}
+                                dangerouslySetInnerHTML={{
+                                    __html: link.label,
+                                }}
+                                className={`p-1 px-3 mx-3 hover:bg-blue-200 transition duration-300 rounded ${
+                                    link.active
+                                        ? "text-blue-500  font-bold w-xs"
+                                        : " text-black"
+                                }`}
+                            />
+                        ) : (
+                            <span
+                                key={link.label}
+                                dangerouslySetInnerHTML={{
+                                    __html: link.label,
+                                }}
+                                className=" px-2 pt-1 text-slate-300"
+                            ></span>
+                        )
+                    )}
+                </div>
             </MainLayout>
         </>
     );

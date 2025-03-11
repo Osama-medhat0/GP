@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class CarsController extends Controller
 {
 
+    public function index()
+    {
+        $cars = Cars::latest()->paginate(3);
+        return inertia("Frontend/CarsPage", ["cars" => $cars]);
+    }
 
     public function store(Request $request)
     {
@@ -23,7 +28,7 @@ class CarsController extends Controller
             'transmission' => 'required|string|max:50',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048' // Validate individual files
+            'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
 
@@ -34,6 +39,10 @@ class CarsController extends Controller
                 $path = $image->store('car', 'public'); // Store in storage/app/public/cars
                 $imagePaths[] = $path;
             }
+        }
+
+        if (empty($imagePaths)) {
+            $imagePaths[] = 'porsche.jpeg'; // exists in public/storage/
         }
 
         $validated['images'] = json_encode($imagePaths);

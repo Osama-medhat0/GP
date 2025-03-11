@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class CarsController extends Controller
 {
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -38,8 +40,5 @@ class CarsController extends Controller
         $car = Cars::create($validated);
 
         return redirect()->route("car.listing")->with('message', 'Car added successfully.');
-        // return Inertia::render('User/CarListingForm', [
-        //     'message' => 'Car added successfully.'
-        // ]);
     }
 }

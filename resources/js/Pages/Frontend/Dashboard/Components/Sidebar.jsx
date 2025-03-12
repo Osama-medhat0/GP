@@ -104,14 +104,19 @@ const Sidebar = () => {
                             </Link>
                         </li>
                     )}
-                    <li
-                    // className={route().current("")}
-                    >
-                        <Link href={route("manager.index")}>
-                            <CIcon icon={cilCarAlt} className="mr-3 pb-1 w-7" />
-                            Manage Cars
-                        </Link>
-                    </li>
+                    {user.role === "admin" && (
+                        <li
+                        // className={route().current("")}
+                        >
+                            <Link href={route("manager.index")}>
+                                <CIcon
+                                    icon={cilCarAlt}
+                                    className="mr-3 pb-1 w-7"
+                                />
+                                Manage Cars
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </>

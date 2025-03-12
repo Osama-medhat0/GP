@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cars;
-use Inertia\Inertia;
+use App\Models\CarMake;
+use App\Models\CarModel;
 
 use Illuminate\Http\Request;
 
@@ -15,6 +16,16 @@ class CarsController extends Controller
         $cars = Cars::latest()->paginate(3);
         return inertia("Frontend/CarsPage", ["cars" => $cars]);
     }
+
+    public function create()
+    {
+        $makes = CarMake::all();
+        $models = CarModel::all();
+
+        return inertia("User/CarListingForm", ["carMakes" => $makes, "carModels" => $models]);
+    }
+
+
 
     public function store(Request $request)
     {

@@ -1,95 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { CAlert } from "@coreui/react";
 
-const carMakes = [
-    "Toyota",
-    "Tata",
-    "Tesla",
-    "Toyota Crown",
-    "Tiguan",
-    "Triumph",
-    "mustang",
-    "Mazda",
-    "Mitsubishi",
-    "Mercedes",
-    "Mini",
-    "Nissan",
-    "Noble",
-    "Opel",
-    "Peugeot",
-    "Porsche",
-    "Proton",
-    "Renault",
-    "Rolls Royce",
-    "Rover",
-    "Saab",
-    "Seat",
-    "Skoda",
-    "Smart",
-    "Subaru",
-    "Suzuki",
-    "Volkswagen",
-    "Volvo",
-    "Vauxhall",
-    "Acura",
-    "Alfa Romeo",
-];
-
-const carModels = {
-    Toyota: [
-        "Corolla",
-        "Camry",
-        "Land Cruiser",
-        "Fortuner",
-        "Prado",
-        "Vitz",
-        "Premio",
-        "Allion",
-        "Aqua",
-        "Axio",
-        "Belta",
-        "C-HR",
-        "Hiace",
-        "Hilux",
-        "Noah",
-        "Passo",
-        "Prius",
-        "Ractis",
-        "Rush",
-        "Vanguard",
-        "Voxy",
-        "Wish",
-    ],
-    Tesla: ["Model S", "Model 3", "Model X", "Model Y"],
-    Tata: ["Nexon", "Safari", "Harrier", "Altroz"],
-    Mazda: ["CX-5", "MX-5", "Mazda3", "Mazda6"],
-};
-
-const CarMakeInput = ({ formData, handleChange, setModels, clearModel }) => {
+const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
     const [suggestions, setSuggestions] = useState([]);
 
+    const capitalizeFirstLetter = (string) => {
+        if (!string) return "";
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+
     const handleInputChange = (e) => {
-        const value = e.target.value;
-        handleChange(e);
+        let value = e.target.value;
+
+        // Capitalize first letter while typing
+        const capitalizedValue = capitalizeFirstLetter(value);
+
+        handleChange({ target: { name: "make", value: capitalizedValue } });
 
         if (value) {
-            const filterd = carMakes.filter((make) =>
-                make.toLowerCase().startsWith(value.toLowerCase())
+            const filtered = carMakes.filter((make) =>
+                make.name.toLowerCase().startsWith(value.toLowerCase())
             );
-            setSuggestions(filterd);
+            setSuggestions(filtered);
         } else {
-            setSuggestions([]); // orginally empty array
+            setSuggestions([]);
         }
     };
 
     const handleSelect = (make) => {
-        setModels(carModels[make] || []);
-        clearModel();
-        handleChange({ target: { name: "make", value: make } });
+        const capitalizedMake = capitalizeFirstLetter(make.name);
+        handleChange({ target: { name: "make", value: capitalizedMake } });
+        setFormData({
+            ...formData,
+            make: capitalizedMake,
+            make_id: make.id,
+            model: "",
+        });
         setSuggestions([]);
+    };
+
+    const handleBlur = () => {
+        setTimeout(() => {
+            const isValid = carMakes.some(
+                (make) =>
+                    make.name.toLowerCase() === formData.make.toLowerCase()
+            );
+
+            if (!isValid) {
+                alert(
+                    "Invalid make selected. Please choose from the suggestions."
+                );
+                setFormData({ ...formData, make: "" });
+            }
+
+            setSuggestions([]); // Clear suggestions on blur
+        }, 150);
     };
 
     return (
@@ -100,23 +68,19 @@ const CarMakeInput = ({ formData, handleChange, setModels, clearModel }) => {
                 placeholder="Select make"
                 value={formData.make}
                 onChange={handleInputChange}
+                onBlur={handleBlur}
                 required
                 className="w-full border rounded sm:pl-20 lg:pr-80 lg:pl-2"
-                style={{
-                    // paddingRight: "25rem",
-                    zIndex: 1000,
-                    // position: "absolute",
-                }}
             />
             {suggestions.length > 0 && (
                 <ul className="absolute w-full bg-white border rounded mt-1">
                     {suggestions.map((make) => (
                         <li
-                            key={make}
-                            onClick={() => handleSelect(make)}
                             className="p-2 hover:bg-gray-200 cursor-pointer text-black"
+                            key={make.id}
+                            onMouseDown={() => handleSelect(make)} // Prevent blur before click
                         >
-                            {make}
+                            {make.name}
                         </li>
                     ))}
                 </ul>
@@ -124,17 +88,29 @@ const CarMakeInput = ({ formData, handleChange, setModels, clearModel }) => {
         </div>
     );
 };
-
-const CarModelInput = ({ formData, handleChange, models }) => {
+const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
     const [suggestions, setSuggestions] = useState([]);
 
+    const capitalizeFirstLetter = (string) => {
+        if (!string) return "";
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+
     const handleInputChange = (e) => {
-        const value = e.target.value;
-        handleChange(e);
+        let value = e.target.value;
+
+        // Capitalize first letter while typing
+        const capitalizedValue = capitalizeFirstLetter(value);
+
+        handleChange({ target: { name: "model", value: capitalizedValue } });
+
+        const filteredModels = carModels.filter(
+            (model) => model.car_make_id === formData.make_id
+        );
 
         if (value) {
-            const filtered = models.filter((model) =>
-                model.toLowerCase().startsWith(value.toLowerCase())
+            const filtered = filteredModels.filter((model) =>
+                model.name.toLowerCase().startsWith(value.toLowerCase())
             );
             setSuggestions(filtered);
         } else {
@@ -143,8 +119,30 @@ const CarModelInput = ({ formData, handleChange, models }) => {
     };
 
     const handleSelect = (model) => {
-        handleChange({ target: { name: "model", value: model } });
+        const capitalizedModel = capitalizeFirstLetter(model.name);
+        handleChange({ target: { name: "model", value: capitalizedModel } });
         setSuggestions([]);
+    };
+
+    const handleBlur = () => {
+        setTimeout(() => {
+            const filteredModels = carModels.filter(
+                (model) => model.car_make_id === formData.make_id
+            );
+            const isValid = filteredModels.some(
+                (model) =>
+                    model.name.toLowerCase() === formData.model.toLowerCase()
+            );
+
+            if (formData.model && !isValid) {
+                alert(
+                    "Invalid model selected. Please choose from the suggestions."
+                );
+                setFormData({ ...formData, model: "" });
+            }
+
+            setSuggestions([]);
+        }, 150); // Small delay so click can register first
     };
 
     return (
@@ -155,19 +153,19 @@ const CarModelInput = ({ formData, handleChange, models }) => {
                 placeholder="Select model"
                 value={formData.model}
                 onChange={handleInputChange}
+                onBlur={handleBlur}
                 required
-                disabled={!models.length}
                 className="w-full border rounded sm:pl-20 lg:pr-80 lg:pl-2"
             />
             {suggestions.length > 0 && (
                 <ul className="absolute w-full bg-white border rounded mt-1">
                     {suggestions.map((model) => (
                         <li
-                            key={model}
-                            onClick={() => handleSelect(model)}
+                            key={model.id}
+                            onMouseDown={() => handleSelect(model)} // Prevents blur from firing before click
                             className="p-2 hover:bg-gray-200 cursor-pointer text-black"
                         >
-                            {model}
+                            {model.name}
                         </li>
                     ))}
                 </ul>
@@ -177,6 +175,9 @@ const CarModelInput = ({ formData, handleChange, models }) => {
 };
 
 const NewCarListingForm = () => {
+    const { carMakes, carModels } = usePage().props;
+    // console.log(carMakes);
+    // console.log(carModels);
     const [formData, setFormData] = useState({
         make: "",
         model: "",
@@ -190,7 +191,6 @@ const NewCarListingForm = () => {
         images: [],
     });
 
-    const [models, setModels] = useState([]);
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
@@ -203,27 +203,25 @@ const NewCarListingForm = () => {
         console.log(e.target.files);
     };
 
-    const clearModel = () => setFormData({ ...formData, model: "" });
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
-        router.post("/car", formData, {
+        router.post(route("car.store"), formData, {
             preserveScroll: true,
             onSuccess: () => {
                 alert("Car listed successfully!");
-                setFormData({
-                    make: "",
-                    model: "",
-                    year: "",
-                    price: "",
-                    mileage: "",
-                    fuelType: "",
-                    transmission: "",
-                    location: "",
-                    description: "",
-                    images: [],
-                });
+                // setFormData({
+                //     make: "",
+                //     model: "",
+                //     year: "",
+                //     price: "",
+                //     mileage: "",
+                //     fuelType: "",
+                //     transmission: "",
+                //     location: "",
+                //     description: "",
+                //     images: [],
+                // });
                 setErrors({});
             },
             onError: (errors) => setErrors(errors),
@@ -248,8 +246,8 @@ const NewCarListingForm = () => {
                             <CarMakeInput
                                 formData={formData}
                                 handleChange={handleChange}
-                                setModels={setModels}
-                                clearModel={clearModel}
+                                setFormData={setFormData}
+                                carMakes={carMakes}
                             />
                         </div>
                     </div>
@@ -262,7 +260,8 @@ const NewCarListingForm = () => {
                         <CarModelInput
                             formData={formData}
                             handleChange={handleChange}
-                            models={models}
+                            carModels={carModels}
+                            setFormData={setFormData}
                         />
                     </div>
                     {errors.model && (

@@ -42,20 +42,19 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function ()
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    //Car Listing
-    Route::get('list-your-car', function () {
-        return inertia('User/CarListingForm');
-    })->name("car.listing");
+    //Car Listing get
+    Route::get('list-your-car', [CarsController::class, "create"])->name("car.listing");
+    //Car Listing Post
+    Route::post('list-your-car', [CarsController::class, 'store'])->name('car.store');
 }));
 
-//Join them
-Route::prefix('car')->group(function () {
 
-    //Cars Page
+//Cars Page get
+Route::prefix('car')->group(function () {
     Route::get('/', [CarsController::class, 'index'])->name("car.page");
-    //Car Posting
-    Route::post('/', [CarsController::class, 'store'])->name('car.store');
 });
+
+
 
 //Admin Route
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {

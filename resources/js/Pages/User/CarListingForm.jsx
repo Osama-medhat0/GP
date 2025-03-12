@@ -134,7 +134,7 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
                     model.name.toLowerCase() === formData.model.toLowerCase()
             );
 
-            if (formData.model && !isValid) {
+            if (!isValid) {
                 alert(
                     "Invalid model selected. Please choose from the suggestions."
                 );

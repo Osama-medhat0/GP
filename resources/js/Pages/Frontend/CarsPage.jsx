@@ -44,14 +44,11 @@ const CarsList = () => {
                                             <div
                                                 className="img rounded d-flex align-items-end"
                                                 style={{
-                                                    backgroundImage: `url('/storage/car/${
+                                                    backgroundImage: `url('${
                                                         car.images &&
-                                                        JSON.parse(car.images)
-                                                            .length > 0
-                                                            ? JSON.parse(
-                                                                  car.images
-                                                              )[0]
-                                                            : "porsche.jpeg"
+                                                        car.images.length > 0
+                                                            ? car.images[0] // No need to parse if it's already a URL
+                                                            : "/upload/car/porsche.jpeg" // Fallback image
                                                     }')`,
                                                 }}
                                             ></div>

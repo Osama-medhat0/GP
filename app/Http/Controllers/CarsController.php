@@ -13,8 +13,18 @@ class CarsController extends Controller
 
     public function index()
     {
-        $cars = Cars::latest()->paginate(3);
-        return inertia("Frontend/CarsPage", ["cars" => $cars]);
+        $cars = Cars::latest()->paginate(5);
+
+        $cars->getCollection()->transform(function ($car) {
+            $car->images = json_decode($car->images);
+            $car->images = array_map(fn($img) => asset("storage/{$img}"), $car->images);
+            return $car;
+        });
+
+
+        // dd($cars);
+
+        return inertia("Frontend/CarsPage", ['cars' => $cars]);
     }
 
     public function create()

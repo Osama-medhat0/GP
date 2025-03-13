@@ -100,7 +100,7 @@ const Sidebar = () => {
                                     icon={cilCarAlt}
                                     className="mr-3 pb-1 w-7"
                                 />
-                                List your car
+                                Sell your car
                             </Link>
                         </li>
                     )}

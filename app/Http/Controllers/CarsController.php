@@ -20,10 +20,6 @@ class CarsController extends Controller
             $car->images = array_map(fn($img) => asset("storage/{$img}"), $car->images);
             return $car;
         });
-
-
-        // dd($cars);
-
         return inertia("Frontend/CarsPage", ['cars' => $cars]);
     }
 
@@ -57,13 +53,9 @@ class CarsController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('car', 'public'); // Store in storage/app/public/cars
+                $path = $image->store('car', 'public'); // Store in storage/app/public/car
                 $imagePaths[] = $path;
             }
-        }
-
-        if (empty($imagePaths)) {
-            $imagePaths[] = 'porsche.jpeg'; // exists in public/storage/
         }
 
         $validated['images'] = json_encode($imagePaths);

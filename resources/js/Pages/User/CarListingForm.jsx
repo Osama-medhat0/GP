@@ -3,6 +3,7 @@ import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { router, usePage } from "@inertiajs/react";
 import { CAlert } from "@coreui/react";
+import CarImageUploader from "./CarImageUploader";
 
 const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
     const [suggestions, setSuggestions] = useState([]);
@@ -142,7 +143,7 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
             }
 
             setSuggestions([]);
-        }, 150); // Small delay so click can register first
+        }, 150);
     };
 
     return (
@@ -162,7 +163,7 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
                     {suggestions.map((model) => (
                         <li
                             key={model.id}
-                            onMouseDown={() => handleSelect(model)} // Prevents blur from firing before click
+                            onMouseDown={() => handleSelect(model)}
                             className="p-2 hover:bg-gray-200 cursor-pointer text-black"
                         >
                             {model.name}
@@ -199,13 +200,21 @@ const NewCarListingForm = () => {
     };
 
     const handleImageChange = (e) => {
-        setFormData({ ...formData, images: [...e.target.files] });
-        console.log(e.target.files);
+        const files = Array.from(e.target.files);
+
+        setFormData({ ...formData, images: [...formData.images, ...files] });
+
+        console.log([...formData.images, ...files]); // Log the updated list of files
+        console.log("Number of files:", [...formData.images, ...files].length);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
+        if (formData.images.length === 0) {
+            alert("Image is required");
+            return;
+        }
         router.post(route("car.store"), formData, {
             preserveScroll: true,
             onSuccess: () => {
@@ -395,7 +404,7 @@ const NewCarListingForm = () => {
                         <CAlert color="danger">{errors.location}</CAlert>
                     )}
 
-                    <div className="flex  gap-2 pt-3">
+                    <div className="flex  gap-2 pt-3 pb-1">
                         <h6> Description</h6>
                         <textarea
                             name="description"
@@ -409,18 +418,26 @@ const NewCarListingForm = () => {
                         <CAlert color="danger">{errors.description}</CAlert>
                     )}
 
-                    <div className="flex  gap-2 pt-3 pb-4">
+                    {/* <div className="flex  gap-2 pt-3 pb-4">
                         <h6> Images</h6>
                         <input
                             type="file"
                             name="images"
                             multiple
-                            accept="images/*"
+                            accept="image/*"
                             onChange={handleImageChange}
                             className="w-full p-2 border rounded"
-                            required
+                            style={{ display: "none" }}
+                            // required
                         />
-                    </div>
+                    </div> */}
+                    <h6> Images</h6>
+                    <CarImageUploader
+                        images={formData.images}
+                        setImages={(newImages) =>
+                            setFormData({ ...formData, images: newImages })
+                        }
+                    />
                     <button
                         type="submit"
                         className=" active w-full bg-blue-400 text-white p-2 rounded hover:bg-blue-500 transition duration-300"

@@ -1,6 +1,5 @@
 import MainLayout from "@/Layouts/MainLayout";
 import { Link, usePage } from "@inertiajs/react";
-
 const CarsList = () => {
     const { cars } = usePage().props;
     console.log(cars);
@@ -44,12 +43,7 @@ const CarsList = () => {
                                             <div
                                                 className="img rounded d-flex align-items-end"
                                                 style={{
-                                                    backgroundImage: `url('${
-                                                        car.images &&
-                                                        car.images.length > 0
-                                                            ? car.images[0] // No need to parse if it's already a URL
-                                                            : "/upload/car/porsche.jpeg" // Fallback image
-                                                    }')`,
+                                                    backgroundImage: `url('${car.images[0]}')`,
                                                 }}
                                             ></div>
 

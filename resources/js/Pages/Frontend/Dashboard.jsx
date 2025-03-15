@@ -5,8 +5,6 @@ import { SidebarProvider } from "./Dashboard/Components/SidebarContext";
 import DashboardLayout from "./Dashboard/DashboardLayout";
 
 export default function Dashboard() {
-    const { url } = usePage();
-
     return (
         <>
             <SidebarProvider>

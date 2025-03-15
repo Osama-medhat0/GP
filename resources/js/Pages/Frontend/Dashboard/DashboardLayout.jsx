@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Sidebar from "./Components/Sidebar";
 import { SidebarProvider } from "./Components/SidebarContext";
 import Header from "../Components/Header";
+import Loader from "@/Components/Loader";
 
 const DashboardLayout = ({ children }) => {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 1000);
-
-        return () => clearTimeout(timer); // Cleanup
-    }, []);
-
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -70,37 +60,8 @@ const DashboardLayout = ({ children }) => {
                     href="/assets/css/dashboardTemplateCss/style.css"
                 />
             </Helmet>
-
-            {/* Preloader */}
-            {loading && (
-                <div id="ftco-loader" className="show fullscreen">
-                    <svg className="circular" width="48px" height="48px">
-                        <circle
-                            className="path-bg"
-                            cx={24}
-                            cy={24}
-                            r={22}
-                            fill="none"
-                            strokeWidth={4}
-                            stroke="#eeeeee"
-                        />
-                        <circle
-                            className="path"
-                            cx={24}
-                            cy={24}
-                            r={22}
-                            fill="none"
-                            strokeWidth={4}
-                            strokeMiterlimit={10}
-                            stroke="#01D28E"
-                        />
-                    </svg>
-                </div>
-            )}
-
-            {/* Page Content */}
-            {!loading && (
-                <>
+            <>
+                <Loader delay={1800}>
                     <SidebarProvider>
                         <Header showLogo={false} />
                         <section className="dashboard-area">
@@ -112,8 +73,8 @@ const DashboardLayout = ({ children }) => {
                     <div onClick={scrollToTop} id="scroll-top">
                         <i className="la la-arrow-up" title="Go top" />
                     </div>
-                </>
-            )}
+                </Loader>
+            </>
         </HelmetProvider>
     );
 };

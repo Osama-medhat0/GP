@@ -5,6 +5,7 @@ import Header from "../Pages/Frontend/Components/Header";
 import { usePage } from "@inertiajs/react";
 import { SidebarProvider } from "@/Pages/Frontend/Dashboard/Components/SidebarContext";
 import ScrollToTopButton from "@/Components/ScrollToTopButton";
+import Loader from "@/Components/Loader";
 
 const MainLayout = ({ children }) => {
     useEffect(() => {
@@ -95,19 +96,20 @@ const MainLayout = ({ children }) => {
                     <link rel="stylesheet" href="assets/css/icomoon.css" />
                     <link rel="stylesheet" href="assets/css/style.css" />
                 </Helmet>
+                <Loader delay={1500}>
+                    <Header auth={usePage().props.auth} />
 
-                <Header auth={usePage().props.auth} />
+                    {/* <section className="dashboard-area"> */}
+                    {/* <Sidebar /> */}
+                    {/* Now it's inside the provider */}
+                    {/* <div>{children}</div> */}
+                    {/* </section> */}
+                    <ScrollToTopButton />
+                    {/* Page Content */}
+                    <div>{children}</div>
 
-                {/* <section className="dashboard-area"> */}
-                {/* <Sidebar /> */}
-                {/* Now it's inside the provider */}
-                {/* <div>{children}</div> */}
-                {/* </section> */}
-                <ScrollToTopButton />
-                {/* Page Content */}
-                <div>{children}</div>
-
-                <Footer />
+                    <Footer />
+                </Loader>
             </HelmetProvider>
         </SidebarProvider>
     );

@@ -8,7 +8,9 @@ const CarsList = () => {
             <MainLayout>
                 <section
                     className="hero-wrap hero-wrap-2 js-fullheight"
-                    style={{ backgroundImage: "url('assets/images/mr2.jpg')" }}
+                    style={{
+                        backgroundImage: "url('assets/images/mr2.jpg')",
+                    }}
                     data-stellar-background-ratio="0.5"
                 >
                     <div className="overlay"></div>

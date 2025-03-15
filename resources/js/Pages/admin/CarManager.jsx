@@ -24,9 +24,6 @@ const CarManager = ({ makes = [], models = [] }) => {
                     setErrors({});
                 },
                 onError: (errors) => {
-                    // if (errors.name) {
-                    //     alert(errors.name); // This will show "The name has already been taken."
-                    // }
                     setErrors(errors);
                 },
             }
@@ -45,7 +42,7 @@ const CarManager = ({ makes = [], models = [] }) => {
 
         router.post(
             route("manager.storeModel"),
-            { name: newModel, car_make_id: selectedMake },
+            { name: newModel, make_name: selectedMake },
             {
                 onSuccess: () => {
                     alert("Car model add successfully");
@@ -110,25 +107,17 @@ const CarManager = ({ makes = [], models = [] }) => {
 
                     {/* Add Model Section */}
                     <div className="mb-6">
-                        <select
-                            required
+                        <input
+                            type="text"
+                            placeholder="Make Name"
                             value={selectedMake}
                             onChange={(e) => setSelectedMake(e.target.value)}
                             className="border p-2 rounded w-full mb-2"
-                        >
-                            <option value="" disabled>
-                                Select Make
-                            </option>
-                            {/* {console.log(makes.data)} */}
-                            {makes.data.map((make) => (
-                                <option key={make.id} value={make.id}>
-                                    {make.name}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.selectedMake && (
+                        />
+
+                        {errors.make_name && (
                             <p className="text-red-500 text-sm">
-                                {errors.selectedMake}
+                                {errors.make_name}
                             </p>
                         )}
                         <input

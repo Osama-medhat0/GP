@@ -84,20 +84,22 @@ export default function Header({ showLogo, head }) {
                             >
                                 AI Tool
                             </NavLink>
-                            <NavLink
-                                style={{
-                                    marginRight: "35px",
-                                    fontSize: "17px",
-                                }}
-                                className={`mr-5 block no-underline ${
-                                    route().current("car.listing")
-                                        ? "text-green-500 font-bold"
-                                        : ""
-                                }`}
-                                href={route("car.listing")}
-                            >
-                                Sell Your Car
-                            </NavLink>
+                            {user.role === "user" && (
+                                <NavLink
+                                    style={{
+                                        marginRight: "35px",
+                                        fontSize: "17px",
+                                    }}
+                                    className={`mr-5 block no-underline ${
+                                        route().current("car.listing")
+                                            ? "text-green-500 font-bold"
+                                            : ""
+                                    }`}
+                                    href={route("car.listing")}
+                                >
+                                    Sell Your Car
+                                </NavLink>
+                            )}
                             {user ? (
                                 <NavLink
                                     href={

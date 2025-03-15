@@ -96,7 +96,7 @@ const MainLayout = ({ children }) => {
                     <link rel="stylesheet" href="assets/css/icomoon.css" />
                     <link rel="stylesheet" href="assets/css/style.css" />
                 </Helmet>
-                <Loader delay={1500}>
+                <Loader delay={1600}>
                     <Header auth={usePage().props.auth} />
 
                     {/* <section className="dashboard-area"> */}

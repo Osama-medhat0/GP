@@ -1,7 +1,7 @@
 import { Link, usePage } from "@inertiajs/react";
 import { useSidebarContext } from "./SidebarContext";
 import Navbar from "react-bootstrap/Navbar";
-import { cilPeople, cilCarAlt, cilUser } from "@coreui/icons";
+import { cilPeople, cilCarAlt, cilUser, cilPencil } from "@coreui/icons";
 import { CIcon } from "@coreui/icons-react";
 
 const Sidebar = () => {
@@ -66,8 +66,12 @@ const Sidebar = () => {
                         }
                     >
                         <Link href={route("profile.edit")}>
-                            <CIcon icon={cilUser} className="mr-3 pb-1 w-7" />
-                            My Profile
+                            <img
+                                src="/profile.svg"
+                                alt="Profile"
+                                className="mr-3 pb-1 w-7 h-7"
+                            />
+                            Profile
                         </Link>
                     </li>
                     {user.role === "admin" && (
@@ -88,21 +92,41 @@ const Sidebar = () => {
                         </li>
                     )}
                     {user.role === "user" && (
-                        <li
-                            className={
-                                route().current("car.listing")
-                                    ? "page-active"
-                                    : ""
-                            }
-                        >
-                            <Link href={route("car.listing")}>
-                                <CIcon
-                                    icon={cilCarAlt}
-                                    className="mr-3 pb-1 w-7"
-                                />
-                                Sell your car
-                            </Link>
-                        </li>
+                        <>
+                            <li
+                                className={
+                                    route().current("car.listing")
+                                        ? "page-active"
+                                        : ""
+                                }
+                            >
+                                <Link href={route("car.listing")}>
+                                    <img
+                                        src="/car.png"
+                                        alt="Profile"
+                                        className="mr-3 pb-1 w-7 h-7"
+                                    />{" "}
+                                    Sell your car
+                                </Link>
+                            </li>
+
+                            <li
+                                className={
+                                    route().current("car.edit")
+                                        ? "page-active"
+                                        : ""
+                                }
+                            >
+                                <Link href={route("car.edit")}>
+                                    <img
+                                        src="/listed-car.png"
+                                        alt="Listed Car"
+                                        className="mr-3 pb-1 w-7 h-7"
+                                    />
+                                    Listed Car
+                                </Link>
+                            </li>
+                        </>
                     )}
                     {user.role === "admin" && (
                         <li

@@ -19,6 +19,11 @@ class Cars extends Model
         'transmission',
         'location',
         'description',
-        'images'
+        'images',
+        'user_id'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

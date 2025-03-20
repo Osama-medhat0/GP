@@ -1,6 +1,6 @@
 import Sidebar from "@/Pages/Frontend/Dashboard/Components/Sidebar";
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { SidebarProvider } from "./Dashboard/Components/SidebarContext";
 import DashboardLayout from "./Dashboard/DashboardLayout";
 

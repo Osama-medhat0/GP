@@ -35,11 +35,16 @@ const CarImageUploader = ({ images, setImages }) => {
                     className={`image-preview ${index === 0 ? "cover" : ""}`}
                 >
                     <img
-                        src={URL.createObjectURL(image)}
+                        src={
+                            image instanceof File
+                                ? URL.createObjectURL(image)
+                                : image
+                        }
                         alt={`Car ${index + 1}`}
                     />
                     <button
-                        className="remove-btn  pb-4"
+                        type="button"
+                        className="remove-btn pb-4"
                         onClick={() => removeImage(index)}
                     >
                         ×
@@ -47,6 +52,7 @@ const CarImageUploader = ({ images, setImages }) => {
                     {index === 0 && <span className="cover-tag">COVER</span>}
                 </div>
             ))}
+
             {Array.from({ length: 4 - images.length }).map((_, index) => (
                 <label
                     key={`empty-${index}`}

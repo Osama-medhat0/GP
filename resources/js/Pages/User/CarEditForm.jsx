@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { router, useForm } from "@inertiajs/react";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
-import { router, usePage } from "@inertiajs/react";
-import { CAlert } from "@coreui/react";
+import { useEffect, useState } from "react";
 import CarImageUploader from "./CarImageUploader";
+import { CAlert } from "@coreui/react";
 
 const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
     const [suggestions, setSuggestions] = useState([]);
@@ -174,11 +174,9 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
         </div>
     );
 };
+export default function CarEditForm({ car, carMakes, carModels }) {
+    // console.log(car);
 
-const NewCarListingForm = () => {
-    const { carMakes, carModels } = usePage().props;
-    // console.log(carMakes);
-    // console.log(carModels);
     const [formData, setFormData] = useState({
         make: "",
         model: "",
@@ -192,38 +190,52 @@ const NewCarListingForm = () => {
         images: [],
     });
 
+    useEffect(() => {
+        const defaultCar = car[0];
+        setFormData({
+            make: defaultCar.make || "",
+            model: defaultCar.model || "",
+            year: defaultCar.year || "",
+            price: defaultCar.price || "",
+            mileage: defaultCar.mileage || "",
+            fuelType: defaultCar.fuelType || "",
+            transmission: defaultCar.transmission || "",
+            location: defaultCar.location || "",
+            description: defaultCar.description || "",
+            images: defaultCar.image_urls ? [...defaultCar.image_urls] : [],
+        });
+        console.log(formData);
+    }, []);
+
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        console.log(formData);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
         if (formData.images.length === 0) {
             alert("Image is required");
             return;
         }
-        router.post(route("car.store"), formData, {
+
+        const data = new FormData();
+        Object.keys(formData).forEach((key) => {
+            if (key === "images") {
+                formData.images.forEach((image) => {
+                    data.append("images[]", image);
+                });
+            } else {
+                data.append(key, formData[key]);
+            }
+        });
+
+        router.post(route("car.update", car[0].id), data, {
             preserveScroll: true,
-            onSuccess: () => {
-                alert("Car listed successfully!");
-                // setFormData({
-                //     make: "",
-                //     model: "",
-                //     year: "",
-                //     price: "",
-                //     mileage: "",
-                //     fuelType: "",
-                //     transmission: "",
-                //     location: "",
-                //     description: "",
-                //     images: [],
-                // });
-                setErrors({});
-            },
+            onSuccess: () => alert("Car updated successfully!"),
             onError: (errors) => setErrors(errors),
         });
         // setFormData([]);
@@ -234,10 +246,11 @@ const NewCarListingForm = () => {
             {/* understand foerm */}
             <DashboardLayout>
                 <div className="text-center text-3xl font-bold mb-6 pt-9 ">
-                    Sell Your Car
+                    Update Your Car List
                 </div>
                 <form
                     onSubmit={handleSubmit}
+                    encType="multipart/form-data"
                     className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-xl shadow-lg space-y-4 ml-10"
                 >
                     <div className="flex  gap-5">
@@ -248,6 +261,7 @@ const NewCarListingForm = () => {
                                 handleChange={handleChange}
                                 setFormData={setFormData}
                                 carMakes={carMakes}
+                                value={formData.make}
                             />
                         </div>
                     </div>
@@ -409,19 +423,6 @@ const NewCarListingForm = () => {
                         <CAlert color="danger">{errors.description}</CAlert>
                     )}
 
-                    {/* <div className="flex  gap-2 pt-3 pb-4">
-                        <h6> Images</h6>
-                        <input
-                            type="file"
-                            name="images"
-                            multiple
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="w-full p-2 border rounded"
-                            style={{ display: "none" }}
-                            // required
-                        />
-                    </div> */}
                     <h6> Images</h6>
                     <CarImageUploader
                         images={formData.images}
@@ -433,12 +434,10 @@ const NewCarListingForm = () => {
                         type="submit"
                         className=" active w-full bg-blue-400 text-white p-2 rounded hover:bg-blue-500 transition duration-300"
                     >
-                        List Car
+                        Update Car
                     </button>
                 </form>
             </DashboardLayout>
         </SidebarProvider>
     );
-};
-
-export default NewCarListingForm;
+}

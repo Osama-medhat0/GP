@@ -27,12 +27,13 @@ Route::get("/home", function () {
 });
 
 // User Routes
-Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function () {
+Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () {
 
     Route::get('/', function () {
         if (Auth::check() && Auth::user()->role === "admin") {
             return redirect()->route('admin.dashboard');
-        } else return inertia("Frontend/Dashboard");
+        } else
+            return inertia("Frontend/Dashboard");
     })->name('dashboard');
 
     //Profile Routes
@@ -42,21 +43,28 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group((function ()
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    //Car Listing get
+    //Car Listing
     Route::get('list-your-car', [CarsController::class, "create"])->name("car.listing");
-    //Car Listing Post
     Route::post('list-your-car', [CarsController::class, 'store'])->name('car.store');
-}));
 
+    // Route::post('car/update', [CarsController::class, 'update'])->name('car.update');
 
-//Cars Page get
+    //Listed Cars
+    Route::get("user/car", [CarsController::class, "edit"])->name("car.edit");
+    //Delete Listed Cars
+    Route::delete("user/car/{id}", [CarsController::class, "delete"])->name("car.delete");
+    //Car Edit Form Page
+    Route::get("user/car/list", [CarsController::class, "CarEditForm"])->name("car.edit.form");
+    //update Listed Car
+    Route::post('user/car/update/{car}', [CarsController::class, 'update'])->name('car.update');
+});
+
+//Cars Page
 Route::prefix('car')->group(function () {
     Route::get('/', [CarsController::class, 'index'])->name("car.page");
 });
 
-
-
-//Admin Route
+//Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
 
@@ -64,6 +72,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('/users', [AdminController::class, 'usersList'])->name('admin.users');
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
+
     //Car Manager Route
     Route::prefix('manager')->group(function () {
         Route::get('/', [CarManagerController::class, 'index'])->name('manager.index');
@@ -73,8 +82,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::delete('/model/{id}', [CarManagerController::class, 'deleteModel'])->name('manager.deleteModel');
     });
 });
-
-
 
 // Auth Routes
 require __DIR__ . '/auth.php';

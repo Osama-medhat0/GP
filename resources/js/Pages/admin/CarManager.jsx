@@ -24,7 +24,7 @@ const CarManager = ({ makes = [], models = [] }) => {
                     setErrors({});
                 },
                 onError: (errors) => {
-                    setErrors(errors);
+                    setErrors({ newMake: errors.name });
                 },
             }
         );
@@ -50,7 +50,13 @@ const CarManager = ({ makes = [], models = [] }) => {
                     setSelectedMake("");
                     setErrors({});
                 },
-                onError: (errors) => setErrors(errors),
+                onError: (errors) => {
+                    // console.log(errors);
+                    setErrors({
+                        newModel: errors.name,
+                        selectedMake: errors.make_name,
+                    });
+                },
             }
         );
     };
@@ -76,7 +82,7 @@ const CarManager = ({ makes = [], models = [] }) => {
     return (
         <SidebarProvider>
             <DashboardLayout>
-                {console.log(makes)}
+                {/* {console.log(makes)} */}
                 <div className="mt-6 pt-4 max-w-2xl mx-auto p-6 bg-gray-100 rounded-xl shadow-lg">
                     <h2 className="text-2xl font-bold mb-4 text-center">
                         Car Manager
@@ -115,9 +121,9 @@ const CarManager = ({ makes = [], models = [] }) => {
                             className="border p-2 rounded w-full mb-2"
                         />
 
-                        {errors.make_name && (
+                        {errors.selectedMake && (
                             <p className="text-red-500 text-sm">
-                                {errors.make_name}
+                                {errors.selectedMake}
                             </p>
                         )}
                         <input
@@ -221,7 +227,7 @@ const CarManager = ({ makes = [], models = [] }) => {
                             </p>
                         )}
                     </ul>
-                    {console.log(models)}
+                    {/* {console.log(models)} */}
                     <div className="flex justify-end pt-3 ">
                         {models.links.map((link) =>
                             link.url ? (

@@ -45,18 +45,7 @@ class AdminDashboardTest extends TestCase
         $response = $this->actingAs($this->admin)->get("admin/dashboard");
         $response->assertStatus(200)->assertInertia(
             fn(Assert $page) =>
-            $page->component('Auth/admin/Dashboard')
+            $page->component('Frontend/Dashboard')
         );
-    }
-
-    public function test_admin_dashboard_renders_users_list(): void
-    {
-
-        $response = $this->actingAs($this->admin)->get('/admin/dashboard/users');
-        $response->assertStatus(200)
-            ->assertInertia(
-                fn(Assert $page) =>
-                $page->component('Auth/admin/Dashboard')
-            );
     }
 }

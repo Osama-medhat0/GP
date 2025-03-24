@@ -7,6 +7,7 @@ use App\Models\CarMake;
 use App\Models\CarModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CarsController extends Controller
@@ -30,8 +31,6 @@ class CarsController extends Controller
 
         return inertia("User/CarListingForm", ["carMakes" => $makes, "carModels" => $models]);
     }
-
-
 
     public function store(Request $request)
     {
@@ -67,6 +66,11 @@ class CarsController extends Controller
 
     public function update(Request $request, Cars $car)
     {
+        // deecode JSON string if it's sent as a string
+        if ($request->has('deletedImages') && is_string($request->deletedImages)) {
+            $request->merge(['deletedImages' => json_decode($request->deletedImages, true)]);
+        }
+
         $validator = Validator::make($request->all(), [
             'make' => 'required|string|max:255',
             'model' => 'required|string|max:255',
@@ -77,49 +81,52 @@ class CarsController extends Controller
             'transmission' => 'required|string|max:50',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048'
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'deletedImages' => 'nullable|array',
         ]);
 
-
         if ($validator->fails()) {
-            dd("Validation Failed", $validator->errors()->all());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
+        $validated = $validator->validated();
 
-        $validated = $validator->validated(); // Now extract the validated data
-
-        // decode existing images into arry
         $existingImages = json_decode($car->images, true) ?? [];
 
-        // If new images are uploaded, delete old ones and update
-        if ($request->hasFile('images')) {
-            // Delete old images
-            foreach ($existingImages as $oldImage) {
-                $oldImagePath = storage_path('app/public/' . $oldImage); // conver path to actual file loc
-                if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath); //delete file
-                }
-            }
+        // Handle removed images
+        if ($request->has('deletedImages')) {
+            $deletedImages = $request->input('deletedImages');
 
-            // Upload new images
-            $newImages = [];
-            foreach ($request->file('images') as $file) {
-                $path = $file->store('car', 'public'); // Save relative path
-                $newImages[] = $path;
-            }
+            // Convert full URLs to relative storage paths
+            $deletedPaths = array_map(function ($image) {
+                return str_replace(asset('storage') . '/', '', $image);
+            }, $deletedImages);
 
-            // converts new image paths array into a JSON string
-            $validated['images'] = json_encode($newImages);
-        } else {
-            // Keep existing images
-            $validated['images'] = $car->images; // No need for json_encode
+            //Remove images fom the datbase list
+            $existingImages = array_filter($existingImages, function ($image) use ($deletedPaths) {
+                return !in_array($image, $deletedPaths);
+            });
+
+            foreach ($deletedPaths as $path) {
+                Storage::disk('public')->delete($path);
+            }
         }
 
-        $car->update($validated);
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('car', 'public');
+                $imagePaths[] = $path;
+            }
+        }
 
+        $finalImages = array_merge($existingImages, $imagePaths);
+
+        $validated['images'] = json_encode(array_values($finalImages)); // array_values Reset array keys after array_filters 0, 2 to 0 , 1
+
+        $car->update($validated);
         return redirect()->route("car.edit.form")->with("message", "Car updated successfully.");
     }
-
-
 
     public function CarEditForm()
     {
@@ -157,9 +164,9 @@ class CarsController extends Controller
             return $car;
         });
 
-        if ($cars->isEmpty()) {
-            return redirect()->back()->with('message', 'No cars found.');
-        }
+        // if ($cars->isEmpty()) {
+        //     return redirect()->back()->with('message', 'No cars found.');
+        // }
 
         return inertia("User/UserCarsPage", ['cars' => $cars]);
     }

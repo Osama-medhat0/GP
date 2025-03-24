@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
     Route::delete("user/car/{id}", [CarsController::class, "delete"])->name("car.delete");
     //Car Edit Form Page
     Route::get("user/car/list", [CarsController::class, "CarEditForm"])->name("car.edit.form");
-    //update Listed Car
+    //Update Listed Car
     Route::post('user/car/update/{car}', [CarsController::class, 'update'])->name('car.update');
 });
 
@@ -68,12 +68,13 @@ Route::prefix('car')->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
 
+    //Manage Users Routes
     Route::prefix('dashboard')->group(function () {
         Route::get('/users', [AdminController::class, 'usersList'])->name('admin.users');
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
 
-    //Car Manager Route
+    //Car Manager Routes
     Route::prefix('manager')->group(function () {
         Route::get('/', [CarManagerController::class, 'index'])->name('manager.index');
         Route::post('/make', [CarManagerController::class, 'storeMake'])->name('manager.storeMake');

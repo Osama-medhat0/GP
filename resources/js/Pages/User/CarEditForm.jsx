@@ -4,6 +4,8 @@ import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { useEffect, useState } from "react";
 import CarImageUploader from "./CarImageUploader";
 import { CAlert } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilCamera } from "@coreui/icons";
 
 const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
     const [suggestions, setSuggestions] = useState([]);
@@ -175,7 +177,31 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
     );
 };
 export default function CarEditForm({ car, carMakes, carModels }) {
-    // console.log(car);
+    const handleImageChange = (e) => {
+        const newImages = Array.from(e.target.files);
+        setFormData((prev) => ({
+            ...prev,
+            images: [...prev.images, ...newImages],
+        }));
+    };
+
+    const removeImage = (index, type) => {
+        setFormData((prev) => ({
+            ...prev,
+            deletedImages: [
+                ...(prev.deletedImages || []),
+                type === "existing" ? prev.existingImages[index] : null,
+            ].filter(Boolean),
+            existingImages:
+                type === "existing"
+                    ? prev.existingImages.filter((_, i) => i !== index)
+                    : prev.existingImages,
+            images:
+                type === "new"
+                    ? prev.images.filter((_, i) => i !== index)
+                    : prev.images,
+        }));
+    };
 
     const [formData, setFormData] = useState({
         make: "",
@@ -188,6 +214,8 @@ export default function CarEditForm({ car, carMakes, carModels }) {
         location: "",
         description: "",
         images: [],
+        existingImages: [],
+        deletedImages: [],
     });
 
     useEffect(() => {
@@ -202,32 +230,51 @@ export default function CarEditForm({ car, carMakes, carModels }) {
             transmission: defaultCar.transmission || "",
             location: defaultCar.location || "",
             description: defaultCar.description || "",
-            images: defaultCar.image_urls ? [...defaultCar.image_urls] : [],
+            images: [], // new uploads
+            existingImages: defaultCar.image_urls || [], //existing image URLs
         });
-        console.log(formData);
-    }, []);
+        console.log(defaultCar.image_urls);
+    }, [car]);
 
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        console.log(formData);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData.images.length === 0) {
-            alert("Image is required");
+
+        if (
+            formData.images.length === 0 &&
+            formData.existingImages.length === 0
+        ) {
+            alert("At least one image is required.");
             return;
         }
 
+        console.log("Submitting form with data:", formData);
+
         const data = new FormData();
+
         Object.keys(formData).forEach((key) => {
             if (key === "images") {
                 formData.images.forEach((image) => {
-                    data.append("images[]", image);
+                    if (image instanceof File) {
+                        data.append("images[]", image);
+                    }
                 });
+            } else if (key === "existingImages") {
+                data.append(
+                    "existingImages",
+                    JSON.stringify(formData.existingImages)
+                );
+            } else if (key === "deletedImages") {
+                data.append(
+                    "deletedImages",
+                    JSON.stringify(formData.deletedImages)
+                );
             } else {
                 data.append(key, formData[key]);
             }
@@ -238,7 +285,6 @@ export default function CarEditForm({ car, carMakes, carModels }) {
             onSuccess: () => alert("Car updated successfully!"),
             onError: (errors) => setErrors(errors),
         });
-        // setFormData([]);
     };
 
     return (
@@ -423,13 +469,98 @@ export default function CarEditForm({ car, carMakes, carModels }) {
                         <CAlert color="danger">{errors.description}</CAlert>
                     )}
 
-                    <h6> Images</h6>
-                    <CarImageUploader
-                        images={formData.images}
-                        setImages={(newImages) =>
-                            setFormData({ ...formData, images: newImages })
-                        }
-                    />
+                    <div className="image-uploader ">
+                        <label htmlFor="file-input" className="add-image">
+                            +
+                        </label>
+                        <input
+                            id="file-input"
+                            type="file"
+                            multiple
+                            onChange={handleImageChange}
+                            style={{ display: "none" }}
+                            disabled={
+                                formData.images.length +
+                                    formData.existingImages.length ===
+                                4
+                            }
+                        />
+
+                        {formData.existingImages.map((imageUrl, index) => (
+                            <div
+                                key={`existing-${index}`}
+                                className={`image-preview ${
+                                    index === 0 ? "cover" : ""
+                                }`}
+                            >
+                                <img src={imageUrl} alt="Existing Car" />
+                                <button
+                                    type="button"
+                                    className="remove-btn pb-4"
+                                    onClick={() =>
+                                        removeImage(index, "existing")
+                                    }
+                                >
+                                    &times;
+                                </button>
+                                {index === 0 && (
+                                    <span className="cover-tag">COVER</span>
+                                )}
+                            </div>
+                        ))}
+
+                        {formData.images.map((image, index) => (
+                            <div
+                                key={`new-${index}`}
+                                className={`image-preview ${
+                                    index === 0 ? "cover" : ""
+                                }`}
+                            >
+                                <img
+                                    src={URL.createObjectURL(image)}
+                                    alt="New Upload"
+                                />
+                                <button
+                                    type="button"
+                                    className="remove-btn pb-4"
+                                    onClick={() => removeImage(index, "new")}
+                                >
+                                    &times;
+                                </button>
+                                {/* {index === 0 && (
+                                    <span className="cover-tag">COVER</span>
+                                )} */}
+                            </div>
+                        ))}
+
+                        {Array.from({
+                            length:
+                                4 -
+                                formData.images.length -
+                                formData.existingImages.length,
+                        }).map((_, index) => (
+                            <label
+                                key={`empty-${index}`}
+                                className="empty-slot cursor-pointer"
+                            >
+                                <input
+                                    type="file"
+                                    multiple
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                />
+                                <CIcon
+                                    icon={cilCamera}
+                                    style={{
+                                        width: "22px",
+                                        marginLeft: "10px",
+                                    }}
+                                />
+                                <div>+</div>
+                            </label>
+                        ))}
+                    </div>
+
                     <button
                         type="submit"
                         className=" active w-full bg-blue-400 text-white p-2 rounded hover:bg-blue-500 transition duration-300"

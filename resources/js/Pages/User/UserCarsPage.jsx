@@ -48,7 +48,7 @@ const UserCarsPage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {cars.length > 0 ? (
+                                    {cars && cars.length > 0 ? (
                                         cars.map((car) => (
                                             <tr
                                                 key={car.id}

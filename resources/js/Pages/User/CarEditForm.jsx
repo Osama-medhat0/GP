@@ -188,13 +188,16 @@ export default function CarEditForm({ car, carMakes, carModels }) {
     const removeImage = (index, type) => {
         setFormData((prev) => ({
             ...prev,
-            deletedImages: [
-                ...(prev.deletedImages || []),
-                type === "existing" ? prev.existingImages[index] : null,
-            ].filter(Boolean),
+            deletedImages:
+                type === "existing"
+                    ? [
+                          ...(prev.deletedImages || []), // [] avoids errors if it's undefined
+                          prev.existingImages[index],
+                      ]
+                    : prev.deletedImages,
             existingImages:
                 type === "existing"
-                    ? prev.existingImages.filter((_, i) => i !== index)
+                    ? prev.existingImages.filter((_, i) => i !== index) // keeps all images except the one at index
                     : prev.existingImages,
             images:
                 type === "new"

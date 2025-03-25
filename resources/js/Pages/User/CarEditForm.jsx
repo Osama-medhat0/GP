@@ -530,9 +530,10 @@ export default function CarEditForm({ car, carMakes, carModels }) {
                                 >
                                     &times;
                                 </button>
-                                {/* {index === 0 && (
-                                    <span className="cover-tag">COVER</span>
-                                )} */}
+                                {index === 0 &&
+                                    formData.existingImages.length === 0 && (
+                                        <span className="cover-tag">COVER</span>
+                                    )}
                             </div>
                         ))}
 
@@ -568,7 +569,7 @@ export default function CarEditForm({ car, carMakes, carModels }) {
                         type="submit"
                         className=" active w-full bg-blue-400 text-white p-2 rounded hover:bg-blue-500 transition duration-300"
                     >
-                        Update Car
+                        Update Car List
                     </button>
                 </form>
             </DashboardLayout>

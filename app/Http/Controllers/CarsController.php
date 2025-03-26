@@ -136,7 +136,7 @@ class CarsController extends Controller
         $userId = Auth::id();
 
         $cars = Cars::where('user_id', $userId)->get()->map(function ($car) {
-            $car->images = json_decode($car->images, true) ?? []; // Decode JSON images
+            $car->images = json_decode($car->images, true) ?? []; // Decode JSON images into an arrayy
 
             // Generate full URLs for images
             $car->image_urls = array_map(fn($image) => asset('storage/' . $image), $car->images);
@@ -174,9 +174,8 @@ class CarsController extends Controller
 
     public function delete($id)
     {
-
-        $car = Cars::findOrFail($id);
+        $car = Cars::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $car->delete();
-        return  inertia("User/UserCarsPage");
+        return redirect()->route('car.edit')->with('message', 'Car deleted successfully.');
     }
 }

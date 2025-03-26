@@ -109,7 +109,7 @@ class CarsControllerTest extends TestCase
 
         $image = UploadedFile::fake()->image('car2.jpg');
 
-        $response = $this->actingAs($user)->put(route("car.update", $car), [
+        $response = $this->actingAs($user)->post(route("car.update", $car), [
             'id' => $car->id,
             'make' => $make->name,
             'model' => $model->name,
@@ -128,15 +128,69 @@ class CarsControllerTest extends TestCase
         $this->assertTrue(Storage::disk('public')->exists("car/{$image->hashName()}"));
     }
 
-    public function test_user_can_delete_car_listing()
+    public function test_user_can_access_car_edit_form()
     {
+
         $user = User::factory()->create();
-        $car = Cars::factory()->for($user)->create();
+        $model = CarModel::factory()->create();
+        $make = CarMake::factory()->create();
 
-        $response = $this->actingAs($user)->delete(route("car.delete", $car->id));
+        $image = UploadedFile::fake()->image('car1.jpg')->store('car', 'public');
+        $car = Cars::factory()->for($user)->create([
+            'make' => $make->name,
+            'model' => $model->name,
+            'images' => json_encode([$image]),
+        ]);
 
+        $response = $this->actingAs($user)->get(route('car.edit.form'));
         $response->assertStatus(200);
 
+        $response->assertInertia(fn($page) => $page->component('User/CarEditForm')->has('car', 1)->where('car.0.id', $car->id)->where('car.0.make', $car->make)->where('car.0.model', $car->model)->where('car.0.image_urls.0', asset("storage/{$image}")));
+    }
+
+    public function test_authenticated_user_can_view_their_cars()
+    {
+
+        $user = User::factory()->create();
+
+        $image = UploadedFile::fake()->image('car1.jpg')->store('car', 'public');
+
+        $car = Cars::factory()->for($user)->create(['images' => json_encode([$image])]);
+
+        $response = $this->actingAs($user)->get(route('car.edit'));
+        $response->assertStatus(200);
+
+        $response->assertInertia(fn($page) => $page->component('User/UserCarsPage')->has('cars', 1)->where('cars.0.id', $car->id)->where('cars.0.image_urls.0', asset("storage/{$image}")));
+    }
+
+    public function test_returns_empty_cars_list_if_user_has_no_cars()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('car.edit'));
+
+        $response->assertInertia(
+            fn($page) =>
+            $page
+                ->component('User/UserCarsPage')
+                ->has('cars', 0)
+        );
+    }
+
+    public function test_delete_car_list()
+    {
+        $user = User::factory()->create();
+        $model = CarModel::factory()->create();
+        $make = CarMake::factory()->create();
+
+        $car = Cars::factory()->for($user)->create(['make' => $make->name, 'model' => $model->name]);
+
+        $response = $this->actingAs($user)->delete(route('car.delete', $car->id));
+
+        //Assert car is deleted
         $this->assertDatabaseMissing('cars', ['id' => $car->id]);
+
+        $response->assertRedirect(route('car.edit'));
     }
 }

@@ -1,8 +1,16 @@
 import MainLayout from "@/Layouts/MainLayout";
 import { Link, usePage } from "@inertiajs/react";
-const CarsList = () => {
+import { router } from "@inertiajs/react";
+import { useEffect } from "react";
+
+const CarsPage = () => {
     const { cars } = usePage().props;
-    console.log(cars);
+    // console.log(cars);
+
+    useEffect(() => {
+        router.reload({ only: ["cars"] }); // forces Inertia to fetch fresh car data instead of using a cached version.
+    }, []);
+
     return (
         <>
             <MainLayout>
@@ -96,6 +104,8 @@ const CarsList = () => {
                         </div>
                     </div>
                 </section>
+
+                {/* pagination */}
                 <div
                     className="flex justify-center pb-20"
                     style={{ backgroundColor: "#f8f9fa" }}
@@ -129,4 +139,4 @@ const CarsList = () => {
         </>
     );
 };
-export default CarsList;
+export default CarsPage;

@@ -3,7 +3,6 @@ import { Head } from "@inertiajs/react";
 import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
-import Header from "../Frontend/Components/Header";
 import MainLayout from "@/Layouts/MainLayout";
 
 export default function Edit({ mustVerifyEmail, status }) {

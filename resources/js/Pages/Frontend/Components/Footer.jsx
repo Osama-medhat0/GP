@@ -1,3 +1,5 @@
+import { Link } from "@inertiajs/react";
+
 const Footer = () => {
     return (
         <>
@@ -41,7 +43,7 @@ const Footer = () => {
                                 <ul className="list-unstyled">
                                     <li>
                                         <a href="#" className="py-2 d-block">
-                                            About
+                                            About Us
                                         </a>
                                     </li>
                                     <li>
@@ -94,9 +96,12 @@ const Footer = () => {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" className="py-2 d-block">
+                                        <Link
+                                            href={route("contact")}
+                                            className="py-2 d-block"
+                                        >
                                             Contact Us
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>

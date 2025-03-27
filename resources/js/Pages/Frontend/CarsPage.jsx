@@ -69,14 +69,15 @@ const CarsPage = () => {
                                                     </span>
                                                     <p className="price ml-auto">
                                                         Price:{" "}
-                                                        {car.price.toLocaleString(
+                                                        {parseFloat(
+                                                            car.price
+                                                        ).toLocaleString(
                                                             "en-US",
                                                             {
                                                                 style: "currency",
                                                                 currency: "USD",
                                                             }
                                                         )}
-                                                        {/* i change it  */}
                                                     </p>
                                                 </div>
                                                 <p className="d-flex mb-0 d-block">

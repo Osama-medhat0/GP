@@ -56,7 +56,7 @@ const Home = () => {
                         <div className="row justify-content-center">
                             <div className="col-md-12 heading-section text-center ftco-animate mb-5">
                                 <span className="subheading">
-                                    What we offer
+                                    Find Your Next Car{" "}
                                 </span>
                                 <h2 className="mb-2">Feeatured Vehicles</h2>
                             </div>
@@ -230,7 +230,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section
+                {/* <section
                     className="ftco-section ftco-intro"
                     style={{ backgroundImage: "url(assets/images/gtr.jpg)" }}
                 >
@@ -248,7 +248,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
 
                 {/* <section className="ftco-section ftco-no-pt bg-light">
                     <div className="container">

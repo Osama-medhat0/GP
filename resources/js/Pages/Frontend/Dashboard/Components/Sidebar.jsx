@@ -1,9 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 import { useSidebarContext } from "./SidebarContext";
 import Navbar from "react-bootstrap/Navbar";
-import { cilPeople, cilCarAlt, cilUser, cilPencil } from "@coreui/icons";
-import { CIcon } from "@coreui/icons-react";
-
 const Sidebar = () => {
     const { sidebarActive, setSidebarActive } = useSidebarContext();
     const user = usePage().props.auth.user;

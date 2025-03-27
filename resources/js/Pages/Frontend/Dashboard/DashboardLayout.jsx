@@ -61,19 +61,19 @@ const DashboardLayout = ({ children }) => {
                 />
             </Helmet>
             <>
-                <Loader delay={1800}>
-                    <SidebarProvider>
-                        <Header showLogo={false} />
+                <SidebarProvider>
+                    <Header showLogo={false} />
+                    <Sidebar />
+                    <Loader delay={1200}>
                         <section className="dashboard-area">
-                            <Sidebar />
                             <div>{children}</div>
                         </section>
-                    </SidebarProvider>
+                    </Loader>
+                </SidebarProvider>
 
-                    <div onClick={scrollToTop} id="scroll-top">
-                        <i className="la la-arrow-up" title="Go top" />
-                    </div>
-                </Loader>
+                <div onClick={scrollToTop} id="scroll-top">
+                    <i className="la la-arrow-up" title="Go top" />
+                </div>
             </>
         </HelmetProvider>
     );

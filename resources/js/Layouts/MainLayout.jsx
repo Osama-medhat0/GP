@@ -18,21 +18,21 @@ const MainLayout = ({ children }) => {
         };
 
         const scripts = [
-            "assets/js/jquery.min.js",
-            "assets/js/jquery-migrate-3.0.1.min.js",
-            "assets/js/popper.min.js",
-            "assets/js/bootstrap.min.js",
-            "assets/js/jquery.easing.1.3.js",
-            "assets/js/jquery.waypoints.min.js",
-            "assets/js/jquery.stellar.min.js",
-            "assets/js/owl.carousel.min.js",
-            "assets/js/jquery.magnific-popup.min.js",
-            "assets/js/aos.js",
-            "assets/js/jquery.animateNumber.min.js",
-            "assets/js/bootstrap-datepicker.js",
-            "assets/js/jquery.timepicker.min.js",
-            "assets/js/scrollax.min.js",
-            "assets/js/main.js",
+            "/assets/js/jquery.min.js",
+            "/assets/js/jquery-migrate-3.0.1.min.js",
+            "/assets/js/popper.min.js",
+            "/assets/js/bootstrap.min.js",
+            "/assets/js/jquery.easing.1.3.js",
+            "/assets/js/jquery.waypoints.min.js",
+            "/assets/js/jquery.stellar.min.js",
+            "/assets/js/owl.carousel.min.js",
+            "/assets/js/jquery.magnific-popup.min.js",
+            "/assets/js/aos.js",
+            "/assets/js/jquery.animateNumber.min.js",
+            "/assets/js/bootstrap-datepicker.js",
+            "/assets/js/jquery.timepicker.min.js",
+            "/assets/js/scrollax.min.js",
+            "/assets/js/main.js",
         ];
 
         scripts.forEach(loadScript);
@@ -67,47 +67,45 @@ const MainLayout = ({ children }) => {
                     {/* Css */}
                     <link
                         rel="stylesheet"
-                        href="assets/css/open-iconic-bootstrap.min.css"
+                        href="/assets/css/open-iconic-bootstrap.min.css"
                     />
-                    <link rel="stylesheet" href="assets/css/animate.css" />
+                    <link rel="stylesheet" href="/assets/css/animate.css" />
                     <link
                         rel="stylesheet"
-                        href="assets/css/owl.carousel.min.css"
-                    />
-                    <link
-                        rel="stylesheet"
-                        href="assets/css/owl.theme.default.min.css"
+                        href="/assets/css/owl.carousel.min.css"
                     />
                     <link
                         rel="stylesheet"
-                        href="assets/css/magnific-popup.css"
-                    />
-                    <link rel="stylesheet" href="assets/css/aos.css" />
-                    <link rel="stylesheet" href="assets/css/ionicons.min.css" />
-                    <link
-                        rel="stylesheet"
-                        href="assets/css/bootstrap-datepicker.css"
+                        href="/assets/css/owl.theme.default.min.css"
                     />
                     <link
                         rel="stylesheet"
-                        href="assets/css/jquery.timepicker.css"
+                        href="/assets/css/magnific-popup.css"
                     />
-                    <link rel="stylesheet" href="assets/css/flaticon.css" />
-                    <link rel="stylesheet" href="assets/css/icomoon.css" />
-                    <link rel="stylesheet" href="assets/css/style.css" />
+                    <link rel="stylesheet" href="/assets/css/aos.css" />
+                    <link
+                        rel="stylesheet"
+                        href="/assets/css/ionicons.min.css"
+                    />
+                    <link
+                        rel="stylesheet"
+                        href="/assets/css/bootstrap-datepicker.css"
+                    />
+                    <link
+                        rel="stylesheet"
+                        href="/assets/css/jquery.timepicker.css"
+                    />
+                    <link rel="stylesheet" href="/assets/css/flaticon.css" />
+                    <link rel="stylesheet" href="/assets/css/icomoon.css" />
+                    <link rel="stylesheet" href="/assets/css/style.css" />
                 </Helmet>
-                <Loader delay={1600}>
-                    <Header auth={usePage().props.auth} />
 
-                    {/* <section className="dashboard-area"> */}
-                    {/* <Sidebar /> */}
-                    {/* Now it's inside the provider */}
-                    {/* <div>{children}</div> */}
-                    {/* </section> */}
-                    <ScrollToTopButton />
+                <Header auth={usePage().props.auth} />
+
+                <ScrollToTopButton />
+                <Loader delay={1300}>
                     {/* Page Content */}
                     <div>{children}</div>
-
                     <Footer />
                 </Loader>
             </HelmetProvider>
@@ -115,4 +113,3 @@ const MainLayout = ({ children }) => {
     );
 };
 export default MainLayout;
-// move it to layouts

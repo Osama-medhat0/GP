@@ -9,7 +9,12 @@ import { useState } from "react";
 import { useSidebarContext } from "../Dashboard/Components/SidebarContext";
 
 export default function Header({ showLogo, head }) {
-    const user = usePage().props.auth.user;
+    const user = usePage().props.auth?.user ?? null;
+
+    const firstName = user ? user.name.split(" ")[0] : "Guest";
+    const capitalizeFirstName =
+        firstName.charAt(0).toUpperCase() + firstName.slice(1);
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -151,7 +156,7 @@ export default function Header({ showLogo, head }) {
                                             type="button"
                                             className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm text-gray-500 hover:text-gray-700"
                                         >
-                                            {user.name}
+                                            {capitalizeFirstName}
                                             <svg
                                                 className="ms-2 h-4 w-4"
                                                 xmlns="http://www.w3.org/2000/svg"

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarManagerController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,10 @@ Route::get("/home", function () {
         ],
     ]);
 });
+
+//contact us Routes
+Route::get('/contact-us', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
 // User Routes
 Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () {

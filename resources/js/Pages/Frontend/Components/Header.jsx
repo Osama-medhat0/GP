@@ -2,9 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { useSidebarContext } from "../Dashboard/Components/SidebarContext";
 
@@ -32,34 +30,23 @@ export default function Header({ showLogo, head }) {
                 <Container>
                     {/* For large screens */}
                     {!showLogo && (
-                        <Navbar.Brand
-                            href="/home"
-                            style={{ fontWeight: "bold", fontSize: 30 }}
-                            className="hidden sm:block"
-                        >
-                            <span style={{ color: "black" }}>Fair</span>
-                            <span style={{ color: "#01D28E" }}>Wheels</span>
-                        </Navbar.Brand>
+                        <Link href={route("home")} className="no-underline">
+                            <Navbar.Brand
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: "1.5rem",
+                                }}
+                            >
+                                <span style={{ color: "black" }}>Fair</span>
+                                <span style={{ color: "#01D28E" }}>Wheels</span>
+                            </Navbar.Brand>
+                        </Link>
                     )}
-
-                    {/* For small screens */}
-                    {/* <Navbar.Brand
-                        href="/home"
-                        style={{ fontWeight: "bold", fontSize: 30 }}
-                        className="block sm:hidden"
-                    >
-                        <span style={{ color: "black" }}>Fair</span>
-                        <span style={{ color: "#01D28E" }}>Wheels</span>
-                    </Navbar.Brand> */}
 
                     <div className="ml-auto text-right hidden sm:flex ">
                         <Nav className="me-auto">
-                            <NavLink
-                                style={{
-                                    marginRight: "35px",
-                                    fontSize: "17px",
-                                }}
-                                className={`mr-5 block no-underline ${
+                            <Link
+                                className={`block no-underline mr-5 py-4  text-gray-700 text-lg ${
                                     route().current("home")
                                         ? "text-green-500 font-bold"
                                         : ""
@@ -68,34 +55,30 @@ export default function Header({ showLogo, head }) {
                                 // active={route().current("/")}
                             >
                                 Home
-                            </NavLink>
-                            <NavLink
-                                style={{
-                                    marginRight: "35px",
-                                    fontSize: "17px",
-                                }}
-                                className="mr-5 block no-underline"
+                            </Link>
+                            <Link
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
+                                    route().current("car.page")
+                                        ? "text-green-500 font-bold"
+                                        : ""
+                                }`}
                                 href={route("car.page")}
                             >
                                 Cars
-                            </NavLink>
-                            <NavLink
-                                style={{
-                                    marginRight: "35px",
-                                    fontSize: "17px",
-                                }}
-                                className="mr-5 block no-underline"
+                            </Link>
+                            <Link
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
+                                    route().current("")
+                                        ? "text-green-500 font-bold"
+                                        : ""
+                                }`}
                                 href="#ai-tool"
                             >
                                 AI Tool
-                            </NavLink>
+                            </Link>
 
-                            <NavLink
-                                style={{
-                                    marginRight: "35px",
-                                    fontSize: "17px",
-                                }}
-                                className={`mr-5 block no-underline ${
+                            <Link
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
                                     route().current("car.listing")
                                         ? "text-green-500 font-bold"
                                         : ""
@@ -103,16 +86,16 @@ export default function Header({ showLogo, head }) {
                                 href={route("car.listing")}
                             >
                                 Sell Your Car
-                            </NavLink>
+                            </Link>
 
                             {user ? (
-                                <NavLink
+                                <Link
                                     href={
                                         user.role === "admin"
                                             ? route("admin.dashboard")
                                             : route("dashboard")
                                     }
-                                    className={`rounded-md px-3 py-2 transition no-underline mr-12 mt-1 pt-2
+                                    className={`block no-underline mr-5 py-4 text-gray-700 text-lg
                                         ${
                                             route().current("admin.dashboard")
                                                 ? "text-green-500 font-bold"
@@ -128,22 +111,22 @@ export default function Header({ showLogo, head }) {
                                     }}
                                 >
                                     Dashboard
-                                </NavLink>
+                                </Link>
                             ) : (
                                 <>
                                     {/* login isnt responsive */}
-                                    <NavLink
+                                    <Link
                                         href={route("login")}
-                                        className="rounded-md px-4 py-1 text-black text-lg transition "
+                                        className={`block no-underline ml-3 mr-2 py-4 text-blue-400 font-bold`}
                                     >
                                         Log in
-                                    </NavLink>
-                                    <NavLink
+                                    </Link>
+                                    <Link
                                         href={route("register")}
-                                        className="rounded-md px-2 py-1 text-black text-lg transition"
+                                        className={`block no-underline ml-3 py-4 text-blue-400 font-bold`}
                                     >
                                         Register
-                                    </NavLink>
+                                    </Link>
                                 </>
                             )}
                         </Nav>
@@ -154,7 +137,7 @@ export default function Header({ showLogo, head }) {
                                     <span className="inline-flex rounded-md mt-1">
                                         <button
                                             type="button"
-                                            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm text-gray-500 hover:text-gray-700"
+                                            className="inline-flex my-3 items-center rounded-md bg-white px-3 py-2 text-sm text-gray-500 hover:text-gray-700"
                                         >
                                             {capitalizeFirstName}
                                             <svg
@@ -187,6 +170,7 @@ export default function Header({ showLogo, head }) {
                                         href={route("logout")}
                                         method="post"
                                         as="button"
+                                        className="text-gray-500 hover:text-red-500"
                                     >
                                         Log Out
                                     </Dropdown.Link>
@@ -196,18 +180,48 @@ export default function Header({ showLogo, head }) {
                     </div>
 
                     {/* Mobile Menu */}
-                    <div className="-me-2 flex items-center sm:hidden">
+                    <div className="py-0 sm:hidden mt-2">
+                        <Link
+                            className={`inline-flex rounded-md mt-2 mr-4 text-gray-700 text-lg ${
+                                route().current("car.page")
+                                    ? "text-green-500 font-bold"
+                                    : ""
+                            }`}
+                            href={route("car.page")}
+                        >
+                            Cars
+                        </Link>
+                        <Link
+                            className={`inline-flex rounded-md mr-4 mb-2 text-gray-700 text-lg ${
+                                route().current("car.page")
+                                    ? "text-green-500 font-bold"
+                                    : ""
+                            }`}
+                            href={route("car.page")}
+                        >
+                            AI-Tool
+                        </Link>
                         <button
+                            className="inline-flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100"
                             onClick={() => {
-                                if (route().current("home")) {
+                                {
+                                    // console.log(showingNavigationDropdown);
+                                }
+
+                                if (
+                                    route().current("home") ||
+                                    route().current("car.page") ||
+                                    route().current("comparison") ||
+                                    route().current("profile.edit")
+                                ) {
                                     setShowingNavigationDropdown(
                                         !showingNavigationDropdown
                                     );
                                 } else {
                                     setSidebarActive(true);
+                                    console.log(showingNavigationDropdown);
                                 }
                             }}
-                            className="inline-flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                         >
                             <svg
                                 className="h-6 w-6"
@@ -250,21 +264,22 @@ export default function Header({ showLogo, head }) {
                             }
                         `}
                     >
-                        <ResponsiveNavLink
-                            className={`mr-5 block no-underline ${
+                        <Link
+                            className={`block no-underline mt-3  text-gray-700 text-lg${
                                 route().current("home")
                                     ? "text-green-500 font-bold"
                                     : ""
                             }`}
                             href={route("home")}
+                            // active={route().current("/")}
                         >
                             Home
-                        </ResponsiveNavLink>
-
+                        </Link>
+                        <hr className=" my-2 border-gray-900" />
                         {user?.role === "admin" && (
                             <>
-                                <ResponsiveNavLink
-                                    className={`mr-5 block no-underline ${
+                                <Link
+                                    className={`block no-underline   text-gray-700 text-lg ${
                                         route().current("dashboard")
                                             ? "text-green-500 font-bold"
                                             : ""
@@ -272,20 +287,20 @@ export default function Header({ showLogo, head }) {
                                     href={route("dashboard")}
                                 >
                                     Dashboard
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    className="no-underline"
+                                </Link>
+                                <hr className=" my-2 border-gray-900" />
+                                <Link
+                                    className="no-underline  text-gray-700 text-lg"
                                     href={route("admin.users")}
                                 >
                                     Manage Users
-                                </ResponsiveNavLink>
+                                </Link>
                             </>
                         )}
-
                         {user && (
                             <>
-                                <ResponsiveNavLink
-                                    className={`no-underline ${
+                                <Link
+                                    className={`no-underline  text-gray-700 text-lg ${
                                         route().current("profile.edit")
                                             ? "text-green-500 font-bold"
                                             : ""
@@ -293,9 +308,10 @@ export default function Header({ showLogo, head }) {
                                     href={route("profile.edit")}
                                 >
                                     Profile
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    className={`mr-5 block no-underline ${
+                                </Link>
+                                <hr className=" my-2 border-gray-900" />
+                                <Link
+                                    className={` block no-underline  text-gray-700  ${
                                         route().current("dashboard")
                                             ? "text-green-500 font-bold"
                                             : ""
@@ -303,30 +319,35 @@ export default function Header({ showLogo, head }) {
                                     href={route("dashboard")}
                                 >
                                     Dashboard
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
+                                </Link>
+                                <hr className=" my-2 border-gray-900" />
+
+                                <Link
                                     method="post"
                                     href={route("logout")}
                                     as="button"
+                                    className="text-red-500 mb-2"
                                 >
                                     Log Out
-                                </ResponsiveNavLink>
+                                </Link>
                             </>
                         )}
                         {!user && (
                             <>
-                                <ResponsiveNavLink
-                                    href={route("login")}
-                                    className="no-underline"
-                                >
-                                    Log in
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route("register")}
-                                    className="no-underline"
-                                >
-                                    Register
-                                </ResponsiveNavLink>
+                                <div className="flex flex-col">
+                                    <Link
+                                        href={route("login")}
+                                        className="no-underline mb-2"
+                                    >
+                                        Log in
+                                    </Link>
+                                    <Link
+                                        href={route("register")}
+                                        className="no-underline mb-2"
+                                    >
+                                        Register
+                                    </Link>
+                                </div>
                             </>
                         )}
                     </div>

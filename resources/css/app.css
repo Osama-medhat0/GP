@@ -207,3 +207,87 @@ body {
     opacity: 1;
     visibility: visible;
 }
+
+.compare-sidebar {
+    position: fixed;
+    bottom: 0;
+    background: white;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 40;
+    overflow-y: auto;
+    max-width: 55%;
+    /* height: 26.5rem; */
+}
+
+@media (max-width: 768px) {
+    .compare-sidebar {
+        max-width: 55%;
+    }
+    .chevron {
+        margin-top: 6rem;
+    }
+}
+
+.sidebar-header {
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.car-list {
+    scrollbar-width: none;
+}
+
+.car-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    gap: 10px;
+}
+
+.car-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+/* .remove-btn-comparison {
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    background-color: red;
+    margin-bottom: 3rem;
+    border-radius: 3rem;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+} */
+
+.compare-btn {
+    display: block;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+@media (max-width: 752px) {
+    .car-data-responsive {
+        font-size: 12px;
+    }
+}
+@media (max-width: 552px) {
+    .car-data-responsive {
+        font-size: 10px;
+    }
+}
+@media (max-width: 500px) {
+    .car-data-responsive {
+        font-size: 8px;
+    }
+}
+.card-body {
+    /* padding: 0px; */
+}

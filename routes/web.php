@@ -25,7 +25,7 @@ Route::get("/home", function () {
             'user' => Auth::user(),
         ],
     ]);
-});
+})->name("home");
 
 //contact us Routes
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact');
@@ -68,6 +68,8 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
 Route::prefix('car')->group(function () {
     Route::get('/', [CarsController::class, 'index'])->name("car.page");
 });
+//Comparsion page
+Route::get('/compare-cars', [CarsController::class, 'compare'])->name('car.compare');
 
 //Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {

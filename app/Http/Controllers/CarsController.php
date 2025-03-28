@@ -171,11 +171,23 @@ class CarsController extends Controller
         return inertia("User/UserCarsPage", ['cars' => $cars]);
     }
 
-
     public function delete($id)
     {
         $car = Cars::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $car->delete();
         return redirect()->route('car.edit')->with('message', 'Car deleted successfully.');
+    }
+
+    public function compare(Request $request)
+    {
+        $carIds = $request->input('cars', []);
+
+        if (!is_array($carIds) || count($carIds) < 2) {
+            return redirect()->back()->with('error', 'Select at least two cars to compare.');
+        }
+
+        $cars = Cars::whereIn('id', $carIds)->get();
+
+        return inertia('User/CarComparison', ['cars' => $cars]);
     }
 }

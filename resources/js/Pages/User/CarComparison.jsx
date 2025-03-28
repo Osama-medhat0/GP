@@ -25,7 +25,7 @@ const CarComparison = () => {
             <section className="container my-5 ">
                 <h2 className="text-center mb-12">Car Comparison</h2>
 
-                <div className="flex justify-between flex-wrap  gap-4">
+                <div className="flex justify-center flex-wrap  gap-4">
                     {cars.map((car) => {
                         const images = JSON.parse(car.images);
                         const imageUrl = `/storage/${images[0]}`;
@@ -46,28 +46,36 @@ const CarComparison = () => {
                                             objectFit: "cover",
                                         }}
                                     />
-                                    <div className="card-body">
-                                        <h5 className="font-semibold  mb-2 car-data-responsive ">
+                                    <style>{`
+                                        @media (max-width: 500px) {
+                                            .card-body.no-padding-500 {
+                                                padding: 0 !important;
+                                            }
+                                        }
+                                    `}</style>
+
+                                    <div className="card-body no-padding-500">
+                                        <h5 className="font-semibold mt-2  mb-4 car-data-responsive ">
                                             {car.make} {car.model}
                                         </h5>
-                                        <p className="border-b py-1  car-data-responsive">
+                                        <p className="border-b py-1 mb-4  car-data-responsive">
                                             Year: <strong>{car.year}</strong>
                                         </p>
-                                        <p className="border-b py-1  car-data-responsive">
+                                        <p className="border-b py-1 mb-4  car-data-responsive">
                                             Price:{" "}
                                             <strong>
                                                 ${car.price.toLocaleString()}
                                             </strong>
                                         </p>
-                                        <p className="border-b py-1 car-data-responsive">
+                                        <p className="border-b py-1 mb-4 car-data-responsive">
                                             Mileage:{" "}
                                             <strong>{car.mileage} km</strong>
                                         </p>
-                                        <p className="border-b py-1 car-data-responsive">
+                                        <p className="border-b py-1 mb-4 car-data-responsive">
                                             Transmission:{" "}
                                             <strong>{car.transmission}</strong>
                                         </p>
-                                        <p className="py-1 car-data-responsive">
+                                        <p className="py-1 mb-4 car-data-responsive">
                                             Fuel Type:{" "}
                                             <strong>{car.fuelType}</strong>
                                         </p>

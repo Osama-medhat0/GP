@@ -42,9 +42,9 @@ const Footer = () => {
                                 <h2 className="ftco-heading-2">Information</h2>
                                 <ul className="list-unstyled">
                                     <li>
-                                        <a href="#" className="py-2 d-block">
+                                        <Link href="#" className="py-2 d-block">
                                             About Us
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
                                         <a href="#" className="py-2 d-block">

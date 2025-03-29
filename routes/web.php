@@ -70,6 +70,8 @@ Route::prefix('car')->group(function () {
 });
 //Comparsion page
 Route::get('/compare-cars', [CarsController::class, 'compare'])->name('car.compare');
+//Car Details Route
+Route::get('/car/{id}', [CarsController::class, 'detail'])->name('car.detail');
 
 //Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {

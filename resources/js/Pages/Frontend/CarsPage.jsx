@@ -9,7 +9,7 @@ const CarsPage = () => {
     useEffect(() => {
         router.reload({ only: ["cars"] });
     }, []);
-
+    console.log(cars);
     // Manage selected cars for comparison
     // const [selectedCars, setSelectedCars] = useState([]);
     const [selectedCars, setSelectedCars] = useState(() => {
@@ -93,24 +93,33 @@ const CarsPage = () => {
                                 cars.data.map((car) => (
                                     <div key={car.id} className="col-md-4">
                                         <div className="car-wrap rounded ftco-animate">
-                                            <div
+                                            <Link
+                                                href={route(
+                                                    "car.detail",
+                                                    car.id
+                                                )}
                                                 className="img rounded d-flex align-items-end"
                                                 style={{
                                                     backgroundImage: `url('${car.images[0]}')`,
                                                 }}
-                                            ></div>
+                                            ></Link>
 
                                             <div className="text">
                                                 <h2 className="mb-0">
-                                                    <Link href="car-single.html">
+                                                    <Link
+                                                        href={route(
+                                                            "car.detail",
+                                                            car.id
+                                                        )}
+                                                    >
                                                         {car.make} {car.model}
                                                     </Link>
                                                 </h2>
                                                 <div className="d-flex mb-3">
-                                                    <span className="cat">
+                                                    <span className="">
                                                         {car.year}
                                                     </span>
-                                                    <p className="price ml-auto">
+                                                    <p className="price ml-auto ">
                                                         Price:{" "}
                                                         {parseFloat(
                                                             car.price
@@ -131,7 +140,10 @@ const CarsPage = () => {
                                                         Contact Owner
                                                     </Link>
                                                     <Link
-                                                        href="car-single"
+                                                        href={route(
+                                                            "car.detail",
+                                                            { id: car.id }
+                                                        )}
                                                         className="btn btn-secondary py-2 ml-1"
                                                     >
                                                         Details

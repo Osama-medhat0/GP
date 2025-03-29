@@ -42,22 +42,28 @@ const CompareSidebar = ({ selectedCars, removeCar }) => {
                                     >
                                         X
                                     </button>
-                                    <img
-                                        className="img p-8 rounded-md"
-                                        style={{
-                                            backgroundImage: `url('${car.images[0]}')`,
-                                        }}
-                                        alt={`${car.make} ${car.model}`}
-                                    />
+                                    <Link href={route("car.detail", car.id)}>
+                                        <img
+                                            className="img p-8 rounded-md"
+                                            style={{
+                                                backgroundImage: `url('${car.images[0]}')`,
+                                            }}
+                                            alt={`${car.make} ${car.model}`}
+                                        />
+                                    </Link>
                                     <div>
-                                        <p>
-                                            <div className="text-black">
-                                                {car.make}
-                                            </div>
-                                            <div className="text-sm">
-                                                {car.model} {car.year}
-                                            </div>
-                                        </p>
+                                        <Link
+                                            href={route("car.detail", car.id)}
+                                        >
+                                            <p>
+                                                <div className="text-black">
+                                                    {car.make}
+                                                </div>
+                                                <div className="text-sm text-gray-500">
+                                                    {car.model} {car.year}
+                                                </div>
+                                            </p>
+                                        </Link>
                                     </div>
                                 </div>
                             ))}

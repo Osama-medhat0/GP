@@ -190,4 +190,12 @@ class CarsController extends Controller
 
         return inertia('User/CarComparison', ['cars' => $cars]);
     }
+
+    public function detail($id)
+    {
+        $car = Cars::with('user')->findOrFail($id);
+        // dd($car);
+
+        return inertia('User/CarDetails', ['car' => $car->toArray()]);
+    }
 }

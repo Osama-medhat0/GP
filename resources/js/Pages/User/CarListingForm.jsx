@@ -4,6 +4,7 @@ import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { router, usePage } from "@inertiajs/react";
 import { CAlert } from "@coreui/react";
 import CarImageUploader from "./CarImageUploader";
+import { toast } from "react-toastify";
 
 const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
     const [suggestions, setSuggestions] = useState([]);
@@ -51,9 +52,10 @@ const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
             );
 
             if (!isValid) {
-                alert(
+                toast.warn(
                     "Invalid make selected. Please choose from the suggestions."
                 );
+
                 setFormData({ ...formData, make: "" });
             }
 
@@ -136,7 +138,7 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
             );
 
             if (!isValid) {
-                alert(
+                toast.warn(
                     "Invalid model selected. Please choose from the suggestions."
                 );
                 setFormData({ ...formData, model: "" });
@@ -203,13 +205,12 @@ const NewCarListingForm = () => {
         e.preventDefault();
         console.log(formData);
         if (formData.images.length === 0) {
-            alert("Image is required");
+            toast.warn("Image is required");
             return;
         }
         router.post(route("car.store"), formData, {
             preserveScroll: true,
             onSuccess: () => {
-                alert("Car listed successfully!");
                 // setFormData({
                 //     make: "",
                 //     model: "",

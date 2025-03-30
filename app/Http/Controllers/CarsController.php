@@ -61,7 +61,10 @@ class CarsController extends Controller
 
         $car = $request->user()->cars()->create($validated);
 
-        return redirect()->route("car.listing")->with('message', 'Car added successfully.');
+        return redirect()->back()->with([
+            'message' => 'Car has been successfully added!',
+            'type' => 'success'
+        ]);
     }
 
     public function update(Request $request, Cars $car)
@@ -125,7 +128,10 @@ class CarsController extends Controller
         $validated['images'] = json_encode(array_values($finalImages)); // array_values Reset array keys after array_filters 0, 2 to 0 , 1
 
         $car->update($validated);
-        return redirect()->route("car.edit.form")->with("message", "Car updated successfully.");
+        return redirect()->back()->with([
+            'message' => 'Car has been updated!',
+            'type' => 'success'
+        ]);
     }
 
     public function CarEditForm()
@@ -175,7 +181,10 @@ class CarsController extends Controller
     {
         $car = Cars::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $car->delete();
-        return redirect()->route('car.edit')->with('message', 'Car deleted successfully.');
+        return redirect()->back()->with([
+            'message' => 'Car has been deleted!',
+            'type' => 'success' // Can be success, error, info, warning]);
+        ]);
     }
 
     public function compare(Request $request)

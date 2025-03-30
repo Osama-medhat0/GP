@@ -9,7 +9,6 @@ const UserCarsPage = () => {
         if (confirm("Are you sure you want to delete this car?")) {
             router.delete(route("car.delete", carId), {
                 preserveScroll: true,
-                onSuccess: () => alert("Car deleted successfully!"),
                 onError: (error) => alert("Error deleting car: " + error),
             });
         }

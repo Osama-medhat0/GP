@@ -6,6 +6,7 @@ import CarImageUploader from "./CarImageUploader";
 import { CAlert } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilCamera } from "@coreui/icons";
+import { toast } from "react-toastify";
 
 const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
     const [suggestions, setSuggestions] = useState([]);
@@ -253,7 +254,7 @@ export default function CarEditForm({ car, carMakes, carModels }) {
             formData.images.length === 0 &&
             formData.existingImages.length === 0
         ) {
-            alert("At least one image is required.");
+            toast.warn("At least one image is required.");
             return;
         }
 
@@ -285,8 +286,14 @@ export default function CarEditForm({ car, carMakes, carModels }) {
 
         router.post(route("car.update", car[0].id), data, {
             preserveScroll: true,
-            onSuccess: () => alert("Car updated successfully!"),
-            onError: (errors) => setErrors(errors),
+            onSuccess: () => {
+                setErrors({});
+            },
+
+            onError: (errors) => {
+                toast.error("Failed to update car. Please check the errors.");
+                setErrors(errors);
+            },
         });
     };
 

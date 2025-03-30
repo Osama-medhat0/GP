@@ -3,6 +3,7 @@ import Sidebar from "./Components/Sidebar";
 import { SidebarProvider } from "./Components/SidebarContext";
 import Header from "../Components/Header";
 import Loader from "@/Components/Loader";
+import FlashMessageHandler from "../Components/FlashMessageHandler";
 
 const DashboardLayout = ({ children }) => {
     const scrollToTop = () => {
@@ -67,6 +68,7 @@ const DashboardLayout = ({ children }) => {
                     <Loader delay={1200}>
                         <section className="dashboard-area">
                             <div>{children}</div>
+                            <FlashMessageHandler />
                         </section>
                     </Loader>
                 </SidebarProvider>

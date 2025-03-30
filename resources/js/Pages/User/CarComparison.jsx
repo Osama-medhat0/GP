@@ -41,7 +41,7 @@ const CarComparison = () => {
                                         alt={`${car.make} ${car.model}`}
                                         className="card-img-top rounded mb-2 mx-auto"
                                         style={{
-                                            height: "100px",
+                                            height: "170px",
                                             width: "100%",
                                             objectFit: "cover",
                                         }}
@@ -88,7 +88,7 @@ const CarComparison = () => {
 
                 <div className="text-center mt-5">
                     <Link
-                        href={route("car.page")}
+                        href={route("cars.page")}
                         className="active px-10 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
                     >
                         Back to Cars

@@ -2,16 +2,29 @@ import MainLayout from "@/Layouts/MainLayout";
 import { Link, usePage, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import CompareSidebar from "../User/CompareSidebar";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const CarsPage = () => {
     const { cars } = usePage().props;
+
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+
+    const toggleCompareSidebar = () => {
+        setIsSidebarVisible((prev) => !prev);
+    };
 
     useEffect(() => {
         router.reload({ only: ["cars"] });
     }, []);
     console.log(cars);
-    // Manage selected cars for comparison
-    // const [selectedCars, setSelectedCars] = useState([]);
+
     const [selectedCars, setSelectedCars] = useState(() => {
         return JSON.parse(localStorage.getItem("selectedCars")) || [];
     });
@@ -24,6 +37,7 @@ const CarsPage = () => {
                 updatedCars = prev.filter((c) => c.id !== car.id); // Remove
             } else {
                 updatedCars = prev.length < 4 ? [...prev, car] : prev; // Add
+                setIsSidebarVisible(true);
             }
             localStorage.setItem("selectedCars", JSON.stringify(updatedCars));
             return updatedCars;
@@ -38,25 +52,15 @@ const CarsPage = () => {
             return updatedCars;
         });
     };
-    // Navigate to comparison page
-    const handleCompare = () => {
-        if (selectedCars.length < 2) {
-            alert("Select at least two cars to compare.");
-            return;
-        }
-        router.get(route("car.compare"), {
-            cars: selectedCars.map((c) => c.id),
-        });
-    };
 
     return (
         <>
             <MainLayout>
-                {/* Sticky Sidebar for Comparison */}
                 <CompareSidebar
                     selectedCars={selectedCars}
                     removeCar={removeCar}
-                    handleCompare={handleCompare}
+                    isSidebarVisible={isSidebarVisible} // Pass as a prop
+                    toggleSidebar={toggleCompareSidebar} // Pass toggle function
                 />
 
                 <section
@@ -93,16 +97,38 @@ const CarsPage = () => {
                                 cars.data.map((car) => (
                                     <div key={car.id} className="col-md-4">
                                         <div className="car-wrap rounded ftco-animate">
-                                            <Link
-                                                href={route(
-                                                    "car.detail",
-                                                    car.id
+                                            <Swiper
+                                                modules={[
+                                                    Navigation,
+                                                    Pagination,
+                                                    Scrollbar,
+                                                    A11y,
+                                                ]}
+                                                spaceBetween={10}
+                                                slidesPerView={1}
+                                                navigation
+                                                pagination={{ clickable: true }}
+                                                scrollbar={{ draggable: true }}
+                                            >
+                                                {car.images.map(
+                                                    (image, index) => (
+                                                        <SwiperSlide
+                                                            key={index}
+                                                        >
+                                                            <img
+                                                                src={image}
+                                                                alt={`Car ${car.make} ${car.model}`}
+                                                                className="w-100 rounded"
+                                                                style={{
+                                                                    height: "250px",
+                                                                    objectFit:
+                                                                        "cover",
+                                                                }}
+                                                            />
+                                                        </SwiperSlide>
+                                                    )
                                                 )}
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage: `url('${car.images[0]}')`,
-                                                }}
-                                            ></Link>
+                                            </Swiper>
 
                                             <div className="text">
                                                 <h2 className="mb-0">

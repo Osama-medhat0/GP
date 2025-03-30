@@ -54,7 +54,6 @@ const MainLayout = ({ children }) => {
             });
         };
     }, []);
-    console.log("MainLayout rendered");
 
     return (
         <SidebarProvider>

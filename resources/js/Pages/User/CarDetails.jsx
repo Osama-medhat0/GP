@@ -187,7 +187,7 @@ const CarDetails = () => {
             </div>
             <div className="text-center mt-3 mb-5">
                 <Link
-                    href={route("car.page")}
+                    href={route("cars.page")}
                     className="active px-10  bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
                 >
                     Back to Cars

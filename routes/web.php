@@ -66,12 +66,10 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
 
 //Cars Page
 Route::prefix('car')->group(function () {
-    Route::get('/', [CarsController::class, 'index'])->name("car.page");
+    Route::get('/', [CarsController::class, 'index'])->name("cars.page");
+    Route::get('/compare', [CarsController::class, 'compare'])->name('car.compare');
+    Route::get('/{id}', [CarsController::class, 'detail'])->name('car.detail');
 });
-//Comparsion page
-Route::get('/compare-cars', [CarsController::class, 'compare'])->name('car.compare');
-//Car Details Route
-Route::get('/car/{id}', [CarsController::class, 'detail'])->name('car.detail');
 
 //Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {

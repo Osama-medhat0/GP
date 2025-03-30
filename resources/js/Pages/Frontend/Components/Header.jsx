@@ -58,11 +58,11 @@ export default function Header({ showLogo, head }) {
                             </Link>
                             <Link
                                 className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
-                                    route().current("car.page")
+                                    route().current("cars.page")
                                         ? "text-green-500 font-bold"
                                         : ""
                                 }`}
-                                href={route("car.page")}
+                                href={route("cars.page")}
                             >
                                 Cars
                             </Link>
@@ -183,21 +183,21 @@ export default function Header({ showLogo, head }) {
                     <div className="py-0 sm:hidden mt-2">
                         <Link
                             className={`inline-flex rounded-md mt-2 mr-4 text-gray-700 text-lg ${
-                                route().current("car.page")
+                                route().current("cars.page")
                                     ? "text-green-500 font-bold"
                                     : ""
                             }`}
-                            href={route("car.page")}
+                            href={route("cars.page")}
                         >
                             Cars
                         </Link>
                         <Link
                             className={`inline-flex rounded-md mr-4 mb-2 text-gray-700 text-lg ${
-                                route().current("car.page")
+                                route().current("cars.page")
                                     ? "text-green-500 font-bold"
                                     : ""
                             }`}
-                            href={route("car.page")}
+                            href={route("cars.page")}
                         >
                             AI-Tool
                         </Link>
@@ -210,7 +210,7 @@ export default function Header({ showLogo, head }) {
 
                                 if (
                                     route().current("home") ||
-                                    route().current("car.page") ||
+                                    route().current("cars.page") ||
                                     route().current("comparison") ||
                                     route().current("profile.edit")
                                 ) {

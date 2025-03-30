@@ -2,15 +2,18 @@ import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const CompareSidebar = ({ selectedCars, removeCar }) => {
-    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-
+const CompareSidebar = ({
+    selectedCars,
+    removeCar,
+    toggleSidebar,
+    isSidebarVisible,
+}) => {
     return (
         <div className="relative">
             {/* Toggle Button */}
             <button
-                className=" chevron fixed mt-44 bg-green-400 text-white p-2 rounded-r-lg shadow-md z-50"
-                onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                className="chevron fixed mt-44 bg-green-400 text-white p-2 rounded-r-lg shadow-md z-50"
+                onClick={toggleSidebar}
             >
                 {isSidebarVisible ? (
                     <ChevronRight size={24} />
@@ -21,8 +24,8 @@ const CompareSidebar = ({ selectedCars, removeCar }) => {
 
             {/* Sidebar */}
             <div
-                className={`compare-sidebar  ${
-                    isSidebarVisible ? "" : "w-0 overflow-hidden z-0"
+                className={`compare-sidebar ${
+                    isSidebarVisible ? "w-64" : "w-0 overflow-hidden"
                 }`}
             >
                 {isSidebarVisible && (

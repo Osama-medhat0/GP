@@ -1,6 +1,8 @@
 import MainLayout from "@/Layouts/MainLayout";
+import { CAlert } from "@coreui/react";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const contactUs = () => {
     const [formData, setFormData] = useState({
@@ -22,14 +24,15 @@ const contactUs = () => {
         router.post(route("contact.store"), formData, {
             preserveScroll: true,
             onSuccess: () => {
-                alert("Message sent successfully.");
                 setErrors({});
             },
             onError: (errors) => {
                 setErrors(errors);
+                toast.warn("Please fill in all required fields!");
             },
         });
     };
+
     return (
         <>
             <MainLayout>
@@ -130,6 +133,11 @@ const contactUs = () => {
                                             placeholder="Your Email"
                                         />
                                     </div>
+                                    {errors.email && (
+                                        <CAlert color="danger">
+                                            {errors.email}
+                                        </CAlert>
+                                    )}
                                     <div className="form-group">
                                         <input
                                             name="subject"

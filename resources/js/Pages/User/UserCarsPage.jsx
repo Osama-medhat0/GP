@@ -1,17 +1,48 @@
 import { usePage, router, Link } from "@inertiajs/react";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserCarsPage = () => {
     const { cars } = usePage().props;
     console.log(cars);
     const handleDelete = (carId) => {
-        if (confirm("Are you sure you want to delete this car?")) {
-            router.delete(route("car.delete", carId), {
-                preserveScroll: true,
-                onError: (error) => alert("Error deleting car: " + error),
-            });
-        }
+        const confirmToast = ({ closeToast }) => (
+            <div className="text-center">
+                <p className="mb-2">
+                    Are you sure you want to delete this car?
+                </p>
+                <div className="flex justify-center space-x-2">
+                    <button
+                        className="bg-red-500 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                            router.delete(route("car.delete", carId), {
+                                preserveScroll: true,
+                                onError: (error) =>
+                                    toast.error("Error deleting car: " + error),
+                            });
+                            closeToast(); // Close the toast after clicking
+                        }}
+                    >
+                        Yes, Delete
+                    </button>
+                    <button
+                        className="bg-gray-500 text-white px-3 py-1 rounded"
+                        onClick={closeToast}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        );
+
+        toast.warn(confirmToast, {
+            autoClose: false,
+            closeOnClick: false,
+            draggable: false,
+            closeButton: false,
+        });
     };
     console.log(cars);
     return (

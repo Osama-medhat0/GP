@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, router, usePage } from "@inertiajs/react";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
+import { toast } from "react-toastify";
 
 const CarManager = ({ makes = [], models = [] }) => {
     const [newMake, setNewMake] = useState("");
@@ -19,11 +20,11 @@ const CarManager = ({ makes = [], models = [] }) => {
             { name: newMake },
             {
                 onSuccess: () => {
-                    alert("Car make added successfully!");
                     setNewMake("");
                     setErrors({});
                 },
                 onError: (errors) => {
+                    toast.error(`${errors.name}`);
                     setErrors({ newMake: errors.name });
                 },
             }
@@ -45,40 +46,97 @@ const CarManager = ({ makes = [], models = [] }) => {
             { name: newModel, make_name: selectedMake },
             {
                 onSuccess: () => {
-                    alert("Car model add successfully");
                     setNewModel("");
                     setSelectedMake("");
                     setErrors({});
                 },
                 onError: (errors) => {
-                    // console.log(errors);
                     setErrors({
                         newModel: errors.name,
                         selectedMake: errors.make_name,
                     });
+                    toast.error(
+                        `Error: ${errors.name || ""} ${errors.make_name || ""}`
+                    );
                 },
             }
         );
     };
-
     const handleDeleteMake = (id) => {
-        if (confirm("Are you sure you want to delete this make?")) {
-            router.delete(`/admin/manager/make/${id}`, {
-                onSuccess: () => {
-                    setErrors({});
-                },
-            });
-        }
+        const confirmToast = ({ closeToast }) => (
+            <div className="text-center">
+                <p className="mb-2">
+                    Are you sure you want to delete this make?
+                </p>
+                <div className="flex justify-center space-x-2">
+                    <button
+                        className="bg-red-500 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                            router.delete(route("manager.deleteMake", id), {
+                                preserveScroll: true,
+                                onError: (error) =>
+                                    toast.error(`${errors.name}`),
+                            });
+                            closeToast(); // Close the toast after clicking
+                        }}
+                    >
+                        Yes, Delete
+                    </button>
+                    <button
+                        className="bg-gray-500 text-white px-3 py-1 rounded"
+                        onClick={closeToast}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        );
+
+        toast.warn(confirmToast, {
+            autoClose: false,
+            closeOnClick: false,
+            draggable: false,
+            closeButton: false,
+        });
     };
 
     const handleDeleteModel = (id) => {
-        if (confirm("Are you sure you want to delete this model?")) {
-            router.delete(`/admin/manager/model/${id}`, {
-                onSuccess: () => setErrors({}),
-            });
-        }
-    };
+        const confirmToast = ({ closeToast }) => (
+            <div className="text-center">
+                <p className="mb-2">
+                    Are you sure you want to delete this model?{" "}
+                </p>
+                <div className="flex justify-center space-x-2">
+                    <button
+                        className="bg-red-500 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                            router.delete(route("manager.deleteModel", id), {
+                                preserveScroll: true,
+                                onError: (error) =>
+                                    toast.error(`${errors.name}`),
+                            });
+                            closeToast(); // Close the toast after clicking
+                        }}
+                    >
+                        Yes, Delete
+                    </button>
+                    <button
+                        className="bg-gray-500 text-white px-3 py-1 rounded"
+                        onClick={closeToast}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        );
 
+        toast.warn(confirmToast, {
+            autoClose: false,
+            closeOnClick: false,
+            draggable: false,
+            closeButton: false,
+        });
+    };
     return (
         <SidebarProvider>
             <DashboardLayout>

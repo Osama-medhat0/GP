@@ -25,6 +25,9 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->back()->with('message', 'User deleted successfully.');
+        return redirect()->back()->with([
+            'message' => 'User deleted successfully.',
+            'type' => 'success' // Can be success, error, info, warning]);
+        ]);
     }
 }

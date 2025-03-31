@@ -225,7 +225,10 @@ const NewCarListingForm = () => {
                 // });
                 setErrors({});
             },
-            onError: (errors) => setErrors(errors),
+            onError: (errors) => {
+                toast.error("Check the errors");
+                setErrors(errors);
+            },
         });
         // setFormData([]);
     };

@@ -22,6 +22,9 @@ class ContactController extends Controller
         ]);
 
         Contact::create($request->all());
-        return redirect()->route('contact');
+        return redirect()->back()->with([
+            'message' => 'Message sent successfully!',
+            'type' => 'success' // Can be success, error, info, warning]);
+        ]);
     }
 }

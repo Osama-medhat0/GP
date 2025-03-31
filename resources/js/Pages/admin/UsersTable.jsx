@@ -1,6 +1,7 @@
 import { usePage, router, Link } from "@inertiajs/react";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
+import { toast } from "react-toastify";
 
 const UsersTable = () => {
     const { users } = usePage().props;
@@ -8,15 +9,44 @@ const UsersTable = () => {
         users?.data.filter((user) => user.role === "user") || [];
 
     const handleDelete = (userId) => {
-        if (confirm("Are you sure you want to delete this user?")) {
-            router.delete(route("admin.users.delete", userId), {
-                preserveScroll: true,
-                onSuccess: () => alert("User deleted successfully!"),
-                onError: () => alert("Error deleting user:" + error),
-            });
-        }
-    };
+        const confirmToast = ({ closeToast }) => (
+            <div className="text-center">
+                <p className="mb-2">
+                    Are you sure you want to delete this user?
+                </p>
+                <div className="flex justify-center space-x-2">
+                    <button
+                        className="bg-red-500 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                            router.delete(route("admin.users.delete", userId), {
+                                preserveScroll: true,
+                                onError: (error) =>
+                                    toast.error(
+                                        "Error deleting user: " + error
+                                    ),
+                            });
+                            closeToast(); // Close the toast after clicking
+                        }}
+                    >
+                        Yes, Delete
+                    </button>
+                    <button
+                        className="bg-gray-500 text-white px-3 py-1 rounded"
+                        onClick={closeToast}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        );
 
+        toast.warn(confirmToast, {
+            autoClose: false,
+            closeOnClick: false,
+            draggable: false,
+            closeButton: false,
+        });
+    };
     return (
         <SidebarProvider>
             <DashboardLayout>

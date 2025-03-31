@@ -10,13 +10,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MainLayout = ({ children }) => {
-    // const { flash } = usePage().props;
-    // useEffect(() => {
-    //     if (flash?.message) {
-    //         toast[flash?.type || "success"](flash.message);
-    //     }
-    // }, [flash]);
-    // console.log("Flash:", flash);
+    const { flash } = usePage().props;
+    useEffect(() => {
+        if (flash?.message) {
+            toast[flash?.type || "success"](flash.message);
+        }
+    }, [flash]);
+    console.log("Flash:", flash);
 
     useEffect(() => {
         const loadScript = (src) => {
@@ -117,7 +117,7 @@ const MainLayout = ({ children }) => {
                     {/* Page Content */}
                     <div>{children}</div>
                     {/* Toast container for showing flash messages */}
-                    {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+                    <ToastContainer position="top-right" autoClose={3000} />
                     <Footer />
                 </Loader>
             </HelmetProvider>

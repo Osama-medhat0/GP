@@ -30,7 +30,10 @@ class CarManagerController extends Controller
         ], ['name.unique' => 'This car make already exists. Please choose a different name.']);
 
         CarMake::create($request->only('name'));
-        return redirect()->route("manager.index");
+        return redirect()->back()->with([
+            'message' => 'Car make added successfully!',
+            'type' => 'success'
+        ]);
     }
 
     public function storeModel(Request $request)
@@ -52,18 +55,27 @@ class CarManagerController extends Controller
 
         CarModel::create(['name' => $request->name, 'car_make_id' => $make->id]);
 
-        return redirect()->route("manager.index");
+        return redirect()->back()->with([
+            'message' => 'Car model added successfully!',
+            'type' => 'success'
+        ]);
     }
 
     public function deleteMake($id)
     {
         CarMake::findOrFail($id)->delete();
-        return redirect()->route('manager.index');
+        return redirect()->back()->with([
+            'message' => 'Car make deleted successfully!',
+            'type' => 'success'
+        ]);
     }
 
     public function deleteModel($id)
     {
         CarModel::findOrFail($id)->delete();
-        return redirect()->route('manager.index');
+        return redirect()->back()->with([
+            'message' => 'Car model deleted successfully!',
+            'type' => 'success'
+        ]);
     }
 }

@@ -12,9 +12,16 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const CarsPage = () => {
-    const { cars } = usePage().props;
+    useEffect(() => {
+        router.reload({ only: ["cars"] });
+    }, []);
 
-    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const { cars } = usePage().props;
+    const [isSidebarVisible, setIsSidebarVisible] = useState(() => {
+        const storedCars =
+            JSON.parse(localStorage.getItem("selectedCars")) || [];
+        return storedCars.length > 0; // Set to true if there are saved cars
+    });
 
     const toggleCompareSidebar = () => {
         setIsSidebarVisible((prev) => !prev);
@@ -176,9 +183,9 @@ const CarsPage = () => {
                                                     </Link>
                                                 </p>
                                                 <button
-                                                    onClick={() =>
-                                                        handleSelectCar(car)
-                                                    }
+                                                    onClick={() => {
+                                                        handleSelectCar(car);
+                                                    }}
                                                     className={`btn ${
                                                         selectedCars.some(
                                                             (c) =>

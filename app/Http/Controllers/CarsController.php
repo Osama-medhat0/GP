@@ -134,14 +134,14 @@ class CarsController extends Controller
         ]);
     }
 
-    public function CarEditForm()
+    public function CarEditForm($id)
     {
         $carMakes = CarMake::all();
         $model = CarModel::all();
 
         $userId = Auth::id();
 
-        $cars = Cars::where('user_id', $userId)->get()->map(function ($car) {
+        $cars = Cars::where('id', $id)->where('user_id', $userId)->get()->map(function ($car) {
             $car->images = json_decode($car->images, true) ?? []; // Decode JSON images into an arrayy
 
             // Generate full URLs for images

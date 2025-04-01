@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
     //Delete Listed Cars
     Route::delete("user/car/{id}", [CarsController::class, "delete"])->name("car.delete");
     //Car Edit Form Page
-    Route::get("user/car/list", [CarsController::class, "CarEditForm"])->name("car.edit.form");
+    Route::get("user/car/edit/{id}", [CarsController::class, "CarEditForm"])->name("car.edit.form");
     //Update Listed Car
     Route::post('user/car/update/{car}', [CarsController::class, 'update'])->name('car.update');
 });

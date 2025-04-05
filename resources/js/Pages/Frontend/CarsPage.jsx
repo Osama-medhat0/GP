@@ -12,6 +12,9 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const CarsPage = () => {
+    const user = usePage().props.auth.user;
+    console.log(user);
+
     useEffect(() => {
         router.reload({ only: ["cars"] });
     }, []);
@@ -166,12 +169,46 @@ const CarsPage = () => {
                                                     </p>
                                                 </div>
                                                 <p className="d-flex mb-0 d-block">
-                                                    <Link
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Contact Owner
-                                                    </Link>
+                                                    {car.user_id === user.id ? (
+                                                        <Link
+                                                            href={route(
+                                                                "live.chat",
+                                                                {
+                                                                    user_id:
+                                                                        car.user_id,
+                                                                }
+                                                            )}
+                                                            className={`btn btn-primary py-2 mr-1 ${
+                                                                car.user_id ===
+                                                                user.id
+                                                                    ? "disabled"
+                                                                    : ""
+                                                            }`}
+                                                            onClick={(e) => {
+                                                                if (
+                                                                    car.user_id ===
+                                                                    user.id
+                                                                ) {
+                                                                    e.preventDefault();
+                                                                }
+                                                            }}
+                                                        >
+                                                            Your Listing
+                                                        </Link>
+                                                    ) : (
+                                                        <Link
+                                                            href={route(
+                                                                "live.chat",
+                                                                {
+                                                                    user_id:
+                                                                        car.user_id,
+                                                                }
+                                                            )}
+                                                            className="btn btn-primary py-2 mr-1"
+                                                        >
+                                                            Contact Owner
+                                                        </Link>
+                                                    )}
                                                     <Link
                                                         href={route(
                                                             "car.detail",
@@ -182,6 +219,7 @@ const CarsPage = () => {
                                                         Details
                                                     </Link>
                                                 </p>
+
                                                 <button
                                                     onClick={() => {
                                                         handleSelectCar(car);

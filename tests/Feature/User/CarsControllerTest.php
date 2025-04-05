@@ -55,17 +55,7 @@ class CarsControllerTest extends TestCase
         $this->assertTrue(Storage::disk('public')->exists("car/{$image->hashName()}"));
     }
 
-    // public function test_car_make_and_model_data_listing_form()
-    // {
-    //     $user = User::factory()->create();
-    //     $make = CarMake::factory(10)->create();
-    //     $model = CarModel::factory(10)->create();
 
-    //     $response = $this->actingAs($user)->get(route("car.listing"));
-    //     dd($response->status(), $response->headers->get('content-type'), $response->content());
-    //     // $response->assertStatus(200);
-    //     $response->assertInertia(fn($page) => $page->component("User/CarListingForm")->has('carMakes', 10)->has('carModels', 10));
-    // }
 
     public function test_user_can_add_car_list()
     {

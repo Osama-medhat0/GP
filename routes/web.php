@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarManagerController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -40,6 +41,12 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
         } else
             return inertia("Frontend/Dashboard");
     })->name('dashboard');
+
+    //Chat post
+    Route::get('/live/chat', [ChatController::class, 'LiveChat'])->name('live.chat');
+    Route::post('/send-message', [ChatController::class, 'SendMessage'])->name('chat.store');
+    Route::get('/user-all', [ChatController::class, 'GetAllUsers'])->name('chat.users');
+    Route::get('/user-message/{id}', [ChatController::class, 'UserMsgById'])->name('chat.messages');
 
     //Profile Routes
     Route::prefix('profile')->group(function () {

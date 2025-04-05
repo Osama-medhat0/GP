@@ -47,7 +47,9 @@ const CarDetails = () => {
         description,
         images,
     } = car;
-
+    console.log(car);
+    const user = usePage().props.auth.user;
+    console.log(user);
     const [currentImage, setCurrentImage] = useState(0);
     const swiperRef = useRef(null);
     let parsedImages = JSON.parse(images).map((img) => `/storage/${img}`);
@@ -145,19 +147,32 @@ const CarDetails = () => {
                                 Listed by {car.user.name}
                             </p>
                         </div>
-                        <button className="text-blue-500 ">
-                            <div className="flex justify-center bg-blue-500 text-white rounded pt-2 pb-2 hover:bg-blue-600 duration-300">
-                                See profile
-                                <ChevronRight className="mt-1" size={24} />
-                            </div>
-                        </button>
+                        {car.user_id !== user.id ? (
+                            <button className="text-blue-500 ">
+                                <div className="flex justify-center bg-blue-500 text-white rounded pt-2 pb-2 hover:bg-blue-600 duration-300">
+                                    See profile
+                                    <ChevronRight className="mt-1" size={24} />
+                                </div>
+                            </button>
+                        ) : (
+                            ""
+                        )}
                         <p className="font-bold">
                             Member since{" "}
                             <p>{car.user.created_at.slice(0, 10)}</p>
                         </p>
-                        <button className="flex bg-blue-500 rounded justify-center mt-10 pt-2 pb-2 text-white hover:bg-blue-600 duration-300">
-                            <MessageCircle className="mr-1" /> Chat
-                        </button>
+                        {car.user_id === user.id ? (
+                            <p className="font-bold">Your listing</p>
+                        ) : (
+                            <Link
+                                href={route("live.chat", {
+                                    user_id: car.user_id,
+                                })}
+                                className="flex bg-blue-500 rounded justify-center mt-10 pt-2 pb-2 text-white hover:bg-blue-600 duration-300"
+                            >
+                                <MessageCircle className="mr-1" /> Chat
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

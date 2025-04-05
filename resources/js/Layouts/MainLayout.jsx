@@ -113,7 +113,7 @@ const MainLayout = ({ children }) => {
                 <Header auth={usePage().props.auth} />
 
                 <ScrollToTopButton />
-                <Loader delay={1500}>
+                <Loader delay={800}>
                     {/* Page Content */}
                     <div>{children}</div>
                     {/* Toast container for showing flash messages */}

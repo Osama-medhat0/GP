@@ -1,6 +1,7 @@
 import { Link, usePage } from "@inertiajs/react";
 import { useSidebarContext } from "./SidebarContext";
 import Navbar from "react-bootstrap/Navbar";
+import { MessageCircle } from "lucide-react";
 const Sidebar = () => {
     const { sidebarActive, setSidebarActive } = useSidebarContext();
     const user = usePage().props.auth.user;
@@ -122,6 +123,18 @@ const Sidebar = () => {
                                         className="mr-3 pb-1 w-9 h-9"
                                     />
                                     Listed Car
+                                </Link>
+                            </li>
+                            <li
+                                className={
+                                    route().current("car.listing")
+                                        ? "page-active"
+                                        : ""
+                                }
+                            >
+                                <Link href={route("live.chat")}>
+                                    <MessageCircle className=" ml-1 mr-4" />
+                                    Live Chat
                                 </Link>
                             </li>
                         </>

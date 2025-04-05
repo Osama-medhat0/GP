@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ChatMessage;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+
+class ChatController extends Controller
+{
+    public function SendMessage(Request $request)
+    {
+        $request->validate([
+            'msg' => 'required',
+            'receiver_id' => 'required|exists:users,id',  // Add validation for receiver
+        ]);
+
+        ChatMessage::create([
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => $request->receiver_id,
+
+            'msg' => $request->msg,
+            'created_at' => Carbon::now()
+        ]);
+
+        return redirect()->back()->with([
+            'message' => 'Message sent succesfully',
+            'type' => 'success'
+        ]);
+    }
+
+    public function UserMsgById($userId)
+    {
+        try {
+            $user = User::find($userId);
+
+            if (!$user) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+
+            $messages = ChatMessage::where(function ($query) use ($userId) {
+                $query->where('sender_id', Auth::id())
+                    ->where('receiver_id', $userId);
+            })->orWhere(function ($query) use ($userId) {
+                $query->where('sender_id', $userId)
+                    ->where('receiver_id', Auth::id());
+            })->orderBy('created_at', 'asc')->get();
+
+            return response()->json(['messages' => $messages]);
+        } catch (\Exception $e) {
+            Log::error("Chat Error: " . $e->getMessage());
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
+    }
+
+
+    public function LiveChat(Request $request)
+    {
+        $users = $this->GetAllUsers();
+        $selectedUser = null;
+
+        // Check if user_id is provided in the request from the URL
+        if ($request->has('user_id')) {
+            $seller = User::find($request->user_id);
+
+            // If the seller is found and not already in the list of users, add them
+            if ($seller && !$users->contains('id', $seller->id)) {
+                $users->push($seller); // Add seller to the chat list
+            }
+
+            // Set the selected user
+            $selectedUser = $seller;
+        }
+
+        // Check if there is an old selectedUser (to clear it if necessary)
+        if ($selectedUser && $selectedUser->id === Auth::user()->id) {
+            $selectedUser = null;  // Reset selectedUser if it's the authenticated user
+        }
+        // dd($selectedUser);
+        return inertia("User/Chat", ['users' => $users, 'selectedUser' => $selectedUser]);
+    }
+
+
+
+    public function GetAllUsers()
+    {
+        // Fetch chat messages with sender and receiver relationships
+        $chats = ChatMessage::with(['sender', 'receiver'])
+            ->orderBy('id', 'DESC')
+            ->where('sender_id', Auth::user()->id)
+            ->orWhere('receiver_id', Auth::user()->id)
+            ->get();
+
+        // dd($chats);
+
+        if ($chats->isEmpty()) {
+            return [];
+        }
+
+        // Collect the sender and receiver models
+        $users = $chats->flatMap(function ($chat) {
+            return [
+                $chat->sender,
+                $chat->receiver
+            ];
+        })->filter()->unique('id');  // Filter out null and ensure uniqueness based on user ID
+
+        // dd($users);
+
+        $users = $users->filter(function ($user) {
+            return $user->id !== Auth::user()->id; // Exclude the current user
+        });
+
+        return $users;
+    }
+}

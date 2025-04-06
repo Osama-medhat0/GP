@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cars;
 use App\Models\ChatMessage;
 use App\Models\User;
 use Carbon\Carbon;
@@ -62,8 +63,12 @@ class ChatController extends Controller
     {
         $users = $this->GetAllUsers();
         $selectedUser = null;
+        $car = null;
 
-        // Check if user_id is provided in the request from the URL
+        if ($request->has('car')) {
+            $car = Cars::find($request->car);
+        }
+
         if ($request->has('user_id')) {
             $seller = User::find($request->user_id);
 
@@ -80,8 +85,7 @@ class ChatController extends Controller
         if ($selectedUser && $selectedUser->id === Auth::user()->id) {
             $selectedUser = null;  // Reset selectedUser if it's the authenticated user
         }
-        // dd($selectedUser);
-        return inertia("User/Chat", ['users' => $users, 'selectedUser' => $selectedUser]);
+        return inertia("User/Chat", ['users' => $users, 'selectedUser' => $selectedUser, 'selectedCar' => $car]);
     }
 
 
@@ -116,5 +120,21 @@ class ChatController extends Controller
         });
 
         return $users;
+    }
+
+    public function getUserCar(User $user)
+    {
+        $cars = $user->cars;
+        // dd($cars);
+        if ($cars) {
+            return response()->json([
+                'cars' => $cars,
+                'type' => 'success'
+            ]);
+        }
+        return response()->json([
+            'message' => 'No cars found for this user',
+            'type' => 'error'
+        ]);
     }
 }

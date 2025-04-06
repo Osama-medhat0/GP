@@ -47,7 +47,7 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
     Route::post('/send-message', [ChatController::class, 'SendMessage'])->name('chat.store');
     Route::get('/user-all', [ChatController::class, 'GetAllUsers'])->name('chat.users');
     Route::get('/user-message/{id}', [ChatController::class, 'UserMsgById'])->name('chat.messages');
-
+    Route::get('/user-car/{user}', [ChatController::class, 'getUserCar'])->name('user.car');
     //Profile Routes
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');

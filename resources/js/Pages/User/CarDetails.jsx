@@ -167,6 +167,7 @@ const CarDetails = () => {
                             <Link
                                 href={route("live.chat", {
                                     user_id: car.user_id,
+                                    car: car.id,
                                 })}
                                 className="flex bg-blue-500 rounded justify-center mt-10 pt-2 pb-2 text-white hover:bg-blue-600 duration-300"
                             >

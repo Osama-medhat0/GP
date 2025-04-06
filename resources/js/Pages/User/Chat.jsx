@@ -1,21 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { usePage, router, Link } from "@inertiajs/react";
+import { usePage, Link } from "@inertiajs/react";
 import DashboardLayout from "../Frontend/Dashboard/DashboardLayout";
 import { SidebarProvider } from "../Frontend/Dashboard/Components/SidebarContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Chat = () => {
     const [message, setMessage] = useState("");
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
-    const { users, selectedUser: initialSelectedUser } = usePage().props;
+    const [car, setCar] = useState(null);
+    const [availableCars, setAvailableCars] = useState([]);
+    const {
+        users,
+        selectedUser: initialSelectedUser,
+        selectedCar: selectedCar,
+    } = usePage().props;
 
     useEffect(() => {
         if (initialSelectedUser) {
             setSelectedUser(initialSelectedUser);
             fetchMessages(initialSelectedUser.id);
+            fetchCars(initialSelectedUser.id);
         }
-    }, []);
+    }, [initialSelectedUser]);
+
+    useEffect(() => {
+        // Make sure the selected car is set correctly on page load or when cars are fetched
+        if (availableCars.length > 0) {
+            const selectedCarFromPage = availableCars.find(
+                (car) => car.id === selectedCar?.id
+            );
+            if (selectedCarFromPage) {
+                setCar(selectedCarFromPage);
+            } else {
+                setCar(availableCars[0]);
+            }
+        }
+    }, [availableCars, selectedCar]);
 
     useEffect(() => {
         const chatBox = document.querySelector(".chat-msg");
@@ -27,6 +49,53 @@ const Chat = () => {
     const handleUserSelect = (user) => {
         setSelectedUser(user);
         fetchMessages(user.id);
+        fetchCars(user.id);
+    };
+
+    const fetchCars = (userId) => {
+        axios
+            .get(route("user.car", userId))
+            .then((response) => {
+                const cars = response.data.cars;
+                setAvailableCars(cars);
+
+                // Try to keep the current selected car if available, otherwise set the first car
+                const selectedCar = cars.find((car) => car.id === car?.id);
+
+                if (selectedCar) {
+                    setCar(selectedCar);
+                } else if (cars.length > 0) {
+                    setCar(cars[0]);
+                }
+                console.log("Available cars:", cars);
+                console.log("Selected car:", selectedCar);
+            })
+            .catch((error) => {
+                toast.error("Error fetching car details: " + error);
+            });
+    };
+
+    const handleCarSelect = (carId) => {
+        const selectedCar = availableCars.find(
+            (car) => car.id === parseInt(carId, 10)
+        ); // Ensure carId is compared as number
+
+        if (selectedCar) {
+            setCar(selectedCar);
+        } else {
+            console.error("Car not found with ID:", carId);
+        }
+    };
+
+    const getImageUrl = () => {
+        if (car?.images) {
+            const imagePaths = car.images.split(",");
+            const imagePath = imagePaths[0]
+                .trim()
+                .replace(/\\\//g, "/")
+                .replace(/["\[\]]/g, ""); // Get the first image and clean up the path
+            return `/storage/${imagePath}`;
+        }
     };
 
     const fetchMessages = (userId) => {
@@ -50,7 +119,7 @@ const Chat = () => {
                     receiver_id: selectedUser.id,
                 })
                 .then(() => {
-                    fetchMessages(selectedUser.id); // Fetch new messages after sending
+                    fetchMessages(selectedUser.id);
                     setMessage("");
                 })
                 .catch((error) => {
@@ -65,7 +134,7 @@ const Chat = () => {
                 <div className="ml-80 pl-9 text-3xl font-bold pt-7">
                     Live Chat
                 </div>
-                <div className="flex ml-80 mr-0 px-6 mt-6 ">
+                <div className="flex ml-80 mr-0 px-6 mt-6 pb-7">
                     <div className="w-1/4 bg-gray-100 p-4 rounded-lg shadow-lg">
                         <strong className="text-xl">Chat List</strong>
                         <hr className="my-2" />
@@ -101,11 +170,61 @@ const Chat = () => {
 
                     <div className="w-3/4 pl-6">
                         <div className="bg-white shadow-lg rounded-lg">
-                            <div className="bg-blue-400 text-white text-center py-3 rounded-t-lg">
-                                <strong>
+                            <div className="bg-blue-400 text-white text-center pt-2 rounded-t-lg pb-10">
+                                <strong className="text-lg float-start pl-4">
                                     Selected User:{" "}
                                     {selectedUser ? selectedUser.name : "None"}
                                 </strong>
+                                {selectedUser && availableCars.length > 0 && (
+                                    <div className="mt-9 float-end">
+                                        <select
+                                            className=" border py-4 cursor-pointer border-gray-300 rounded-lg text-black text-center focus:outline-none focus:ring-blue-500 transition-all duration-200 ease-in-out hover:bg-gray-100"
+                                            onChange={(e) =>
+                                                handleCarSelect(e.target.value)
+                                            }
+                                            value={car?.id || ""}
+                                        >
+                                            {availableCars.map((carItem) => (
+                                                <option
+                                                    key={carItem.id}
+                                                    value={carItem.id}
+                                                >
+                                                    {carItem.make}{" "}
+                                                    {carItem.model} (
+                                                    {carItem.year})
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                                {car && (
+                                    <Link href={route("car.detail", car.id)}>
+                                        <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-md mb-0 mt-9 px-2 pt-2 pb-1 hover:bg-gray-100 transition-all duration-200 ease-in-out cursor-pointer">
+                                            <img
+                                                src={getImageUrl()}
+                                                alt={`${car.make} ${car.model}`}
+                                                className="w-24 h-16 object-cover rounded-md mr-4"
+                                            />
+                                            <div className="flex-1">
+                                                <h2 className="text-sm font-bold text-gray-800">
+                                                    {car.make} {car.model} (
+                                                    {car.year})
+                                                </h2>
+                                                <p className="text-sm text-gray-600">
+                                                    {car.mileage} km •{" "}
+                                                    {car.fuelType} •{" "}
+                                                    {car.transmission}
+                                                </p>
+                                            </div>
+                                            <div className="text-blue-600 text-lg font-semibold whitespace-nowrap pr-3">
+                                                $
+                                                {parseFloat(
+                                                    car.price
+                                                ).toLocaleString()}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )}
                             </div>
                             <div className="p-4 h-96 overflow-y-auto chat-msg">
                                 <ul className="space-y-3">

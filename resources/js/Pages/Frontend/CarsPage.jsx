@@ -202,6 +202,7 @@ const CarsPage = () => {
                                                                 {
                                                                     user_id:
                                                                         car.user_id,
+                                                                    car: car.id,
                                                                 }
                                                             )}
                                                             className="btn btn-primary py-2 mr-1"
@@ -209,6 +210,7 @@ const CarsPage = () => {
                                                             Contact Owner
                                                         </Link>
                                                     )}
+                                                    {console.log(car)}
                                                     <Link
                                                         href={route(
                                                             "car.detail",

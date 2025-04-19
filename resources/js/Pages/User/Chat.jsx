@@ -170,7 +170,7 @@ const Chat = () => {
 
                     <div className="w-3/4 pl-6">
                         <div className="bg-white shadow-lg rounded-lg">
-                            <div className="bg-blue-400 text-white text-center pt-2 rounded-t-lg pb-10">
+                            <div className="bg-blue-400 text-white text-center pt-2 rounded-t-lg pb-7">
                                 <strong className="text-lg float-start pl-4">
                                     Selected User:{" "}
                                     {selectedUser ? selectedUser.name : "None"}

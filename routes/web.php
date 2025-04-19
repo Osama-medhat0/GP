@@ -32,6 +32,11 @@ Route::get("/home", function () {
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
+//AI Estimate Price route
+Route::get('estimate-price', function () {
+    return inertia('User/CarPriceEstimate');
+})->name('estimate.price');
+
 // User Routes
 Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () {
 

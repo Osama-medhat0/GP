@@ -169,7 +169,8 @@ const CarsPage = () => {
                                                     </p>
                                                 </div>
                                                 <p className="d-flex mb-0 d-block">
-                                                    {car.user_id === user.id ? (
+                                                    {car.user &&
+                                                    car.user_id === user.id ? (
                                                         <Link
                                                             href={route(
                                                                 "live.chat",

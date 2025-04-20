@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
+use App\Notifications\NewMessageNotification;
 
 class ChatController extends Controller
 {
@@ -23,10 +23,17 @@ class ChatController extends Controller
         ChatMessage::create([
             'sender_id' => Auth::user()->id,
             'receiver_id' => $request->receiver_id,
-
             'msg' => $request->msg,
             'created_at' => Carbon::now()
         ]);
+
+
+        //Send notification to the user
+        $receiver = User::find($request->receiver_id);
+
+        if ($receiver && $receiver->email) {
+            $receiver->notify(new NewMessageNotification(Auth::user()));
+        }
 
         return redirect()->back()->with([
             'message' => 'Message sent succesfully',
@@ -85,7 +92,10 @@ class ChatController extends Controller
         if ($selectedUser && $selectedUser->id === Auth::user()->id) {
             $selectedUser = null;  // Reset selectedUser if it's the authenticated user
         }
-        return inertia("User/Chat", ['users' => $users, 'selectedUser' => $selectedUser, 'selectedCar' => $car]);
+
+        $unreadNotifications = Auth::user()->unreadNotifications->where('type', NewMessageNotification::class);
+
+        return inertia("User/Chat", ['users' => $users, 'selectedUser' => $selectedUser, 'selectedCar' => $car, 'unreadNotifications' => $unreadNotifications]);
     }
 
 

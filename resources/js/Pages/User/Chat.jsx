@@ -11,11 +11,56 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [car, setCar] = useState(null);
     const [availableCars, setAvailableCars] = useState([]);
+
     const {
         users,
         selectedUser: initialSelectedUser,
         selectedCar: selectedCar,
+        unreadNotifications: unreadNotfications,
     } = usePage().props;
+    const [unreadNotifications, setUnreadNotifications] =
+        useState(unreadNotfications);
+
+    console.log(unreadNotfications);
+
+    //unread notifications
+    const unreadCounts = unreadNotfications.reduce((acc, notification) => {
+        const senderId = notification.data.sender_id;
+        if (!acc[senderId]) {
+            acc[senderId] = 0;
+        }
+        acc[senderId]++;
+        return acc;
+    }, {});
+
+    const markNotificationsAsRead = (userId) => {
+        // Get the notifications to mark as read for this user
+        const notificationIds = unreadNotfications
+            .filter((notification) => notification.data.sender_id === userId)
+            .map((notification) => notification.id);
+
+        if (notificationIds.length > 0) {
+            axios
+                .post(route("notifications.markRead"), {
+                    notification_ids: notificationIds,
+                })
+                .then(() => {
+                    // Clear unread counts for the selected user
+                    setUnreadNotifications((prevNotifications) =>
+                        prevNotifications.filter(
+                            (notification) =>
+                                !notificationIds.includes(notification.id)
+                        )
+                    );
+                })
+                .catch((error) => {
+                    console.error(
+                        "Error marking notifications as read:",
+                        error
+                    );
+                });
+        }
+    };
 
     useEffect(() => {
         if (initialSelectedUser) {
@@ -50,6 +95,7 @@ const Chat = () => {
         setSelectedUser(user);
         fetchMessages(user.id);
         fetchCars(user.id);
+        markNotificationsAsRead(user.id);
     };
 
     const fetchCars = (userId) => {
@@ -159,6 +205,12 @@ const Chat = () => {
                                             <span className="text-lg font-medium">
                                                 {user.name}
                                             </span>
+
+                                            {unreadCounts[user.id] > 0 && (
+                                                <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                                    {unreadCounts[user.id]}
+                                                </span>
+                                            )}
                                         </button>
                                     </li>
                                 ))

@@ -5,11 +5,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CarManagerController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Inertia\Inertia;
 // Public Routes
 Route::get('/', function () {
     return inertia('Frontend/Home', [
@@ -44,8 +45,17 @@ Route::middleware(['auth', 'verified'])->prefix("dashboard")->group(function () 
         if (Auth::check() && Auth::user()->role === "admin") {
             return redirect()->route('admin.dashboard');
         } else
-            return inertia("Frontend/Dashboard");
+            return inertia("Frontend/Dashboard", ['notifications' => Auth::user()->unreadNotifications,]); //notifications
     })->name('dashboard');
+
+    //marks as read
+    Route::post('/notifications/mark-read', function () {
+        Auth::user()->unreadNotifications->markAsRead();
+        return Inertia::location(route('dashboard'));
+    })->name('notifications.read');
+
+
+    Route::post('/notifications/live-chat', [NotificationController::class, 'markAsRead'])->name("notifications.markRead");
 
     //Chat post
     Route::get('/live/chat', [ChatController::class, 'LiveChat'])->name('live.chat');

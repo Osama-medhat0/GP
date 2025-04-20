@@ -125,7 +125,7 @@ const Footer = () => {
                                             <a href="#">
                                                 <span className="icon icon-envelope" />
                                                 <span className="text">
-                                                    FairWheels@gmail.com
+                                                    info@FairWheels.com
                                                 </span>
                                             </a>
                                         </li>

@@ -207,4 +207,9 @@ class CarsController extends Controller
 
         return inertia('User/CarDetails', ['car' => $car->toArray()]);
     }
+
+    public function featured()
+    {
+        return Cars::latest()->take(4)->get();
+    }
 }

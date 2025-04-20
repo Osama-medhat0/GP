@@ -1,5 +1,7 @@
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import MainLayout from "../../Layouts/MainLayout";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import SearchContent from "./Components/SearchContent";
 import {
     FaCar,
@@ -9,7 +11,10 @@ import {
 } from "react-icons/fa";
 
 const Home = () => {
-    console.log(usePage());
+    const cars = usePage().props.featuredCars;
+    const user = usePage().props.auth.user;
+    console.log(user);
+    console.log(cars);
     return (
         <>
             <MainLayout>
@@ -22,16 +27,13 @@ const Home = () => {
                     <div className="container">
                         <div className="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
                             <div className="col-lg-8 ftco-animate">
-                                <div className="text w-100 text-center mb-md-5 pb-md-5 ">
-                                    <h1 className="mb-4">
-                                        Fast &amp; Easy Way To Buy or Sell a Car
+                                <div className="text text-center mb-md-5 pb-md-5 ">
+                                    <h1 className="mb-4 mx-0 px-0 w-xl">
+                                        Find Your Perfect Car Or Sell With Ease
                                     </h1>
                                     <p className="pt-" style={{ fontSize: 18 }}>
-                                        Our platform makes car retail simple and
-                                        efficient, providing a seamless
-                                        experience for listing and exploring
-                                        cars. Find your perfect vehicle or sell
-                                        with ease.
+                                        List, Discover, Compare &amp; Estimate
+                                        Fair Price Of Any Car
                                     </p>
                                 </div>
                             </div>
@@ -58,376 +60,125 @@ const Home = () => {
                                 <span className="subheading">
                                     Find Your Next Car{" "}
                                 </span>
-                                <h2 className="mb-2">Feeatured Vehicles</h2>
+                                <h2 className="mb-2">Featured Listings</h2>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="carousel-car owl-carousel">
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-1.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
+                        <div className="col-md-12">
+                            <div className="carousel-car owl-carousel">
+                                {cars.length > 0 ? (
+                                    cars.map((car) => (
+                                        <div key={car.id} className="item">
+                                            <div className="car-wrap rounded ftco-animate">
+                                                <div
+                                                    className="img rounded d-flex align-items-end"
+                                                    style={{
+                                                        backgroundImage: `url(/storage/${
+                                                            JSON.parse(
+                                                                car.images
+                                                            )[0]
+                                                        })`,
+                                                        height: "250px",
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition:
+                                                            "center",
+                                                    }}
+                                                ></div>
+                                                <div className="text">
+                                                    <h2 className="mb-0">
+                                                        <Link
+                                                            href={route(
+                                                                "car.detail",
+                                                                car.id
+                                                            )}
+                                                        >
+                                                            {car.make}{" "}
+                                                            {car.model}
+                                                        </Link>
+                                                    </h2>
+                                                    <div className="d-flex mb-3">
+                                                        <span className="cat">
+                                                            {car.year}
+                                                        </span>
+                                                        <p className="price ml-auto">
+                                                            {parseFloat(
+                                                                car.price
+                                                            ).toLocaleString(
+                                                                "en-US",
+                                                                {
+                                                                    style: "currency",
+                                                                    currency:
+                                                                        "USD",
+                                                                }
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                    <p className="d-flex mb-0 d-block">
+                                                        {user &&
+                                                        car.user_id ===
+                                                            user.id ? (
+                                                            <Link
+                                                                href={route(
+                                                                    "live.chat",
+                                                                    {
+                                                                        user_id:
+                                                                            car.user_id,
+                                                                    }
+                                                                )}
+                                                                className={`btn btn-primary py-2 mr-1 ${
+                                                                    car.user_id ===
+                                                                    user.id
+                                                                        ? "disabled"
+                                                                        : ""
+                                                                }`}
+                                                                onClick={(
+                                                                    e
+                                                                ) => {
+                                                                    if (
+                                                                        car.user_id ===
+                                                                        user.id
+                                                                    ) {
+                                                                        e.preventDefault();
+                                                                    }
+                                                                }}
+                                                            >
+                                                                Your Listing
+                                                            </Link>
+                                                        ) : (
+                                                            <Link
+                                                                href={route(
+                                                                    "live.chat",
+                                                                    {
+                                                                        user_id:
+                                                                            car.user_id,
+                                                                        car: car.id,
+                                                                    }
+                                                                )}
+                                                                className="btn btn-primary py-2 mr-1"
+                                                            >
+                                                                Contact Owner
+                                                            </Link>
+                                                        )}
+                                                        <Link
+                                                            href={route(
+                                                                "car.detail",
+                                                                { id: car.id }
+                                                            )}
+                                                            className="btn btn-secondary py-2 ml-1"
+                                                        >
+                                                            Details
+                                                        </Link>
                                                     </p>
                                                 </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Buy now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-2.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Buy now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-3.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Buy now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-4.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Buy now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    ))
+                                ) : (
+                                    <p>No cars available</p>
+                                )}
                             </div>
                         </div>
                     </div>
                 </section>
-
-                {/* <section
-                    className="ftco-section ftco-intro"
-                    style={{ backgroundImage: "url(assets/images/gtr.jpg)" }}
-                >
-                    <div className="overlay" />
-                    <div className="container">
-                        <div className="row justify-content-end">
-                            <div className="col-md-6 heading-section heading-section-white ftco-animate">
-                                <h2 className="mb-3">
-                                    Do You Want To Earn With Us? So Don't Be
-                                    Late.
-                                </h2>
-                                <a href="#" className="btn btn-primary btn-lg">
-                                    Become A Driver
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section> */}
-
-                {/* <section className="ftco-section ftco-no-pt bg-light">
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-md-12 heading-section text-center ftco-animate mb-5">
-                                <span className="subheading">
-                                    What we offer
-                                </span>
-                                <h2 className="mb-2">Feeatured Vehicles</h2>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="carousel-car owl-carousel">
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-1.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Book now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-2.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Book now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-3.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Book now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="item">
-                                        <div className="car-wrap rounded ftco-animate">
-                                            <div
-                                                className="img rounded d-flex align-items-end"
-                                                style={{
-                                                    backgroundImage:
-                                                        "url(assets/images/car-4.jpg)",
-                                                }}
-                                            ></div>
-                                            <div className="text">
-                                                <h2 className="mb-0">
-                                                    <a href="#">
-                                                        Mercedes Grand Sedan
-                                                    </a>
-                                                </h2>
-                                                <div className="d-flex mb-3">
-                                                    <span className="cat">
-                                                        Cheverolet
-                                                    </span>
-                                                    <p className="price ml-auto">
-                                                        $500 <span>/day</span>
-                                                    </p>
-                                                </div>
-                                                <p className="d-flex mb-0 d-block">
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-primary py-2 mr-1"
-                                                    >
-                                                        Book now
-                                                    </a>{" "}
-                                                    <a
-                                                        href="#"
-                                                        className="btn btn-secondary py-2 ml-1"
-                                                    >
-                                                        Details
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section> */}
                 <section className="ftco-section ftco-about">
                     <div className="container">
                         <div className="row no-gutters">
@@ -464,8 +215,8 @@ const Home = () => {
                                         the right car at the right price.
                                     </p>
                                     <p className="pt-3">
-                                        <a
-                                            href="#searchContent"
+                                        <Link
+                                            href={route("cars.page")}
                                             className="btn py-3 px-4"
                                             style={{
                                                 backgroundColor: "#1089ff",
@@ -475,7 +226,7 @@ const Home = () => {
                                             }}
                                         >
                                             Search Vehicle
-                                        </a>
+                                        </Link>
                                     </p>
                                 </div>
                             </div>

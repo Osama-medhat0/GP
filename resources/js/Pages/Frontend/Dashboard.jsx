@@ -26,17 +26,16 @@ export default function Dashboard() {
         <>
             <SidebarProvider>
                 <DashboardLayout>
-                    {/* <Header showLogo={false} /> */}
-                    <div className="flex h-screen">
+                    <div className="max-w-2xl mx-auto p-6  rounded-xl  space-y-4 ml-10">
+                        {" "}
+                        {/* Sidebar */}
                         <Sidebar />
-                        <Head title="Dashboard" />
-                        <div className="container mx-auto py-6 px-4">
-                            <h1 className="text-2xl font-bold mb-4">
-                                Dashboard
-                            </h1>
+                        {/* Main content container */}
+                        <div className="flex-grow  py-6 px-4">
+                            <Head title="Dashboard" />
 
                             {notifications.length > 0 ? (
-                                <div className="bg-white shadow rounded p-4 mb-6">
+                                <div className="bg-white shadow rounded p-10 mb-6">
                                     <h2 className="text-lg font-semibold mb-3">
                                         🔔 Notifications
                                     </h2>
@@ -69,11 +68,7 @@ export default function Dashboard() {
                                     </button>
                                 </div>
                             ) : (
-                                <>
-                                    <p className="text-gray-500">
-                                        No new notifications 🎉
-                                    </p>
-                                </>
+                                <p className="text-gray-500"></p>
                             )}
                         </div>
                     </div>

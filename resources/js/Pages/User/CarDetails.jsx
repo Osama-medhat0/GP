@@ -147,21 +147,11 @@ const CarDetails = () => {
                                 Listed by {car.user.name}
                             </p>
                         </div>
-                        {car.user_id !== user.id ? (
-                            <button className="text-blue-500 ">
-                                <div className="flex justify-center bg-blue-500 text-white rounded pt-2 pb-2 hover:bg-blue-600 duration-300">
-                                    See profile
-                                    <ChevronRight className="mt-1" size={24} />
-                                </div>
-                            </button>
-                        ) : (
-                            ""
-                        )}
                         <p className="font-bold">
                             Member since{" "}
                             <p>{car.user.created_at.slice(0, 10)}</p>
                         </p>
-                        {car.user_id === user.id ? (
+                        {user && car.user_id === user.id ? (
                             <p className="font-bold">Your listing</p>
                         ) : (
                             <Link

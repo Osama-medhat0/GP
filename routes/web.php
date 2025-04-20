@@ -11,23 +11,25 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-// Public Routes
-Route::get('/', function () {
+
+//Home Route
+Route::get('/', function (CarsController $carController) {
     return inertia('Frontend/Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-    ]);
-})->name("home");
-
-Route::get("/home", function () {
-    return inertia("Frontend/Home", [
         'auth' => [
             'user' => Auth::user(),
         ],
+        'featuredCars' => $carController->featured(),
     ]);
 })->name("home");
+
+//blog
+Route::get('/blog', function () {
+    return inertia("Frontend/blog-single");
+});
 
 //contact us Routes
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact');

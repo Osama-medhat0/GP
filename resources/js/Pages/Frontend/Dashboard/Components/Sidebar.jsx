@@ -22,7 +22,7 @@ const Sidebar = () => {
                     <i className="la la-times" />
                 </div>
                 <Navbar.Brand
-                    href="/home"
+                    href={route("home")}
                     style={{
                         fontWeight: "bold",
                         fontSize: 30,

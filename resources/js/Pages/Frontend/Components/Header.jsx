@@ -46,17 +46,6 @@ export default function Header({ showLogo, head }) {
                     <div className="ml-auto text-right hidden sm:flex ">
                         <Nav className="me-auto">
                             <Link
-                                className={`block no-underline mr-5 py-4  text-gray-700 text-lg ${
-                                    route().current("home")
-                                        ? "text-green-500 font-bold"
-                                        : ""
-                                }`}
-                                href={route("home")}
-                                // active={route().current("/")}
-                            >
-                                Home
-                            </Link>
-                            <Link
                                 className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
                                     route().current("cars.page")
                                         ? "text-green-500 font-bold"
@@ -64,7 +53,7 @@ export default function Header({ showLogo, head }) {
                                 }`}
                                 href={route("cars.page")}
                             >
-                                Cars
+                                Discover
                             </Link>
                             <Link
                                 className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
@@ -74,7 +63,7 @@ export default function Header({ showLogo, head }) {
                                 }`}
                                 href="#ai-tool"
                             >
-                                AI Tool
+                                Estimate Price
                             </Link>
 
                             <Link
@@ -125,7 +114,7 @@ export default function Header({ showLogo, head }) {
                                         href={route("register")}
                                         className={`block no-underline ml-3 py-4 text-blue-400 font-bold`}
                                     >
-                                        Register
+                                        Sign Up
                                     </Link>
                                 </>
                             )}
@@ -180,26 +169,26 @@ export default function Header({ showLogo, head }) {
                     </div>
 
                     {/* Mobile Menu */}
-                    <div className="py-0 sm:hidden mt-2">
+                    <div className="py-0 sm:hidden mt-2 pl-4">
                         <Link
-                            className={`inline-flex rounded-md mt-2 mr-4 text-gray-700 text-lg ${
+                            className={`inline-flex rounded-md mt-2 mr-4 text-gray-700 text-md ${
                                 route().current("cars.page")
                                     ? "text-green-500 font-bold"
                                     : ""
                             }`}
                             href={route("cars.page")}
                         >
-                            Cars
+                            Discover
                         </Link>
                         <Link
-                            className={`inline-flex rounded-md mr-4 mb-2 text-gray-700 text-lg ${
+                            className={`inline-flex rounded-md mr-4 mb-2 text-gray-700 text-md ${
                                 route().current("cars.page")
                                     ? "text-green-500 font-bold"
                                     : ""
                             }`}
-                            href={route("cars.page")}
+                            href={route("estimate.price")}
                         >
-                            AI-Tool
+                            Estimate Price
                         </Link>
                         <button
                             className="inline-flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100"
@@ -264,17 +253,6 @@ export default function Header({ showLogo, head }) {
                             }
                         `}
                     >
-                        <Link
-                            className={`block no-underline mt-3  text-gray-700 text-lg${
-                                route().current("home")
-                                    ? "text-green-500 font-bold"
-                                    : ""
-                            }`}
-                            href={route("home")}
-                            // active={route().current("/")}
-                        >
-                            Home
-                        </Link>
                         <hr className=" my-2 border-gray-900" />
                         {user?.role === "admin" && (
                             <>
@@ -345,7 +323,7 @@ export default function Header({ showLogo, head }) {
                                         href={route("register")}
                                         className="no-underline mb-2"
                                     >
-                                        Register
+                                        Sign Up
                                     </Link>
                                 </div>
                             </>

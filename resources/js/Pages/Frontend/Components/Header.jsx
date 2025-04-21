@@ -57,11 +57,11 @@ export default function Header({ showLogo, head }) {
                             </Link>
                             <Link
                                 className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
-                                    route().current("")
+                                    route().current("estimate.price")
                                         ? "text-green-500 font-bold"
                                         : ""
                                 }`}
-                                href="#ai-tool"
+                                href={route("estimate.price")}
                             >
                                 Estimate Price
                             </Link>

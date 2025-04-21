@@ -169,7 +169,7 @@ const CarsPage = () => {
                                                     </p>
                                                 </div>
                                                 <p className="d-flex mb-0 d-block">
-                                                    {car.user &&
+                                                    {user &&
                                                     car.user_id === user.id ? (
                                                         <Link
                                                             href={route(

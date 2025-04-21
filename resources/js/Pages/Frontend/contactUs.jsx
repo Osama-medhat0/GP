@@ -101,7 +101,7 @@ const contactUs = () => {
                                             <p>
                                                 <span>Email:</span>{" "}
                                                 <a href="mailto:FairWheels@gmail.com">
-                                                    FairWheels@gmail.com
+                                                    info@FairWheels.com
                                                 </a>
                                             </p>
                                         </div>

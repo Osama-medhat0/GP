@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/react";
 export default function ApplicationLogo(props) {
     return (
         <Link
-            href="/home"
+            href={route("home")}
             className="hidden sm:block pl-3"
             style={{
                 fontWeight: "bold",

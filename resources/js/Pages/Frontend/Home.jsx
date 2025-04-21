@@ -334,9 +334,12 @@ const Home = () => {
                                     Ready to Sell Your Car? Don’t Wait — Start
                                     Now!
                                 </h2>
-                                <a href="#" className="btn btn-primary btn-lg">
+                                <Link
+                                    href={route("car.listing")}
+                                    className="btn btn-primary btn-lg"
+                                >
                                     List Your Car
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

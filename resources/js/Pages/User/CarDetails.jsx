@@ -141,29 +141,33 @@ const CarDetails = () => {
                     </div>
 
                     {/* Seller Details */}
-                    <div className="grid grid-cols-2  mt-10 border-2 rounded-lg p-2">
+                    <div className="grid grid-cols-2  mt-10 mx-0 border rounded-lg py-3 px-3">
                         <div className=" font-bold">
                             <p className="text-black text-lg">
-                                Listed by {car.user.name}
+                                Listed by: {car.user.name}
+                            </p>
+                            <p className="text-black text-lg">
+                                Date of Listing: {car.created_at.slice(0, 10)}
                             </p>
                         </div>
-                        <p className="font-bold">
-                            Member since{" "}
-                            <p>{car.user.created_at.slice(0, 10)}</p>
+                        <p className="font-bold pl-5">
+                            Member since: {car.user.created_at.slice(0, 10)}
                         </p>
-                        {user && car.user_id === user.id ? (
-                            <p className="font-bold">Your listing</p>
-                        ) : (
-                            <Link
-                                href={route("live.chat", {
-                                    user_id: car.user_id,
-                                    car: car.id,
-                                })}
-                                className="flex bg-blue-500 rounded justify-center mt-10 pt-2 pb-2 text-white hover:bg-blue-600 duration-300"
-                            >
-                                <MessageCircle className="mr-1" /> Chat
-                            </Link>
-                        )}
+                        <div className="col-span-2 flex justify-center">
+                            {user && car.user_id === user.id ? (
+                                <p className="font-bold">Your listing</p>
+                            ) : (
+                                <Link
+                                    href={route("live.chat", {
+                                        user_id: car.user_id,
+                                        car: car.id,
+                                    })}
+                                    className="flex bg-blue-500 rounded justify-center mt-10 py-3 px-5 text-white hover:bg-blue-600 duration-300 ml-10"
+                                >
+                                    <MessageCircle className="mr-1" /> Chat
+                                </Link>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

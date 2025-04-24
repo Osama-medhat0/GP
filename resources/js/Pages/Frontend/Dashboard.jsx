@@ -7,7 +7,7 @@ import { usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia"; // ✅ Correct import
 
 export default function Dashboard() {
-    const { notifications } = usePage().props;
+    const { notifications = [] } = usePage().props;
     console.log(notifications);
 
     const extractSenderFromMessage = (message) => {

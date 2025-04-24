@@ -12789,7 +12789,7 @@ textarea.form-control {
     border-radius: 2px;
 }
 
-.sidebar-box {
+/* .sidebar-box {
     margin-bottom: 30px;
     padding: 25px;
     font-size: 15px;
@@ -12803,7 +12803,7 @@ textarea.form-control {
 .sidebar-box h3 {
     font-size: 18px;
     margin-bottom: 15px;
-}
+} */
 
 .categories li,
 .sidelink li {

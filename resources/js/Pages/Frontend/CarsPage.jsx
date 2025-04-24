@@ -94,7 +94,6 @@ const CarsPage = () => {
                                         <i className="ion-ios-arrow-forward"></i>
                                     </span>
                                 </p>
-                                <h1 className="mb-3 bread">Choose Your Car</h1>
                             </div>
                         </div>
                     </div>

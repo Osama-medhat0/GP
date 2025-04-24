@@ -46,7 +46,7 @@ export default function Header({ showLogo, head }) {
                     <div className="ml-auto text-right hidden sm:flex ">
                         <Nav className="me-auto">
                             <Link
-                                className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
                                     route().current("cars.page")
                                         ? "text-green-500 font-bold"
                                         : ""
@@ -56,7 +56,7 @@ export default function Header({ showLogo, head }) {
                                 Discover
                             </Link>
                             <Link
-                                className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
                                     route().current("estimate.price")
                                         ? "text-green-500 font-bold"
                                         : ""
@@ -67,7 +67,7 @@ export default function Header({ showLogo, head }) {
                             </Link>
 
                             <Link
-                                className={`block no-underline mr-5 py-4 text-gray-700 text-lg ${
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
                                     route().current("car.listing")
                                         ? "text-green-500 font-bold"
                                         : ""
@@ -76,7 +76,16 @@ export default function Header({ showLogo, head }) {
                             >
                                 Sell Your Car
                             </Link>
-
+                            <Link
+                                className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
+                                    route().current("blog")
+                                        ? "text-green-500 font-bold"
+                                        : ""
+                                }`}
+                                href={route("blog")}
+                            >
+                                Blog
+                            </Link>
                             {user ? (
                                 <Link
                                     href={
@@ -84,7 +93,7 @@ export default function Header({ showLogo, head }) {
                                             ? route("admin.dashboard")
                                             : route("dashboard")
                                     }
-                                    className={`block no-underline mr-5 py-4 text-gray-700 text-lg
+                                    className={`block no-underline mr-5 py-4 text-gray-700 text-md
                                         ${
                                             route().current("admin.dashboard")
                                                 ? "text-green-500 font-bold"
@@ -95,9 +104,6 @@ export default function Header({ showLogo, head }) {
                                                 ? "text-green-500 font-bold"
                                                 : ""
                                         }`}
-                                    style={{
-                                        fontSize: "17px",
-                                    }}
                                 >
                                     Dashboard
                                 </Link>
@@ -169,9 +175,9 @@ export default function Header({ showLogo, head }) {
                     </div>
 
                     {/* Mobile Menu */}
-                    <div className="py-0 sm:hidden mt-2 pl-4">
+                    <div className="py-0 sm:hidden mt-2 pl-4 flex">
                         <Link
-                            className={`inline-flex rounded-md mt-2 mr-4 text-gray-700 text-md ${
+                            className={`inline-flex rounded-md  mr-4 text-gray-700 text-sm ${
                                 route().current("cars.page")
                                     ? "text-green-500 font-bold"
                                     : ""
@@ -181,8 +187,8 @@ export default function Header({ showLogo, head }) {
                             Discover
                         </Link>
                         <Link
-                            className={`inline-flex rounded-md mr-4 mb-2 text-gray-700 text-md ${
-                                route().current("cars.page")
+                            className={`inline-flex rounded-md mr-4 mb-2 text-gray-700 text-sm ${
+                                route().current("estimate.price")
                                     ? "text-green-500 font-bold"
                                     : ""
                             }`}
@@ -193,15 +199,13 @@ export default function Header({ showLogo, head }) {
                         <button
                             className="inline-flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100"
                             onClick={() => {
-                                {
-                                    // console.log(showingNavigationDropdown);
-                                }
-
                                 if (
                                     route().current("home") ||
                                     route().current("cars.page") ||
                                     route().current("comparison") ||
-                                    route().current("profile.edit")
+                                    route().current("profile.edit") ||
+                                    route().current("blog") ||
+                                    route().current("blog.show")
                                 ) {
                                     setShowingNavigationDropdown(
                                         !showingNavigationDropdown
@@ -213,7 +217,7 @@ export default function Header({ showLogo, head }) {
                             }}
                         >
                             <svg
-                                className="h-6 w-6"
+                                className="h-6 w-6 "
                                 stroke="currentColor"
                                 fill="none"
                                 viewBox="0 0 24 24"
@@ -257,7 +261,7 @@ export default function Header({ showLogo, head }) {
                         {user?.role === "admin" && (
                             <>
                                 <Link
-                                    className={`block no-underline   text-gray-700 text-lg ${
+                                    className={`block no-underline   text-gray-700 text-md ${
                                         route().current("dashboard")
                                             ? "text-green-500 font-bold"
                                             : ""
@@ -268,7 +272,7 @@ export default function Header({ showLogo, head }) {
                                 </Link>
                                 <hr className=" my-2 border-gray-900" />
                                 <Link
-                                    className="no-underline  text-gray-700 text-lg"
+                                    className="no-underline  text-gray-700 text-md"
                                     href={route("admin.users")}
                                 >
                                     Manage Users
@@ -278,7 +282,7 @@ export default function Header({ showLogo, head }) {
                         {user && (
                             <>
                                 <Link
-                                    className={`no-underline  text-gray-700 text-lg ${
+                                    className={`no-underline  text-gray-700 text-md ${
                                         route().current("profile.edit")
                                             ? "text-green-500 font-bold"
                                             : ""
@@ -289,9 +293,9 @@ export default function Header({ showLogo, head }) {
                                 </Link>
                                 <hr className=" my-2 border-gray-900" />
                                 <Link
-                                    className={` block no-underline  text-gray-700  ${
+                                    className={` block no-underline  text-gray-700 text-md  ${
                                         route().current("dashboard")
-                                            ? "text-green-500 font-bold"
+                                            ? "text-green-500"
                                             : ""
                                     }`}
                                     href={route("dashboard")}

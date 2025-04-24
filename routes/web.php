@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CarManagerController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
@@ -26,12 +27,26 @@ Route::get('/', function (CarsController $carController) {
     ]);
 })->name("home");
 
-//blog
-Route::get('/blog', function () {
-    return inertia("Frontend/blog-single");
+//Blog Routes
+Route::prefix('/blog')->group(function () {
+
+    //Public Routes
+    Route::get('/', [BlogController::class, 'index'])->name('blog');
+    Route::get('{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+    //Authenticated (dashboard) routes
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/create/new', [BlogController::class, 'create'])->name('blog.create');
+        Route::post('/store', [BlogController::class, 'store'])->name('blog.store');
+        Route::get('/edit/{blog}', [BlogController::class, 'edit'])->name('blog.edit'); //still didnt make it
+        Route::post('/update/{blog}', [BlogController::class, 'update'])->name('blog.update'); //still didnt make it
+        Route::delete('/delete/{blog}', [BlogController::class, 'destroy'])->name('blog.destroy'); //still didnt make it
+        //addComment
+        Route::post('/{blog}/comments', [BlogController::class, 'addComment']);
+    });
 });
 
-//contact us Routes
+//Contact Us Routes
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 

@@ -79,11 +79,6 @@ class ChatController extends Controller
         if ($request->has('user_id')) {
             $seller = User::find($request->user_id);
 
-            // If the seller is found and not already in the list of users, add them
-            if ($seller && !$users->contains('id', $seller->id)) {
-                $users->push($seller); // Add seller to the chat list
-            }
-
             // Set the selected user
             $selectedUser = $seller;
         }

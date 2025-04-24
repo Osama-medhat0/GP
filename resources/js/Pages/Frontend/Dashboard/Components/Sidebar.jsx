@@ -73,22 +73,57 @@ const Sidebar = () => {
                         </Link>
                     </li>
                     {user.role === "admin" && (
-                        <li
-                            className={
-                                route().current("admin.users")
-                                    ? "page-active"
-                                    : ""
-                            }
-                        >
-                            <Link href={route("admin.users")}>
-                                <img
-                                    src="/assets/icons/users-management-icon.png"
-                                    alt="Users Management"
-                                    className="mr-3 pb-1 w-9 h-9"
-                                />
-                                Manage users
-                            </Link>
-                        </li>
+                        <>
+                            <li
+                                className={
+                                    route().current("admin.users")
+                                        ? "page-active"
+                                        : ""
+                                }
+                            >
+                                <Link href={route("admin.users")}>
+                                    <img
+                                        src="/assets/icons/users-management-icon.png"
+                                        alt="Users Management"
+                                        className="mr-3 pb-1 w-9 h-9"
+                                    />
+                                    Manage users
+                                </Link>
+                            </li>
+
+                            <li
+                                className={
+                                    route().current("manager.index")
+                                        ? "page-active"
+                                        : ""
+                                }
+                            >
+                                <Link href={route("manager.index")}>
+                                    <img
+                                        src="/assets/icons/car-management.png"
+                                        alt="Listed Car"
+                                        className="mr-3 pb-1 w-10 h-11"
+                                    />
+                                    Manage Cars
+                                </Link>
+                            </li>
+                            <li
+                                className={
+                                    route().current("blog.create")
+                                        ? "page-active"
+                                        : ""
+                                }
+                            >
+                                <Link href={route("blog.create")}>
+                                    <img
+                                        src="/assets/icons/blog.png"
+                                        alt="Listed Car"
+                                        className="mr-3 pb-1 w-10 h-11"
+                                    />
+                                    Publish Blog
+                                </Link>
+                            </li>
+                        </>
                     )}
                     {user.role === "user" && (
                         <>
@@ -138,24 +173,6 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                         </>
-                    )}
-                    {user.role === "admin" && (
-                        <li
-                            className={
-                                route().current("manager.index")
-                                    ? "page-active"
-                                    : ""
-                            }
-                        >
-                            <Link href={route("manager.index")}>
-                                <img
-                                    src="/assets/icons/car-management.png"
-                                    alt="Listed Car"
-                                    className="mr-3 pb-1 w-10 h-11"
-                                />
-                                Manage Cars
-                            </Link>
-                        </li>
                     )}
                 </ul>
             </div>

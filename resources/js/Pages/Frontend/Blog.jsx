@@ -75,7 +75,7 @@ const Blog = () => {
                                                         slug: blog.slug,
                                                     })}
                                                 >
-                                                    Admin
+                                                    {blog.user?.name}
                                                 </Link>
                                             </div>
                                             <div>
@@ -86,14 +86,12 @@ const Blog = () => {
                                                     className="meta-chat"
                                                 >
                                                     <span className="icon-chat" />{" "}
-                                                    {blog.comments_count
-                                                        ? blog.comments_count
-                                                        : ""}
+                                                    {blog.comments_count ?? 0}
                                                     {console.log(blog)}
                                                 </Link>
                                             </div>
                                         </div>
-                                        <h3 className="heading mt-2">
+                                        <h3 className="heading mt-1">
                                             <Link href={`/blog/${blog.slug}`}>
                                                 {" "}
                                                 {/* Use the slug for the link */}
@@ -111,7 +109,7 @@ const Blog = () => {
                                             </p>{" "}
                                         </Link>
                                         {/* Show a snippet of the content */}
-                                        <p>
+                                        <p className="mb-5 mt-4">
                                             <Link
                                                 href={`/blog/${blog.slug}`} // Using the slug for the URL
                                                 className="btn btn-primary "

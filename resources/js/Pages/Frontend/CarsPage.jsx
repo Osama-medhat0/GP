@@ -223,9 +223,9 @@ const CarsPage = () => {
                                                 </p>
 
                                                 <button
-                                                    onClick={() => {
-                                                        handleSelectCar(car);
-                                                    }}
+                                                    onClick={() =>
+                                                        handleSelectCar(car)
+                                                    }
                                                     className={`btn ${
                                                         selectedCars.some(
                                                             (c) =>
@@ -234,6 +234,14 @@ const CarsPage = () => {
                                                             ? "btn-danger"
                                                             : "btn-outline-primary"
                                                     } mt-2`}
+                                                    title={
+                                                        !selectedCars.some(
+                                                            (c) =>
+                                                                c.id === car.id
+                                                        )
+                                                            ? "Add up to 4 cars"
+                                                            : ""
+                                                    }
                                                 >
                                                     {selectedCars.some(
                                                         (c) => c.id === car.id

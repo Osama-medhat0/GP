@@ -12,9 +12,11 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Blog;
 
 //Home Route
 Route::get('/', function (CarsController $carController) {
+    $blogs = Blog::withCount('comments')->latest()->take(3)->get();
     return inertia('Frontend/Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -24,6 +26,7 @@ Route::get('/', function (CarsController $carController) {
             'user' => Auth::user(),
         ],
         'featuredCars' => $carController->featured(),
+        'blogs' => $blogs,
     ]);
 })->name("home");
 
@@ -49,6 +52,7 @@ Route::prefix('/blog')->group(function () {
 //Contact Us Routes
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
+
 
 //AI Estimate Price route
 Route::get('estimate-price', function () {

@@ -18,12 +18,19 @@ class BlogController extends Controller
     // Show all blog posts (public)
     public function index()
     {
-        $blogs = Blog::withCount('comments')->latest()->paginate(5);
+        $blogs = Blog::with(['user', 'comments'])->withCount('comments')->latest()->paginate(5);
         return Inertia::render('Frontend/Blog', [
             'blogs' => $blogs
         ]);
     }
 
+    public function homeBlogs()
+    {
+        $blogs = Blog::latest()->take(3)->get();
+        return Inertia::render('Frontend/Home', [
+            'blogs' => $blogs
+        ]);
+    }
     // Show single post by slug (public)
     public function show($slug)
     {
@@ -48,7 +55,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048', /
+            'image' => 'nullable|image|max:2048',
         ]);
 
         $imagePath = null;
@@ -125,7 +132,7 @@ class BlogController extends Controller
         $blog->comments()->create([
             'user_id' => Auth::id(),
             'blog_id' => $blog->id,
-            'body' => $request->body, 
+            'body' => $request->body,
         ]);
 
         return back();

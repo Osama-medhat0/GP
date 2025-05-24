@@ -65,17 +65,20 @@ export default function Header({ showLogo, head }) {
                             >
                                 Estimate Price
                             </Link>
-
-                            <Link
-                                className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
-                                    route().current("car.listing")
-                                        ? "text-green-500 font-bold"
-                                        : ""
-                                }`}
-                                href={route("car.listing")}
-                            >
-                                Sell Your Car
-                            </Link>
+                            {user && user.role === "user" ? (
+                                <Link
+                                    className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
+                                        route().current("car.listing")
+                                            ? "text-green-500 font-bold"
+                                            : ""
+                                    }`}
+                                    href={route("car.listing")}
+                                >
+                                    Sell Your Car
+                                </Link>
+                            ) : (
+                                ""
+                            )}
                             <Link
                                 className={`block no-underline mr-5 py-4 text-gray-700 text-md ${
                                     route().current("blog")

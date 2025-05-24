@@ -107,22 +107,6 @@ const Sidebar = () => {
                                     Manage Cars
                                 </Link>
                             </li>
-                            <li
-                                className={
-                                    route().current("blog.create")
-                                        ? "page-active"
-                                        : ""
-                                }
-                            >
-                                <Link href={route("blog.create")}>
-                                    <img
-                                        src="/assets/icons/blog.png"
-                                        alt="Listed Car"
-                                        className="mr-3 pb-1 w-10 h-11"
-                                    />
-                                    Publish Blog
-                                </Link>
-                            </li>
                         </>
                     )}
                     {user.role === "user" && (
@@ -160,20 +144,32 @@ const Sidebar = () => {
                                     Listed Car
                                 </Link>
                             </li>
-                            <li
-                                className={
-                                    route().current("live.chat")
-                                        ? "page-active"
-                                        : ""
-                                }
-                            >
-                                <Link href={route("live.chat")}>
-                                    <MessageCircle className=" ml-1 mr-4" />
-                                    Live Chat
-                                </Link>
-                            </li>
                         </>
                     )}
+                    <li
+                        className={
+                            route().current("live.chat") ? "page-active" : ""
+                        }
+                    >
+                        <Link href={route("live.chat")}>
+                            <MessageCircle className=" ml-1 mr-4" />
+                            Live Chat
+                        </Link>
+                    </li>
+                    <li
+                        className={
+                            route().current("blog.create") ? "page-active" : ""
+                        }
+                    >
+                        <Link href={route("blog.create")}>
+                            <img
+                                src="/assets/icons/blog.png"
+                                alt="Listed Car"
+                                className="mr-3 pb-1 w-10 h-11"
+                            />
+                            Publish Blog
+                        </Link>
+                    </li>
                 </ul>
             </div>
         </>

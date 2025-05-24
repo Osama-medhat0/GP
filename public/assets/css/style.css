@@ -12369,8 +12369,19 @@ textarea.form-control {
 }
 
 .blog-entry {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     width: 100%;
+}
+.blog-entry .text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-entry .text p {
+    margin-top: auto;
 }
 @media (min-width: 768px) {
     .blog-entry {

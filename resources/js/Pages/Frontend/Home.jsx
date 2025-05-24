@@ -15,6 +15,8 @@ const Home = () => {
     const user = usePage().props.auth.user;
     console.log(user);
     console.log(cars);
+    const { blogs } = usePage().props;
+    console.log(blogs);
     return (
         <>
             <MainLayout>
@@ -179,7 +181,7 @@ const Home = () => {
                         </div>
                     </div>
                 </section>
-                <section className="ftco-section ftco-about">
+                <section className="ftco-section ftco-about" id="about-us">
                     <div className="container">
                         <div className="row no-gutters">
                             <div
@@ -290,11 +292,12 @@ const Home = () => {
                                     </div>
                                     <div className="text w-100">
                                         <h3 className="heading mb-2">
-                                            Performance Insights
+                                            News Blog
                                         </h3>
                                         <p>
-                                            Check car mileage, engine size, and
-                                            performance statistics.
+                                            Read about latest news of the cars
+                                            market place and car performance
+                                            insights
                                         </p>
                                     </div>
                                 </div>
@@ -364,14 +367,15 @@ const Home = () => {
                                                         "url(assets/images/person_1.jpg)",
                                                 }}
                                             ></div>
-                                            <div className="text pt-4">
-                                                <p className="mb-4">
-                                                    Great platform for both
-                                                    buyers and sellers. The AI
-                                                    price prediction is spot on!
+                                            <div className="text-black pt-4">
+                                                <p className="mb-5 font-normal">
+                                                    {" "}
+                                                    Loved the live chat! Got
+                                                    quick answers and closed the
+                                                    deal fast.
                                                 </p>
                                                 <p className="name">
-                                                    Roger Scott
+                                                    Andrew Tate
                                                 </p>
                                                 <span className="position">
                                                     Marketing Manager
@@ -388,14 +392,15 @@ const Home = () => {
                                                         "url(assets/images/person_2.jpg)",
                                                 }}
                                             ></div>
-                                            <div className="text pt-4">
-                                                <p className="mb-4">
+                                            <div className="text-black pt-4">
+                                                <p className="mb-5 font-normal">
+                                                    {" "}
                                                     I found my dream car here at
                                                     an amazing price. Fantastic
                                                     experience!
                                                 </p>
                                                 <p className="name">
-                                                    Roger Scott
+                                                    Mohammed Ali
                                                 </p>
                                                 <span className="position">
                                                     Interface Designer
@@ -412,14 +417,15 @@ const Home = () => {
                                                         "url(assets/images/person_3.jpg)",
                                                 }}
                                             ></div>
-                                            <div className="text pt-4">
-                                                <p className="mb-4">
+                                            <div className="text-black pt-4">
+                                                <p className="mb-5 font-normal">
+                                                    {" "}
                                                     Great platform for both
                                                     buyers and sellers. The AI
                                                     price prediction is spot on!
                                                 </p>
                                                 <p className="name">
-                                                    Roger Scott
+                                                    Youssef Tarik
                                                 </p>
                                                 <span className="position">
                                                     UI Designer
@@ -433,25 +439,25 @@ const Home = () => {
                                                 className="user-img mb-2"
                                                 style={{
                                                     backgroundImage:
-                                                        "url(assets/images/person_1.jpg)",
+                                                        "url(assets/images/person_4.jpg)",
                                                 }}
                                             ></div>
-                                            <div className="text pt-4">
-                                                <p className="mb-4">
+                                            <div className="text-black pt-4">
+                                                <p className="mb-5 font-normal">
+                                                    {" "}
                                                     The comparison feature
                                                     helped me choose the best
                                                     car for my budget.
                                                 </p>
-                                                <p className="name">
-                                                    Roger Scott
-                                                </p>
+                                                <p className="name">John Doe</p>
                                                 <span className="position">
                                                     Web Developer
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="item">
+
+                                    {/* <div className="item">
                                         <div className="testimony-wrap rounded text-center py-4 pb-5">
                                             <div
                                                 className="user-img mb-2"
@@ -474,7 +480,7 @@ const Home = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -489,52 +495,98 @@ const Home = () => {
                             </div>
                         </div>
                         <div className="row d-flex">
-                            <div className="col-md-4 d-flex ftco-animate">
-                                <div className="blog-entry justify-content-end">
-                                    <a
-                                        href="blog-single.html"
-                                        className="block-20"
-                                        style={{
-                                            backgroundImage:
-                                                'url("assets/images/image_1.jpg")',
-                                        }}
-                                    ></a>
-                                    <div className="text pt-4">
-                                        <div className="meta mb-3">
-                                            <div>
-                                                <a href="#">Oct. 29, 2019</a>
-                                            </div>
-                                            <div>
-                                                <a href="#">Admin</a>
-                                            </div>
-                                            <div>
-                                                <a
-                                                    href="#"
-                                                    className="meta-chat"
-                                                >
-                                                    <span className="icon-chat" />{" "}
-                                                    3
-                                                </a>
+                            {blogs &&
+                                blogs.length > 0 &&
+                                blogs.map((blog) => (
+                                    <>
+                                        <div className="col-md-4 d-flex ftco-animate">
+                                            <div className="blog-entry justify-content-end">
+                                                <Link
+                                                    key={blog.id}
+                                                    href={route("blog.show", {
+                                                        slug: blog.slug,
+                                                    })}
+                                                    className="block-20"
+                                                    style={{
+                                                        backgroundImage: `url(${
+                                                            import.meta.env
+                                                                .VITE_APP_URL
+                                                        }/storage/${
+                                                            blog.image
+                                                        })`,
+                                                    }}
+                                                ></Link>
+                                                <div className="text pt-4">
+                                                    <div className="meta mb-3">
+                                                        <div>
+                                                            <Link
+                                                                href={route(
+                                                                    "blog.show",
+                                                                    {
+                                                                        slug: blog.slug,
+                                                                    }
+                                                                )}
+                                                            >
+                                                                {new Date(
+                                                                    blog.created_at
+                                                                ).toLocaleDateString()}
+                                                            </Link>
+                                                        </div>
+                                                        <div>
+                                                            <Link
+                                                                href={route(
+                                                                    "blog.show",
+                                                                    {
+                                                                        slug: blog.slug,
+                                                                    }
+                                                                )}
+                                                            >
+                                                                Admin
+                                                            </Link>
+                                                        </div>
+                                                        <div>
+                                                            <Link
+                                                                href={route(
+                                                                    "blog.show",
+                                                                    {
+                                                                        slug: blog.slug,
+                                                                    }
+                                                                )}
+                                                                className="meta-chat"
+                                                            >
+                                                                <span className="icon-chat" />{" "}
+                                                                {blog.comments_count
+                                                                    ? blog.comments_count
+                                                                    : ""}
+                                                                {console.log(
+                                                                    blog
+                                                                )}
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                    <h3 className="heading mt-2">
+                                                        <Link
+                                                            href={`/blog/${blog.slug}`}
+                                                        >
+                                                            {" "}
+                                                            {/* Use the slug for the link */}
+                                                            {blog.title}
+                                                        </Link>
+                                                    </h3>
+                                                    <p>
+                                                        <Link
+                                                            href={`/blog/${blog.slug}`}
+                                                            className="btn btn-primary"
+                                                        >
+                                                            Read more
+                                                        </Link>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <h3 className="heading mt-2">
-                                            <a href="#">
-                                                Why Lead Generation is Key for
-                                                Business Growth
-                                            </a>
-                                        </h3>
-                                        <p>
-                                            <a
-                                                href="#"
-                                                className="btn btn-primary"
-                                            >
-                                                Read more
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4 d-flex ftco-animate">
+                                    </>
+                                ))}
+                            {/* <div className="col-md-4 d-flex ftco-animate">
                                 <div className="blog-entry justify-content-end">
                                     <a
                                         href="blog-single.html"
@@ -623,15 +675,15 @@ const Home = () => {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </section>
-                <section
+                {/* <section
                     className="ftco-counter ftco-section img bg-light"
                     id="section-counter"
-                >
-                    <div className="overlay" />
+                > */}
+                {/* <div className="overlay" />
                     <div className="container pl-19">
                         <div className="row">
                             <div className="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
@@ -639,7 +691,7 @@ const Home = () => {
                                     <div className="text text-border d-flex align-items-center">
                                         <strong
                                             className="number"
-                                            data-number={45}
+                                            data-number={1}
                                         >
                                             0
                                         </strong>
@@ -683,8 +735,8 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </div> */}
+                {/* </section> */}
             </MainLayout>
         </>
     );

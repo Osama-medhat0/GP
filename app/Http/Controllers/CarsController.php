@@ -14,6 +14,8 @@ class CarsController extends Controller
 {
     public function index()
     {
+        $carMakes = CarMake::all();
+        $carModels = CarModel::all();
         $cars = Cars::latest()->paginate(5);
 
         $cars->getCollection()->transform(function ($car) {
@@ -21,7 +23,7 @@ class CarsController extends Controller
             $car->images = array_map(fn($img) => asset("storage/{$img}"), $car->images);
             return $car;
         });
-        return inertia("Frontend/CarsPage", ['cars' => $cars]);
+        return inertia("Frontend/CarsPage", ['cars' => $cars, 'carMakes' => $carMakes, 'carModels' => $carModels]);
     }
 
     public function create()
@@ -211,5 +213,52 @@ class CarsController extends Controller
     public function featured()
     {
         return Cars::latest()->take(4)->get();
+    }
+
+    public function search(Request $request)
+    {
+        $carMakes = CarMake::all();
+        $carModels = CarModel::all();
+
+        $query = Cars::query();
+
+        if ($request->make) {
+            $query->where('make', $request->make);
+        }
+
+        if ($request->model) {
+            $query->where('model', $request->model);
+        }
+
+        if ($request->year_min) {
+            $query->where('year', '>=', $request->year_min);
+        }
+        if ($request->year_max) {
+            $query->where('year', '<=', $request->year_max);
+        }
+
+
+        if ($request->price_min) {
+            $query->where('price', '>=', $request->price_min);
+        }
+        if ($request->price_max) {
+            $query->where('price', '<=', $request->price_max);
+        }
+
+        if ($request->mileage_min) {
+            $query->where('mileage', '>=', $request->mileage_min);
+        }
+        if ($request->mileage_max) {
+            $query->where('mileage', '<=', $request->mileage_max);
+        }
+
+
+        if ($request->transmission) {
+            $query->where('transmission', $request->transmission);
+        }
+
+
+        $cars = $query->latest()->paginate(5);
+        return inertia("Frontend/CarsPage", ['cars' => $cars, 'carMakes' => $carMakes, 'carModels' => $carModels]);
     }
 }

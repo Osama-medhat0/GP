@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -8,6 +7,18 @@ const CompareSidebar = ({
     toggleSidebar,
     isSidebarVisible,
 }) => {
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return "";
+        return imagePath.startsWith("http")
+            ? imagePath
+            : `/storage/${imagePath.replace(/^car\//, "car/")}`;
+    };
+
+    console.log("selectedCars:", selectedCars);
+    selectedCars.forEach((car) => {
+        console.log("images", car.images, Array.isArray(car.images));
+    });
+
     return (
         <div className="relative">
             {/* Toggle Button */}
@@ -49,10 +60,13 @@ const CompareSidebar = ({
                                         <img
                                             className="img p-8 rounded-md"
                                             style={{
-                                                backgroundImage: `url('${car.images[0]}')`,
+                                                backgroundImage: `url('${getImageUrl(
+                                                    car.images[0]
+                                                )}')`,
                                             }}
                                             alt={`${car.make} ${car.model}`}
                                         />
+                                        {console.log(car.images[0])}
                                     </Link>
                                     <div>
                                         <Link

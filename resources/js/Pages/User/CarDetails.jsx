@@ -173,12 +173,12 @@ const CarDetails = () => {
             </div>
 
             <div className="text-center  my-9">
-                <Link
-                    href={route("cars.page")}
+                <button
+                    onClick={() => window.history.back()}
                     className="px-10  bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
                 >
                     Back to Cars
-                </Link>
+                </button>
             </div>
         </MainLayout>
     );

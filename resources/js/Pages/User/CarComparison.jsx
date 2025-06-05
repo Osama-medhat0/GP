@@ -9,12 +9,12 @@ const CarComparison = () => {
             <MainLayout>
                 <div className="container text-center my-5">
                     <h2 className="text-danger">Not enough cars to compare</h2>
-                    <Link
-                        href={route("cars.page")}
-                        className="btn btn-primary mt-3"
+                    <button
+                        onClick={() => window.history.back()}
+                        className="px-10  bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
                     >
                         Back to Cars
-                    </Link>
+                    </button>
                 </div>
             </MainLayout>
         );
@@ -87,12 +87,12 @@ const CarComparison = () => {
                 </div>
 
                 <div className="text-center mt-5">
-                    <Link
-                        href={route("cars.page")}
-                        className="active px-10 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
+                    <button
+                        onClick={() => window.history.back()}
+                        className="px-10  bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
                     >
                         Back to Cars
-                    </Link>
+                    </button>
                 </div>
             </section>
         </MainLayout>

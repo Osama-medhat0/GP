@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Blog;
+use App\Models\CarMake;
+use App\Models\CarModel;
 
 //Home Route
 Route::get('/', function (CarsController $carController) {
+    $makes = CarMake::all();
+    $models = CarModel::all();
+
     $blogs = Blog::withCount('comments')->latest()->take(3)->get();
     return inertia('Frontend/Home', [
         'canLogin' => Route::has('login'),
@@ -27,8 +32,14 @@ Route::get('/', function (CarsController $carController) {
         ],
         'featuredCars' => $carController->featured(),
         'blogs' => $blogs,
+        "carMakes" => $makes,
+        "carModels" => $models
     ]);
 })->name("home");
+
+//Car Search Route
+Route::get('/search', [CarsController::class, 'search'])->name('cars.search');
+
 
 //Blog Routes
 Route::prefix('/blog')->group(function () {
@@ -133,6 +144,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::delete('/model/{id}', [CarManagerController::class, 'deleteModel'])->name('manager.deleteModel');
     });
 });
+
 
 // Auth Routes
 require __DIR__ . '/auth.php';

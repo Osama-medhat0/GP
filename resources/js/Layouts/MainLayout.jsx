@@ -16,7 +16,7 @@ const MainLayout = ({ children }) => {
             toast[flash?.type || "success"](flash.message);
         }
     }, [flash]);
-    console.log("Flash:", flash);
+    // console.log("Flash:", flash);
 
     useEffect(() => {
         const loadScript = (src) => {

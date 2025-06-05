@@ -1,7 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
 import MainLayout from "../../Layouts/MainLayout";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import SearchContent from "./Components/SearchContent";
 import {
     FaCar,
@@ -9,14 +7,16 @@ import {
     FaTachometerAlt,
     FaBalanceScale,
 } from "react-icons/fa";
+import { useEffect } from "react";
 
 const Home = () => {
     const cars = usePage().props.featuredCars;
     const user = usePage().props.auth.user;
-    console.log(user);
-    console.log(cars);
+    // console.log(user);
+    // console.log(cars);
     const { blogs } = usePage().props;
-    console.log(blogs);
+    // console.log(blogs);
+
     return (
         <>
             <MainLayout>
@@ -198,17 +198,16 @@ const Home = () => {
                                         Welcome to FairWheels
                                     </h2>
                                     <p>
-                                        Welcome to Car Retail Website — your
-                                        ultimate destination for buying and
-                                        selling cars with ease and confidence.
-                                        Our platform is designed to bridge the
-                                        gap between buyers and sellers by
-                                        offering a seamless, user-friendly
-                                        experience.
+                                        Welcome to FairWheels — your ultimate
+                                        destination for buying and selling cars
+                                        with ease and confidence. Our platform
+                                        is designed to bridge the gap between
+                                        buyers and sellers by offering a
+                                        seamless, user-friendly experience.
                                     </p>
                                     <p>
                                         With our advanced AI-powered price
-                                        recommendation system, we help both car
+                                        estimation system, we help both car
                                         owners and potential buyers make
                                         informed decisions based on accurate
                                         market data. Our detailed car listings,

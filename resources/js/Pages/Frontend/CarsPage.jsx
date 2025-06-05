@@ -1,3 +1,4 @@
+import SearchContent from "./Components/SearchContent";
 import MainLayout from "@/Layouts/MainLayout";
 import { Link, usePage, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
@@ -5,21 +6,16 @@ import CompareSidebar from "../User/CompareSidebar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
-// Import Swiper styles
+// Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const CarsPage = () => {
-    const user = usePage().props.auth.user;
-    console.log(user);
+    const { auth, cars } = usePage().props;
+    const user = auth.user;
 
-    useEffect(() => {
-        router.reload({ only: ["cars"] });
-    }, []);
-
-    const { cars } = usePage().props;
     const [isSidebarVisible, setIsSidebarVisible] = useState(() => {
         const storedCars =
             JSON.parse(localStorage.getItem("selectedCars")) || [];
@@ -30,25 +26,38 @@ const CarsPage = () => {
         setIsSidebarVisible((prev) => !prev);
     };
 
-    useEffect(() => {
-        router.reload({ only: ["cars"] });
-    }, []);
-    console.log(cars);
-
     const [selectedCars, setSelectedCars] = useState(() => {
-        return JSON.parse(localStorage.getItem("selectedCars")) || [];
+        const saved = JSON.parse(localStorage.getItem("selectedCars")) || [];
+        return saved.map((car) => ({
+            ...car,
+            images:
+                typeof car.images === "string"
+                    ? JSON.parse(car.images)
+                    : car.images,
+        }));
     });
 
     // Handle selecting/unselecting cars
     const handleSelectCar = (car) => {
         setSelectedCars((prev) => {
             let updatedCars;
+
+            // Normalize image field if needed
+            const fixedCar = {
+                ...car,
+                images:
+                    typeof car.images === "string"
+                        ? JSON.parse(car.images)
+                        : car.images,
+            };
+
             if (prev.some((c) => c.id === car.id)) {
-                updatedCars = prev.filter((c) => c.id !== car.id); // Remove
+                updatedCars = prev.filter((c) => c.id !== car.id);
             } else {
-                updatedCars = prev.length < 4 ? [...prev, car] : prev; // Add
+                updatedCars = prev.length < 4 ? [...prev, fixedCar] : prev;
                 setIsSidebarVisible(true);
             }
+
             localStorage.setItem("selectedCars", JSON.stringify(updatedCars));
             return updatedCars;
         });
@@ -98,11 +107,17 @@ const CarsPage = () => {
                         </div>
                     </div>
                 </section>
-
+                <section className="ftco-section ftco-no-pt bg-light">
+                    <div className="container">
+                        <div className="row no-gutters pt-14">
+                            <SearchContent />
+                        </div>
+                    </div>
+                </section>
                 <section className="ftco-section bg-light">
                     <div className="container">
                         <div className="row">
-                            {cars.data.length > 0 ? (
+                            {cars?.data?.length > 0 ? (
                                 cars.data.map((car) => (
                                     <div key={car.id} className="col-md-4">
                                         <div className="car-wrap rounded ftco-animate">
@@ -119,24 +134,113 @@ const CarsPage = () => {
                                                 pagination={{ clickable: true }}
                                                 scrollbar={{ draggable: true }}
                                             >
-                                                {car.images.map(
-                                                    (image, index) => (
-                                                        <SwiperSlide
-                                                            key={index}
-                                                        >
-                                                            <img
-                                                                src={image}
-                                                                alt={`Car ${car.make} ${car.model}`}
-                                                                className="w-100 rounded"
-                                                                style={{
-                                                                    height: "250px",
-                                                                    objectFit:
-                                                                        "cover",
-                                                                }}
-                                                            />
-                                                        </SwiperSlide>
-                                                    )
-                                                )}
+                                                {(() => {
+                                                    if (
+                                                        typeof car.images ===
+                                                        "string"
+                                                    ) {
+                                                        const parsedImages =
+                                                            JSON.parse(
+                                                                car.images
+                                                            );
+                                                        // console.log(
+                                                        //     parsedImages
+                                                        // );
+
+                                                        return parsedImages.length >
+                                                            1 ? (
+                                                            parsedImages.map(
+                                                                (
+                                                                    image,
+                                                                    index
+                                                                ) => (
+                                                                    <SwiperSlide
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        <img
+                                                                            src={`/${image.replace(
+                                                                                /^\/+|^car\//,
+                                                                                ""
+                                                                            )}`} // remove leading slashes and "car/"
+                                                                            alt={`Car ${car.make} ${car.model}`}
+                                                                            className="w-100 rounded"
+                                                                            style={{
+                                                                                height: "250px",
+                                                                                objectFit:
+                                                                                    "cover",
+                                                                            }}
+                                                                        />
+                                                                        {/* {console.log(
+                                                                            `/${image.replace(
+                                                                                /^\/+|^car\//,
+                                                                                ""
+                                                                            )}`
+                                                                        )} */}
+                                                                    </SwiperSlide>
+                                                                )
+                                                            )
+                                                        ) : (
+                                                            <>
+                                                                <img
+                                                                    src={`http://localhost:8000/storage/car/${parsedImages[0].replace(
+                                                                        /^\/+|^car\//,
+                                                                        ""
+                                                                    )}`}
+                                                                    alt={`Car ${car.make} ${car.model}`}
+                                                                    className="w-100 rounded"
+                                                                    style={{
+                                                                        height: "250px",
+                                                                        objectFit:
+                                                                            "cover",
+                                                                    }}
+                                                                />
+                                                                {/* {console.log(
+                                                                    `/${parsedImages[0].replace(
+                                                                        /^\/+|^car\//,
+                                                                        ""
+                                                                    )}`
+                                                                )} */}
+                                                            </>
+                                                        );
+                                                    } else {
+                                                        {
+                                                            return car.images.map(
+                                                                (
+                                                                    image,
+                                                                    index
+                                                                ) => (
+                                                                    <SwiperSlide
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        <Link
+                                                                            href={route(
+                                                                                "car.detail",
+                                                                                car.id
+                                                                            )}
+                                                                        >
+                                                                            <img
+                                                                                src={
+                                                                                    image
+                                                                                }
+                                                                                alt={`Car ${car.make} ${car.model}`}
+                                                                                className="w-100 rounded"
+                                                                                style={{
+                                                                                    height: "250px",
+                                                                                    objectFit:
+                                                                                        "cover",
+                                                                                }}
+                                                                            />
+                                                                        </Link>
+                                                                    </SwiperSlide>
+                                                                )
+                                                            );
+                                                        }
+                                                    }
+                                                })()}
                                             </Swiper>
 
                                             <div className="text">
@@ -210,11 +314,12 @@ const CarsPage = () => {
                                                             Contact Owner
                                                         </Link>
                                                     )}
-                                                    {console.log(car)}
                                                     <Link
                                                         href={route(
                                                             "car.detail",
-                                                            { id: car.id }
+                                                            {
+                                                                id: car.id,
+                                                            }
                                                         )}
                                                         className="btn btn-secondary py-2 ml-1"
                                                     >
@@ -265,7 +370,7 @@ const CarsPage = () => {
                     className="flex justify-center pb-20"
                     style={{ backgroundColor: "#f8f9fa" }}
                 >
-                    {cars.links.map((link) =>
+                    {cars?.links?.map((link) =>
                         link.url ? (
                             <Link
                                 key={link.label}

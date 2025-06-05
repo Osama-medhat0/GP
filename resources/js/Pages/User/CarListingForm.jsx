@@ -211,18 +211,18 @@ const NewCarListingForm = () => {
         router.post(route("car.store"), formData, {
             preserveScroll: true,
             onSuccess: () => {
-                // setFormData({
-                //     make: "",
-                //     model: "",
-                //     year: "",
-                //     price: "",
-                //     mileage: "",
-                //     fuelType: "",
-                //     transmission: "",
-                //     location: "",
-                //     description: "",
-                //     images: [],
-                // });
+                setFormData({
+                    make: "",
+                    model: "",
+                    year: "",
+                    price: "",
+                    mileage: "",
+                    fuelType: "",
+                    transmission: "",
+                    location: "",
+                    description: "",
+                    images: [],
+                });
                 setErrors({});
             },
             onError: (errors) => {

@@ -51,5 +51,10 @@ if st.button("Predict"):
                           ,inplace=True)
 
     car_price = model.predict(input_data_model)
-    predicted_price = max(car_price[0], 0)  # Ensures no negative prices
-    st.markdown(f'Car Price is going to be ${predicted_price:.2f}')
+    predicted_price = max(car_price[0], 0)  # INR
+
+    conversion_rate = 0.58  # INR to EGP
+    predicted_price_egp = predicted_price * conversion_rate
+
+    st.markdown(f'🚗 Estimated Car Price: {predicted_price_egp:,.2f} EGP')
+

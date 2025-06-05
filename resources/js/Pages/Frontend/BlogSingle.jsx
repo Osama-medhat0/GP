@@ -176,7 +176,7 @@ const BlogSingle = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Type a keyword and hit enter"
+                                                placeholder="Type a keyword"
                                             />
                                         </div>
                                     </form>

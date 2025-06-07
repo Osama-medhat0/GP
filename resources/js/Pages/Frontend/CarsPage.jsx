@@ -15,7 +15,7 @@ import "swiper/css/scrollbar";
 const CarsPage = () => {
     const { auth, cars } = usePage().props;
     const user = auth.user;
-
+    console.log("CarsPage", cars);
     const [isSidebarVisible, setIsSidebarVisible] = useState(() => {
         const storedCars =
             JSON.parse(localStorage.getItem("selectedCars")) || [];
@@ -253,6 +253,14 @@ const CarsPage = () => {
                                                     >
                                                         {car.make} {car.model}
                                                     </Link>
+                                                    <span className="badge  ml-24 mb-1">
+                                                        {car.price_status ===
+                                                            "overpriced" && (
+                                                            <span className="badge badge-warning">
+                                                                Overpriced
+                                                            </span>
+                                                        )}
+                                                    </span>
                                                 </h2>
                                                 <div className="d-flex mb-3">
                                                     <span className="">
@@ -267,6 +275,8 @@ const CarsPage = () => {
                                                             {
                                                                 style: "currency",
                                                                 currency: "USD",
+                                                                minimumFractionDigits: 0,
+                                                                maximumFractionDigits: 0,
                                                             }
                                                         )}
                                                     </p>

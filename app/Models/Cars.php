@@ -20,7 +20,8 @@ class Cars extends Model
         'location',
         'description',
         'images',
-        'user_id'
+        'user_id',
+        'price_status',
     ];
     public function user()
     {

@@ -94,7 +94,14 @@ const UserCarsPage = () => {
                                                     {car.year}
                                                 </td>
                                                 <td className="py-2 px-4 border">
-                                                    {car.price}
+                                                    {parseFloat(
+                                                        car.price
+                                                    ).toLocaleString("en-US", {
+                                                        style: "currency",
+                                                        currency: "USD",
+                                                        minimumFractionDigits: 0,
+                                                        maximumFractionDigits: 0,
+                                                    })}
                                                 </td>
                                                 <td className="py-2 px-4 border">
                                                     {car.image_urls &&

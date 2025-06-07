@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { cilCamera } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
-const CarImageUploader = ({ images, setImages }) => {
-    // const [images, setImages] = useState([]);
-
+const CarImageUploader = ({ images = [], setImages }) => {
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         setImages([...images, ...files]);

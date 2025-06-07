@@ -178,7 +178,11 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
 };
 
 const NewCarListingForm = () => {
-    const { carMakes, carModels } = usePage().props;
+    const { carMakes, carModels, predicted_price } = usePage().props;
+    const [overpricedConfirmed, setOverpricedConfirmed] = useState(false);
+    const [hasListed, setHasListed] = useState(false);
+    const [errors, setErrors] = useState({});
+
     // console.log(carMakes);
     // console.log(carModels);
     const [formData, setFormData] = useState({
@@ -194,23 +198,41 @@ const NewCarListingForm = () => {
         images: [],
     });
 
-    const [errors, setErrors] = useState({});
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-        if (formData.images.length === 0) {
+    const handleSubmit = (e, overrideOptions = {}) => {
+        if (e) e.preventDefault();
+
+        const payload = {
+            ...formData,
+            ...overrideOptions,
+            confirmed_overpriced: overpricedConfirmed,
+            price: formData.price.replace(/,/g, ""),
+            mileage: formData.mileage.replace(/,/g, ""),
+        };
+
+        if (payload.images?.length === 0) {
             toast.warn("Image is required");
             return;
         }
-        router.post(route("car.store"), formData, {
+
+        router.post(route("car.store"), payload, {
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: (page) => {
+                const priceStatus = page.props?.flash?.price_status || "normal";
+
+                if (priceStatus === "overpriced" && !overpricedConfirmed) {
+                    setOverpricedConfirmed(true);
+                    setHasListed(true); // Show the suggested price button
+                    // toast.warning(page.props.flash.message);
+                    return; // Don't reset form yet
+                }
+
+                // toast.success(page.props.flash.message || "Car listed.");
+
                 setFormData({
                     make: "",
                     model: "",
@@ -223,14 +245,46 @@ const NewCarListingForm = () => {
                     description: "",
                     images: [],
                 });
+
                 setErrors({});
+                setOverpricedConfirmed(false); // Reset confirmation flag
+                setHasListed(false);
             },
             onError: (errors) => {
-                toast.error("Check the errors");
+                Object.entries(errors)
+                    .filter(([key]) => key.startsWith("images"))
+                    .forEach(([key, errMsg]) => toast.error(errMsg));
                 setErrors(errors);
             },
         });
-        // setFormData([]);
+    };
+    const handlePriceChange = (e) => {
+        let value = e.target.value;
+
+        // Remove anything except digits (so user can't type letters or commas)
+        value = value.replace(/\D/g, "");
+
+        // Format with commas
+        const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        setFormData((prev) => ({
+            ...prev,
+            price: formattedValue,
+        }));
+    };
+    const handleKmChange = (e) => {
+        let value = e.target.value;
+
+        // Remove anything except digits (so user can't type letters or commas)
+        value = value.replace(/\D/g, "");
+
+        // Format with commas
+        const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        setFormData((prev) => ({
+            ...prev,
+            mileage: formattedValue,
+        }));
     };
 
     return (
@@ -287,30 +341,14 @@ const NewCarListingForm = () => {
                         <CAlert color="danger">{errors.year}</CAlert>
                     )}
 
-                    <div className="flex  gap-5 pt-3">
-                        <h6> Price</h6>
-                        <input
-                            type="number"
-                            name="price"
-                            placeholder="Enter the total price"
-                            value={formData.price}
-                            onChange={handleChange}
-                            required
-                            className="w-full border rounded"
-                        />
-                    </div>
-                    {errors.price && (
-                        <CAlert color="danger">{errors.price}</CAlert>
-                    )}
-
                     <div className="flex gap-2 pt-3">
                         <h6> Kilometers</h6>
                         <input
-                            type="number"
+                            type="text"
                             name="mileage"
                             placeholder="Ex:20,000"
                             value={formData.mileage}
-                            onChange={handleChange}
+                            onChange={handleKmChange}
                             required
                             className="w-full p-2 border rounded"
                         />
@@ -383,6 +421,21 @@ const NewCarListingForm = () => {
                     {errors.transmission && (
                         <CAlert color="danger">{errors.transmission}</CAlert>
                     )}
+                    <div className="flex  gap-5 pt-3">
+                        <h6> Price</h6>
+                        <input
+                            type="text"
+                            name="price"
+                            placeholder="Enter the total price"
+                            value={formData.price}
+                            onChange={handlePriceChange}
+                            required
+                            className="w-full border rounded"
+                        />
+                    </div>
+                    {errors.price && (
+                        <CAlert color="danger">{errors.price}</CAlert>
+                    )}
 
                     <div className="flex  gap-2 pt-3">
                         <h6 className="pr-3"> Location</h6>
@@ -436,9 +489,32 @@ const NewCarListingForm = () => {
                     <button
                         type="submit"
                         className=" active w-full bg-blue-400 text-white p-2 rounded hover:bg-blue-500 transition duration-300"
+                        onClick={(e) => setHasListed(true)}
                     >
                         List Car
                     </button>
+                    {predicted_price && hasListed && (
+                        <button
+                            type="button"
+                            className="bg-green-400 text-black text-sm font-medium px-4 py-2 rounded-md hover:bg-green-500 transition duration-200 ml-44"
+                            onClick={(e) => {
+                                setHasListed(false);
+                                handleSubmit(e, {
+                                    price: predicted_price,
+                                    use_ai_price: "true",
+                                });
+                            }}
+                        >
+                            Use Suggested Price{" "}
+                            {parseFloat(predicted_price).toLocaleString(
+                                "en-US",
+                                {
+                                    style: "currency",
+                                    currency: "USD",
+                                }
+                            )}
+                        </button>
+                    )}
                 </form>
             </DashboardLayout>
         </SidebarProvider>

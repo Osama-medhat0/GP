@@ -7,6 +7,8 @@ use App\Models\CarMake;
 use App\Models\CarModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +18,7 @@ class CarsController extends Controller
     {
         $carMakes = CarMake::all();
         $carModels = CarModel::all();
-        $cars = Cars::latest()->paginate(5);
+        $cars = Cars::latest()->paginate(16);
 
         $cars->getCollection()->transform(function ($car) {
             $car->images = json_decode($car->images);
@@ -49,24 +51,83 @@ class CarsController extends Controller
             'images.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
-
         $imagePaths = [];
-
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('car', 'public'); // Store in storage/app/public/car
+                $path = $image->store('car', 'public');
                 $imagePaths[] = $path;
             }
         }
-
         $validated['images'] = json_encode($imagePaths);
 
-        $car = $request->user()->cars()->create($validated);
-
-        return redirect()->back()->with([
-            'message' => 'Car has been successfully added!',
-            'type' => 'success'
+        // Call price prediction API
+        $response = Http::post(env('PRICE_PREDICTION_API'), [
+            'make' => $validated['make'],
+            'year' => $validated['year'],
+            'mileage' => $validated['mileage'],
+            'fuelType' => $validated['fuelType'],
+            'transmission' => $validated['transmission'],
+            'seller_type' => $validated['seller_type'] ?? 'Individual',
         ]);
+
+        if ($response->successful() && isset($response->json()['predicted_price'])) {
+
+            $predictedPrice = $response->json()['predicted_price'];
+            $priceStatus = 'normal';
+
+            $confirmedOverpriced = filter_var($request->input('confirmed_overpriced'), FILTER_VALIDATE_BOOLEAN);
+
+            // Determine price status (overpriced or normal)
+            if ($validated['price'] > $predictedPrice * 1.1 && !$confirmedOverpriced) {
+                return redirect()->back()->with([
+                    'flash' => [
+                        'type' => 'warning',
+                        'message' => "Your price is significantly higher than our AI-predicted price of " . number_format($predictedPrice) . ". Click again to confirm listing.",
+                        'price_status' => 'overpriced',
+                    ],
+                    'predicted_price' => $predictedPrice,
+                ]);
+            }
+
+            if ($validated['price'] >= $predictedPrice * 1.1 && $confirmedOverpriced) {
+                $priceStatus = 'overpriced';
+            } elseif ($validated['price'] <= $predictedPrice * 1.1) {
+                $priceStatus = 'normal';
+            }
+            // dd($request->all());
+
+            if ($request->input('use_ai_price') === 'true' || $confirmedOverpriced) {
+                // Create car listing
+
+                if ($request->input('use_ai_price') === 'true') {
+                    $price = $predictedPrice;
+                    $priceStatus = 'normal';
+                } else {
+                    $price = $validated['price'];
+                    // $priceStatus remains as already determined
+                }
+
+                $car = Cars::create([
+                    ...$validated,
+                    'user_id' => Auth::id(),
+                    'price' => $price,
+                    'predicted_price' => $predictedPrice,
+                    'price_status' => $priceStatus,
+                ]);
+
+                $flash = [
+                    'type' => $priceStatus === 'overpriced' ? 'warning' : 'success',
+                    'message' => $priceStatus === 'overpriced'
+                        ? "Car listed as 'overpriced' despite being higher than the AI-predicted price of " . number_format($predictedPrice) . "."
+                        : "Car listed using the AI-predicted price of " . number_format($predictedPrice) . ".",
+                    'price_status' => $priceStatus,
+                ];
+
+                return redirect()->route('car.edit')->with('flash', $flash);
+            }
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Price prediction service is unavailable.']);
     }
 
     public function update(Request $request, Cars $car)
@@ -163,7 +224,7 @@ class CarsController extends Controller
     {
         $userId = Auth::id();
 
-        $cars = Cars::where('user_id', $userId)->get()->map(function ($car) {
+        $cars = Cars::where('user_id', $userId)->orderBy('created_at', 'desc')->get()->map(function ($car) {
             $car->images = json_decode($car->images, true) ?? []; // Decode JSON images
 
             // Generate full URLs for images

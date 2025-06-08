@@ -239,43 +239,35 @@ const Chat = () => {
 
                     <div className="w-3/4 pl-6">
                         <div className="bg-white shadow-lg rounded-lg">
-                            <div className="bg-blue-400 text-white text-center pt-2 rounded-t-lg pb-7">
+                            <div className="bg-blue-400 text-white text-center pt-2 rounded-t-lg pb-9">
                                 <strong className="text-lg float-start pl-4">
                                     Selected User:{" "}
                                     {selectedUser ? selectedUser.name : "None"}
                                 </strong>
 
-                                {/* {console.log(selectedUser.name === "Admin")} */}
-                                {/* {console.log(selectedUser.name !== "Admin")} */}
-                                {selectedUser?.name !== "Admin" &&
-                                    selectedUser &&
-                                    availableCars?.length > 0 && (
-                                        <div className="mt-9 float-end">
-                                            <select
-                                                className=" border py-4 cursor-pointer border-gray-300 rounded-lg text-black text-center focus:outline-none focus:ring-blue-500 transition-all duration-200 ease-in-out hover:bg-gray-100"
-                                                onChange={(e) =>
-                                                    handleCarSelect(
-                                                        e.target.value
-                                                    )
-                                                }
-                                                value={car?.id || ""}
-                                            >
-                                                {availableCars.map(
-                                                    (carItem) => (
-                                                        <option
-                                                            key={carItem.id}
-                                                            value={carItem.id}
-                                                        >
-                                                            {carItem.make}{" "}
-                                                            {carItem.model} (
-                                                            {carItem.year})
-                                                        </option>
-                                                    )
-                                                )}
-                                            </select>
-                                        </div>
-                                    )}
-                                {car && (
+                                {selectedUser && availableCars?.length > 0 && (
+                                    <div className="mt-9 float-end">
+                                        <select
+                                            className=" border py-4 cursor-pointer border-gray-300 rounded-lg text-black text-center focus:outline-none focus:ring-blue-500 transition-all duration-200 ease-in-out hover:bg-gray-100"
+                                            onChange={(e) =>
+                                                handleCarSelect(e.target.value)
+                                            }
+                                            value={car?.id || ""}
+                                        >
+                                            {availableCars.map((carItem) => (
+                                                <option
+                                                    key={carItem.id}
+                                                    value={carItem.id}
+                                                >
+                                                    {carItem.make}{" "}
+                                                    {carItem.model} (
+                                                    {carItem.year})
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                                {selectedUser?.name !== "Admin" && car && (
                                     <Link href={route("car.detail", car.id)}>
                                         <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-md mb-0 mt-9 px-2 pt-2 pb-1 hover:bg-gray-100 transition-all duration-200 ease-in-out cursor-pointer">
                                             <img

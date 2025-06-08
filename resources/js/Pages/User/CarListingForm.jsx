@@ -7,6 +7,8 @@ import CarImageUploader from "./CarImageUploader";
 import { toast } from "react-toastify";
 
 const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
+    // console.log("carMakes in CarMakeInput:", carMakes);
+
     const [suggestions, setSuggestions] = useState([]);
 
     const capitalizeFirstLetter = (string) => {
@@ -46,25 +48,38 @@ const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
 
     const handleBlur = () => {
         setTimeout(() => {
-            const isValid = carMakes.some(
+            const matchedMake = carMakes.find(
                 (make) =>
                     make.name.toLowerCase() === formData.make.toLowerCase()
             );
 
-            if (!isValid) {
-                toast.warn(
-                    "Invalid make selected. Please choose from the suggestions."
-                );
+            const toastId = "invalidMake";
 
-                setFormData({ ...formData, make: "" });
+            if (matchedMake) {
+                // Set make_id if user typed it manually
+                setFormData((prev) => ({
+                    ...prev,
+                    make: matchedMake.name, // Capitalized correctly
+                    make_id: matchedMake.id,
+                    model: "", // Reset model
+                }));
+            } else {
+                if (!toast.isActive(toastId)) {
+                    toast.warn(
+                        "Invalid make selected. Please choose from the suggestions.",
+                        { toastId }
+                    );
+                }
+
+                setFormData((prev) => ({ ...prev, make: "", make_id: null }));
             }
 
-            setSuggestions([]); // Clear suggestions on blur
+            setSuggestions([]);
         }, 150);
     };
 
     return (
-        <div className="relative">
+        <div className="relative ">
             <input
                 type="text"
                 name="make"
@@ -91,6 +106,7 @@ const CarMakeInput = ({ formData, carMakes, setFormData, handleChange }) => {
         </div>
     );
 };
+
 const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
     const [suggestions, setSuggestions] = useState([]);
 
@@ -137,10 +153,14 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
                     model.name.toLowerCase() === formData.model.toLowerCase()
             );
 
+            const toastId = "invalidModel";
+
             if (!isValid) {
-                toast.warn(
-                    "Invalid model selected. Please choose from the suggestions."
-                );
+                if (!toast.isActive(toastId))
+                    toast.warn(
+                        "Invalid model selected. Please choose from the suggestions.",
+                        { toastId }
+                    );
                 setFormData({ ...formData, model: "" });
             }
 
@@ -176,7 +196,6 @@ const CarModelInput = ({ formData, handleChange, carModels, setFormData }) => {
         </div>
     );
 };
-
 const NewCarListingForm = () => {
     const { carMakes, carModels, predicted_price } = usePage().props;
     const [overpricedConfirmed, setOverpricedConfirmed] = useState(false);

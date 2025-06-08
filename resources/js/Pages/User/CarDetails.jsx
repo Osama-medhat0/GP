@@ -152,7 +152,7 @@ const CarDetails = () => {
                             </p>
                         </div>
                         <p className="font-bold pl-5">
-                            Member since: {car.user.created_at.slice(0, 10)}
+                            Member since: {car.user.created_at?.slice(0, 10)}
                         </p>
                         <div className="col-span-2 flex justify-center">
                             {user && car.user_id === user.id ? (

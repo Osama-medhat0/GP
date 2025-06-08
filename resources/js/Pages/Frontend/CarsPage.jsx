@@ -15,7 +15,7 @@ import "swiper/css/scrollbar";
 const CarsPage = () => {
     const { auth, cars } = usePage().props;
     const user = auth.user;
-    console.log("CarsPage", cars);
+    // console.log("CarsPage", cars);
     const [isSidebarVisible, setIsSidebarVisible] = useState(() => {
         const storedCars =
             JSON.parse(localStorage.getItem("selectedCars")) || [];
@@ -159,25 +159,34 @@ const CarsPage = () => {
                                                                             index
                                                                         }
                                                                     >
-                                                                        <img
-                                                                            src={`/${image.replace(
-                                                                                /^\/+|^car\//,
-                                                                                ""
-                                                                            )}`} // remove leading slashes and "car/"
-                                                                            alt={`Car ${car.make} ${car.model}`}
-                                                                            className="w-100 rounded"
-                                                                            style={{
-                                                                                height: "250px",
-                                                                                objectFit:
-                                                                                    "cover",
-                                                                            }}
-                                                                        />
-                                                                        {/* {console.log(
-                                                                            `/${image.replace(
-                                                                                /^\/+|^car\//,
-                                                                                ""
-                                                                            )}`
-                                                                        )} */}
+                                                                        <Link
+                                                                            href={route(
+                                                                                "car.detail",
+                                                                                car.id
+                                                                            )}
+                                                                        >
+                                                                            <img
+                                                                                src={`http://localhost:8000/storage/car/${parsedImages[
+                                                                                    index
+                                                                                ].replace(
+                                                                                    /^\/+|^car\//,
+                                                                                    ""
+                                                                                )}`} // remove leading slashes and "car/"
+                                                                                alt={`Car ${car.make} ${car.model}`}
+                                                                                className="w-100 rounded"
+                                                                                style={{
+                                                                                    height: "250px",
+                                                                                    objectFit:
+                                                                                        "cover",
+                                                                                }}
+                                                                            />
+                                                                            {/* {console.log(
+                                                                                `/${image.replace(
+                                                                                    /^\/+|^car\//,
+                                                                                    ""
+                                                                                )}`
+                                                                            )} */}
+                                                                        </Link>
                                                                     </SwiperSlide>
                                                                 )
                                                             )

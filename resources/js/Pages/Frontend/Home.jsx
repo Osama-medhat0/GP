@@ -71,20 +71,29 @@ const Home = () => {
                                     cars.map((car) => (
                                         <div key={car.id} className="item">
                                             <div className="car-wrap rounded ftco-animate">
-                                                <div
-                                                    className="img rounded d-flex align-items-end"
-                                                    style={{
-                                                        backgroundImage: `url(/storage/${
-                                                            JSON.parse(
-                                                                car.images
-                                                            )[0]
-                                                        })`,
-                                                        height: "250px",
-                                                        backgroundSize: "cover",
-                                                        backgroundPosition:
-                                                            "center",
-                                                    }}
-                                                ></div>
+                                                <Link
+                                                    href={route(
+                                                        "car.detail",
+                                                        car.id
+                                                    )}
+                                                >
+                                                    <div
+                                                        className="img rounded d-flex align-items-end"
+                                                        style={{
+                                                            backgroundImage: `url(/storage/${
+                                                                JSON.parse(
+                                                                    car.images
+                                                                )[0]
+                                                            })`,
+                                                            height: "250px",
+                                                            backgroundSize:
+                                                                "cover",
+                                                            backgroundPosition:
+                                                                "center",
+                                                        }}
+                                                    ></div>
+                                                </Link>
+
                                                 <div className="text">
                                                     <h2 className="mb-0">
                                                         <Link

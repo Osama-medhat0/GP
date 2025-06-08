@@ -18,7 +18,7 @@ class CarsController extends Controller
     {
         $carMakes = CarMake::all();
         $carModels = CarModel::all();
-        $cars = Cars::latest()->paginate(16);
+        $cars = Cars::latest()->paginate(15);
 
         $cars->getCollection()->transform(function ($car) {
             $car->images = json_decode($car->images);
@@ -366,7 +366,7 @@ class CarsController extends Controller
         }
 
 
-        $cars = $query->latest()->paginate(5);
+        $cars = $query->latest()->paginate(10);
         return inertia("Frontend/CarsPage", ['cars' => $cars, 'carMakes' => $carMakes, 'carModels' => $carModels]);
     }
 }

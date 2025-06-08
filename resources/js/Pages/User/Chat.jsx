@@ -247,9 +247,9 @@ const Chat = () => {
 
                                 {/* {console.log(selectedUser.name === "Admin")} */}
                                 {/* {console.log(selectedUser.name !== "Admin")} */}
-                                {selectedUser.name !== "Admin" &&
+                                {selectedUser?.name !== "Admin" &&
                                     selectedUser &&
-                                    availableCars.length > 0 && (
+                                    availableCars?.length > 0 && (
                                         <div className="mt-9 float-end">
                                             <select
                                                 className=" border py-4 cursor-pointer border-gray-300 rounded-lg text-black text-center focus:outline-none focus:ring-blue-500 transition-all duration-200 ease-in-out hover:bg-gray-100"

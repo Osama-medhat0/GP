@@ -224,7 +224,10 @@ const NewCarListingForm = () => {
             onSuccess: (page) => {
                 const priceStatus = page.props?.flash?.price_status || "normal";
 
-                if (priceStatus === "overpriced" && !overpricedConfirmed) {
+                if (
+                    priceStatus === "lower" ||
+                    (priceStatus === "overpriced" && !overpricedConfirmed)
+                ) {
                     setOverpricedConfirmed(true);
                     setHasListed(true); // Show the suggested price button
                     // toast.warning(page.props.flash.message);

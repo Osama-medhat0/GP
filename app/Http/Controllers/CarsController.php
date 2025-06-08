@@ -73,11 +73,11 @@ class CarsController extends Controller
         if ($response->successful() && isset($response->json()['predicted_price'])) {
 
             $predictedPrice = $response->json()['predicted_price'];
-            $priceStatus = 'normal';
+            $priceStatus = 'lower';
 
             $confirmedOverpriced = filter_var($request->input('confirmed_overpriced'), FILTER_VALIDATE_BOOLEAN);
 
-            // Determine price status (overpriced or normal)
+            // Determine price status (overpriced or lower)
             if ($validated['price'] > $predictedPrice * 1.1 && !$confirmedOverpriced) {
                 return redirect()->back()->with([
                     'flash' => [
@@ -91,9 +91,24 @@ class CarsController extends Controller
 
             if ($validated['price'] >= $predictedPrice * 1.1 && $confirmedOverpriced) {
                 $priceStatus = 'overpriced';
-            } elseif ($validated['price'] <= $predictedPrice * 1.1) {
-                $priceStatus = 'normal';
+            } elseif ($validated['price'] === $predictedPrice * 1.1) {
+                $priceStatus = 'fair';
+            } else {
+                if (!$confirmedOverpriced) {
+
+                    $priceStatus = "lower";
+                    // dd($priceStatus);
+                    return redirect()->back()->with([
+                        'flash' => [
+                            'type' => 'warning',
+                            'message' => "Your price is lower than our AI-predicted price of " . number_format($predictedPrice) . ". Click again to confirm listing.",
+                            'price_status' => 'lower',
+                        ],
+                        'predicted_price' => $predictedPrice,
+                    ]);
+                }
             }
+            // dd($priceStatus);
             // dd($request->all());
 
             if ($request->input('use_ai_price') === 'true' || $confirmedOverpriced) {
@@ -101,7 +116,7 @@ class CarsController extends Controller
 
                 if ($request->input('use_ai_price') === 'true') {
                     $price = $predictedPrice;
-                    $priceStatus = 'normal';
+                    $priceStatus = 'fair';
                 } else {
                     $price = $validated['price'];
                     // $priceStatus remains as already determined
@@ -115,11 +130,20 @@ class CarsController extends Controller
                     'price_status' => $priceStatus,
                 ]);
 
+                if ($priceStatus === "lower") {
+                    $message = "Car listed at a lower price than the AI-predicted price of " . number_format($predictedPrice) . ".";
+                    // dd($priceStatus);
+                } elseif ($priceStatus === 'overpriced') {
+                    $message = "Car listed as 'overpriced' despite being higher than the AI-predicted price of " . number_format($predictedPrice) . ".";
+                } else {
+                    $message = "Car listed using the AI-predicted price of " . number_format($predictedPrice) . ".";
+                    // dd($priceStatus);
+                }
+
+                // Flash message
                 $flash = [
                     'type' => $priceStatus === 'overpriced' ? 'warning' : 'success',
-                    'message' => $priceStatus === 'overpriced'
-                        ? "Car listed as 'overpriced' despite being higher than the AI-predicted price of " . number_format($predictedPrice) . "."
-                        : "Car listed using the AI-predicted price of " . number_format($predictedPrice) . ".",
+                    'message' => $message,
                     'price_status' => $priceStatus,
                 ];
 

@@ -251,9 +251,14 @@ const CarsPage = () => {
                                                             car.id
                                                         )}
                                                     >
-                                                        {car.make} {car.model}
+                                                        {car.make}{" "}
+                                                        {
+                                                            car.model.split(
+                                                                " "
+                                                            )[0]
+                                                        }
                                                     </Link>
-                                                    <span className="badge  ml-24 mb-1">
+                                                    <span className="badge float-right mt-1">
                                                         {car.price_status ===
                                                             "overpriced" && (
                                                             <span className="badge badge-warning">

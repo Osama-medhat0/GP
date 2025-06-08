@@ -34,7 +34,8 @@ const Spec = ({ label, value, Icon }) => (
 );
 
 const CarDetails = () => {
-    const { car } = usePage().props;
+    const { car, predicted_price } = usePage().props;
+    console.log(predicted_price);
     const {
         make,
         model,

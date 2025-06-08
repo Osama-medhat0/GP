@@ -291,8 +291,31 @@ class CarsController extends Controller
     {
         $car = Cars::with('user')->findOrFail($id);
         // dd($car);
+        $response = Http::post(env('PRICE_PREDICTION_API'), [
+            'make' => $car['make'],
+            'year' => $car['year'],
+            'mileage' => $car['mileage'],
+            'fuelType' => $car['fuelType'],
+            'transmission' => $car['transmission'],
+            'seller_type' => $car['seller_type'] ?? 'Individual',
+        ]);
 
-        return inertia('User/CarDetails', ['car' => $car->toArray()]);
+        if ($response->successful() && isset($response->json()['predicted_price'])) {
+
+            $predictedPrice = $response->json()['predicted_price'];
+            $priceStatus = 'lower';
+            if ($car['price'] > $predictedPrice * 1.1) {
+                return inertia('User/CarDetails', ['car' => $car->toArray()])->with([
+                    'flash' => [
+                        'type' => 'warning',
+                        'message' => "This car is priced higher than our AI-predicted value of " . number_format($predictedPrice),
+                        'price_status' => 'overpriced',
+                    ],
+                    'predicted_price' => $predictedPrice,
+                ]);
+            }
+            return inertia('User/CarDetails', ['car' => $car->toArray()]);
+        }
     }
 
     public function featured()

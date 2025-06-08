@@ -198,12 +198,29 @@ const Chat = () => {
                                     >
                                         <button className="flex items-center space-x-2 w-full">
                                             <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-500 text-white font-bold text-lg">
-                                                {user.name
-                                                    .charAt(0)
-                                                    .toUpperCase()}
+                                                {user.role === "admin" ? (
+                                                    <span className="w-10 h-10 flex items-center justify-center rounded-full bg-green-400 text-white font-bold text-lg">
+                                                        {user.name
+                                                            .charAt(0)
+                                                            .toUpperCase()}
+                                                    </span>
+                                                ) : (
+                                                    user.name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                )}
                                             </div>
+
                                             <span className="text-lg font-medium">
-                                                {user.name}
+                                                {/* {user.name}
+                                                 */}
+                                                {user.role === "admin" ? (
+                                                    <span className="ml-2 text-md text-white bg-green-400 px-2 py-0.5 rounded-md ">
+                                                        {user.name}
+                                                    </span>
+                                                ) : (
+                                                    user.name
+                                                )}
                                             </span>
 
                                             {unreadCounts[user.id] > 0 && (
@@ -227,28 +244,37 @@ const Chat = () => {
                                     Selected User:{" "}
                                     {selectedUser ? selectedUser.name : "None"}
                                 </strong>
-                                {selectedUser && availableCars.length > 0 && (
-                                    <div className="mt-9 float-end">
-                                        <select
-                                            className=" border py-4 cursor-pointer border-gray-300 rounded-lg text-black text-center focus:outline-none focus:ring-blue-500 transition-all duration-200 ease-in-out hover:bg-gray-100"
-                                            onChange={(e) =>
-                                                handleCarSelect(e.target.value)
-                                            }
-                                            value={car?.id || ""}
-                                        >
-                                            {availableCars.map((carItem) => (
-                                                <option
-                                                    key={carItem.id}
-                                                    value={carItem.id}
-                                                >
-                                                    {carItem.make}{" "}
-                                                    {carItem.model} (
-                                                    {carItem.year})
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                )}
+
+                                {/* {console.log(selectedUser.name === "Admin")} */}
+                                {/* {console.log(selectedUser.name !== "Admin")} */}
+                                {selectedUser.name !== "Admin" &&
+                                    selectedUser &&
+                                    availableCars.length > 0 && (
+                                        <div className="mt-9 float-end">
+                                            <select
+                                                className=" border py-4 cursor-pointer border-gray-300 rounded-lg text-black text-center focus:outline-none focus:ring-blue-500 transition-all duration-200 ease-in-out hover:bg-gray-100"
+                                                onChange={(e) =>
+                                                    handleCarSelect(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                value={car?.id || ""}
+                                            >
+                                                {availableCars.map(
+                                                    (carItem) => (
+                                                        <option
+                                                            key={carItem.id}
+                                                            value={carItem.id}
+                                                        >
+                                                            {carItem.make}{" "}
+                                                            {carItem.model} (
+                                                            {carItem.year})
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                        </div>
+                                    )}
                                 {car && (
                                     <Link href={route("car.detail", car.id)}>
                                         <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-md mb-0 mt-9 px-2 pt-2 pb-1 hover:bg-gray-100 transition-all duration-200 ease-in-out cursor-pointer">
@@ -282,24 +308,29 @@ const Chat = () => {
                                 <ul className="space-y-3">
                                     {messages && messages.length > 0 ? (
                                         messages.map((msg) => (
-                                            <li
-                                                key={msg.id}
-                                                className={`${
-                                                    msg.sender_id ===
-                                                    selectedUser?.id
-                                                        ? "text-left"
-                                                        : "text-right"
-                                                }`}
-                                            >
+                                            <li key={msg.id}>
                                                 <div
-                                                    className={`inline-block max-w-xs p-2 rounded-lg ${
+                                                    className={`flex ${
                                                         msg.sender_id ===
                                                         selectedUser?.id
-                                                            ? "bg-blue-200 text-gray-800"
-                                                            : "bg-blue-500 text-white"
+                                                            ? "justify-start"
+                                                            : "justify-end"
                                                     }`}
                                                 >
-                                                    {msg.msg}
+                                                    <div
+                                                        className={`block break-words whitespace-pre-wrap w-fit max-w-[45%] p-2 rounded-lg ${
+                                                            msg.sender_id ===
+                                                            selectedUser?.id
+                                                                ? "bg-blue-200 text-gray-800"
+                                                                : "bg-blue-500 text-white"
+                                                        }`}
+                                                        style={{
+                                                            overflowWrap:
+                                                                "anywhere",
+                                                        }}
+                                                    >
+                                                        {msg.msg}
+                                                    </div>
                                                 </div>
                                             </li>
                                         ))

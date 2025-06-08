@@ -97,35 +97,33 @@ class ChatController extends Controller
 
     public function GetAllUsers()
     {
-        // Fetch chat messages with sender and receiver relationships
+        $authUser = Auth::user();
+
+        // Fetch chat messages involving the current user
         $chats = ChatMessage::with(['sender', 'receiver'])
             ->orderBy('id', 'DESC')
-            ->where('sender_id', Auth::user()->id)
-            ->orWhere('receiver_id', Auth::user()->id)
+            ->where('sender_id', $authUser->id)
+            ->orWhere('receiver_id', $authUser->id)
             ->get();
 
-        // dd($chats);
-
-        if ($chats->isEmpty()) {
-            return [];
-        }
-
-        // Collect the sender and receiver models
+        // Collect unique users from chat messages
         $users = $chats->flatMap(function ($chat) {
-            return [
-                $chat->sender,
-                $chat->receiver
-            ];
-        })->filter()->unique('id');  // Filter out null and ensure uniqueness based on user ID
-
-        // dd($users);
-
-        $users = $users->filter(function ($user) {
-            return $user->id !== Auth::user()->id; // Exclude the current user
+            return [$chat->sender, $chat->receiver];
+        })->filter()->unique('id')->filter(function ($user) use ($authUser) {
+            return $user->id !== $authUser->id; // Exclude self
         });
 
-        return $users;
+        // Always include the admin user
+        $admin = User::where('role', 'admin')->first(); // Make sure your admin has a 'role' column or another identifier
+
+        if ($admin && $admin->id !== $authUser->id) {
+            $users->prepend($admin);
+            $users = $users->unique('id');
+        }
+
+        return $users->values(); // Reset keys
     }
+
 
     public function getUserCar(User $user)
     {

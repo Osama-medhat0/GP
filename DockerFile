@@ -1,0 +1,31 @@
+# Step 1: Base PHP image with required extensions
+FROM php:8.2-fpm
+
+# Step 2: System dependencies
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev npm nodejs \
+    && docker-php-ext-install pdo pdo_mysql zip
+
+# Step 3: Install Composer
+COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer
+
+# Step 4: Set working directory
+WORKDIR /var/www/html
+
+# Step 5: Copy Laravel files
+COPY . .
+
+# Step 6: Install PHP dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Step 7: Install Node dependencies and build React
+RUN npm install && npm run build
+
+# Step 8: Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Step 9: Expose port
+EXPOSE 8000
+
+# Step 10: Start Laravel
+CMD php artisan serve --host=0.0.0.0 --port=8000

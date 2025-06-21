@@ -21,3 +21,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+__pycache__/
+*.pyc
+.env
+model.pkl

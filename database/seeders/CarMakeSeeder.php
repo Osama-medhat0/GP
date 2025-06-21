@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CarMake;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CarMakeSeeder extends Seeder

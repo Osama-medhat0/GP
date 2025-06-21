@@ -7,15 +7,11 @@ import {
     FaTachometerAlt,
     FaBalanceScale,
 } from "react-icons/fa";
-import { useEffect } from "react";
 
 const Home = () => {
     const cars = usePage().props.featuredCars;
     const user = usePage().props.auth.user;
-    // console.log(user);
-    // console.log(cars);
     const { blogs } = usePage().props;
-    // console.log(blogs);
 
     return (
         <>
@@ -499,7 +495,7 @@ const Home = () => {
                         <div className="row justify-content-center mb-5">
                             <div className="col-md-7 heading-section text-center ftco-animate">
                                 <span className="subheading">Blog</span>
-                                <h2>Recent Blog</h2>
+                                <h2>Recent Blogs</h2>
                             </div>
                         </div>
                         <div className="row d-flex">

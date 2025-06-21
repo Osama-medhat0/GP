@@ -14,39 +14,6 @@ class CarModelSeeder extends Seeder
      */
     public function run()
     {
-        // $models = [
-        //     'Ford' => ['Utility Police Interceptor Base', 'F-150 XLT', 'Mustang GT Premium', 'Transit Connect XLT', 'Utility Police Interceptor Base', 'Fusion SE', 'GT', 'Excursion Limited', 'Taurus X Limited', 'Explorer Timberline', 'Expedition Platinum', 'Expedition Max Limited', 'Shelby GT500 Base', 'Expedition Limited', 'Transit-350 XL', 'Transit-350 XLT', 'Shelby GT500 Base', 'Transit-350 XLT', 'Explorer XLT', 'Transit-350 XLT'],
-        //     'Hyundai' => ['Palisade SEL', 'Elantra N Base', 'Tucson SE', 'Sonata Hybrid Limited', 'Elantra N Base', 'Kona N Base', 'Elantra GLS', 'Veloster Base', 'Equus Signature'],
-        //     'Lexus' => ['RX 350 RX 350', 'RC 350 F Sport', 'LX 570 Base', 'IS 350 Base', 'LX 570 Three-Row', 'RC 350 Base', 'ES 330 Base', 'NX 350 F SPORT Handling', 'LX 470 Base', 'LS 460 L', 'LC 500 Base', 'GX 470 Base', 'NX 200t Base', 'GX 460 Base'],
-        //     'INFINITI' => ['Q50 Hybrid Sport', 'Q70h Base', 'Q70 3.7', 'G37 x', 'G37 S Sport', 'M56 Base'],
-        //     'Audi' => ['Q3 45 S line Premium Plus', 'S3 2.0T Premium Plus', 'Q5 2.0T Premium Plus', 'A4 2.0T Premium Plus quattro', 'A7 Premium', 'A3 2.0T', 'A5 2.0T Premium Plus', 'RS 5 2.9T', 'RS 7 4.0T Prestige', 'TT RS 2.5T', 'SQ5 3.0T Premium Plus', 'S7 4.0T Premium Plus', 'RS Q8 4.0T quattro', 'A5 2.0T Premium', 'Q7 3.0T Premium Plus', 'TTS 2.0T Premium Plus', 'SQ7 4.0T', 'S3 2.0T Tech Premium Plus', 'Q5 S line Premium Plus', 'A5 2.0T Premium Plus', 'R8 5.2 V10', 'RS 7 4.0T quattro'],
-        //     'BMW' => ['740 iL', '440 Gran Coupe 440i xDrive', '650 Gran Coupe i xDrive', 'i3 120Ah w/Range Extender', '340 i', 'Z4 sDrive28i', 'M850 i xDrive', 'M4 CS', 'M4 Base', 'M4 Base', 'M6 Base', '435 Gran Coupe i', '525 i', '750 750i xDrive', '440 Gran Coupe i', '640 i', 'M8 Competition', 'i8 Base', 'X4 M40i', 'M4 Base', '540 i xDrive', 'M5 Base', 'X5 3.0i', 'X7 xDrive40i', '540 i xDrive', 'X1 sDrive28i', 'M6 Base', 'X6 sDrive35i', 'M4 Base', 'M550 i xDrive', '540 i xDrive', 'M4 Base', 'X1 xDrive28i', 'M4 Base', 'X6 xDrive40i', 'X5 3.0i'],
-        //     'Tesla' => ['Model X Long Range Plus', 'Model 3 Performance', 'Model Y Performance', 'Model X Base', 'Model 3 Standard Range Plus', 'Model X Long Range'],
-        //     'Land Rover' => ['Range Rover Sport 3.0 Supercharged HST', 'LR4 HSE', 'LR4 HSE LUX Landmark Edition', 'Range Rover Sport 3.0L Supercharged HSE', 'Discovery Sport SE R-Dynamic', 'Discovery HSE', 'Range Rover Evoque Pure', 'Discovery Sport HSE', 'Range Rover Autobiography', 'Range Rover Supercharged', 'Defender X-Dynamic SE'],
-        //     'Mercedes-Benz' => ['Metris Base', 'AMG CLA 45 Base 4MATIC', 'AMG C 43 Base 4MATIC', 'AMG C 63 S', 'CLA-Class CLA 250', 'GLK-Class GLK 350', 'AMG GL AMG GL 63 4MATIC', 'C-Class C300 4MATIC', 'AMG C AMG C 63', 'GLE 450 GLE 450', 'Sprinter High Roof', 'AMG GLS 63 4MATIC', 'SL-Class SL 550', 'AMG GLA 45 Base 4MATIC', 'SL-Class SL500 Roadster', 'CLS-Class CLS 550', 'AMG G 63 Base', 'AMG G 63 Base', 'EQS 450 4MATIC', 'AMG GLC 63 Base 4MATIC', 'AMG E 53 4MATIC', 'AMG GLS 63 4MATIC', 'AMG C 43 Base 4MATIC', 'AMG C AMG C 63', 'GLS 450 Base 4MATIC', 'EQS 450+ Base', 'SLC 300 Base', 'Sprinter 4500 High Roof', 'Maybach S S 600', 'CLK-Class 500 Cabriolet', 'CLK-Class CLK 350', 'AMG GLS 63 4MATIC', 'AMG G 63 Base', 'AMG G 63 Base', 'AMG GLS 63 4MATIC', 'AMG GLA 45 Base 4MATIC'],
-        //     'Acura' => ['ILX 2.4L', 'RL Technology', 'ILX 2.0L w/Premium Package', 'Integra w/A-Spec Tech Package', 'MDX 3.7L Advance', 'RSX Type S', 'TLX w/A-Spec Package'],
-        //     'Chevrolet' => ['S-10 LS', 'Suburban RST', 'Silverado 1500 Custom Trail Boss', 'Express 1500 Work Van', 'Monte Carlo SS', 'Corvette Base', 'Trailblazer LS', 'Blazer Premier', 'Traverse Premier', 'Corvette Stingray w/1LT', 'Express 1500 Work Van', 'Avalanche LTZ', 'Bolt EUV Premier'],
-        //     'Jaguar' => ['F-TYPE', 'F-TYPE R', 'XF 35t R-Sport'],
-        //     'Kia' => ['Sorento SX', 'Niro Plug-In Hybrid EX Premium', 'Sportage Nightfall', 'Sportage SX Turbo', 'Sportage X-Pro', 'Telluride SX', 'Optima EX', 'Stinger GT2', 'K900 5.0L', 'Forte GT-Line'],
-        //     'Jeep' => ['New Compass Trailhawk', 'Grand Cherokee Summit', 'Gladiator Rubicon', 'Wrangler Unlimited Sahara'],
-        //     'Porsche' => ['Cayenne Platinum Edition', '911 Carrera S', 'Cayman GTS', 'Cayman Base', '911 Carrera S', 'Panamera 2', '718 Boxster Base', '911 GT2 RS', 'Cayman S', 'Cayenne Platinum Edition', '911 Carrera C2S', 'Cayenne E-Hybrid S', '718 Cayman S', 'Cayman S', '911 Carrera 4S'],
-        //     'Bentley' => ['Continental GTC Base', 'Continental GT W12', 'Arnage R', 'Bentayga S'],
-        //     'Lincoln' => ['Aviator Reserve AWD', 'MKZ Hybrid Base', 'Aviator Reserve AWD', 'MKZ Base', 'Navigator L', 'MKX Base', 'MKZ Reserve', 'Town Car Base', 'Navigator L Reserve', 'MKC Select', 'Corsair Grand Touring'],
-        //     'Cadillac' => ['CT5 Premium Luxury', 'CT5-V Blackwing', 'CT5-V V-Series', 'XT4 Sport', 'DTS Base', 'ATS 3.6L Luxury', 'XTS Luxury', 'CTS 2.0L Turbo Luxury', 'DTS Luxury II'],
-        //     'Lucid' => ['Air Grand Touring', 'Air Pure'],
-        //     'MINI' => ['Convertible John Cooper Works'],
-        //     'Volvo' => ['XC90 Hybrid T8 R-Design', 'XC90 3.2', 'S90 T5 Momentum'],
-        //     'Hummer' => ['H2 Base'],
-        //     'RAM' => ['ProMaster 3500 High Roof', '2500 Laramie', '1500 Laramie', 'ProMaster 2500 Window Van High Roof', '1500 Big Horn'],
-        //     'Scion' => ['tC Base'],
-        //     'Mazda' => ['CX-9 Grand Touring', 'Mazda6 Grand Touring', 'Mazda3 s Grand Touring', 'CX-30 Premium Package'],
-        //     'Alfa Romeo' => ['Stelvio Ti Sport', 'Giulia Quadrifoglio', 'Stelvio Ti'],
-        //     'Ferrari' => ['FF Base', 'Roma Base'],
-        //     'Bugatti' => ['Veyron 16.4 Grand Sport'],
-        //     'Polestar' => ['2 Launch Edition'],
-        //     'Subaru' => ['Forester 2.5i Limited', 'Legacy 2.5i Limited', 'Outback 2.5i Limited', 'Impreza 2.0i Premium'],
-        //     'Tesla' => ['Model S Plaid', 'Model 3 Standard Range Plus', 'Model X Long Range Plus', 'Model Y Performance']
-        // ];
         $models = [
             'Ford' => ['Utility Police Interceptor Base', 'F-150 XLT', 'Mustang GT Premium', 'F-150 SVT Raptor', 'Bronco Wildtrak Advanced', 'F-250 Lariat', 'F-250 Platinum', 'F-250 King Ranch', 'F-250 XLT SuperCab Super Duty', 'F-150 Lariat', 'F-150 Platinum', 'F-150 XL', 'Shelby GT500 Base', 'Shelby GT350R Base', 'GT', 'Expedition Platinum', 'Expedition Limited', 'Expedition King Ranch', 'Expedition Max Limited', 'Expedition Max King Ranch', 'Expedition EL XLT', 'Explorer XLT', 'Explorer Timberline', 'Explorer sport', 'Escape XLT', 'Escape Limited', 'Escape SE', 'Edge Sport', 'Edge SEL', 'Fusion SE', 'Fusion Energi Titanium', 'Fusion Hybrid SE', 'Taurus X Limited', 'Transit Connect XLT', 'Transit Connect XL', 'Transit Connect XL w/Rear Symmetrical Doors', 'Transit-350 XL', 'Transit-350 XLT', 'Transit-350 Base', 'E150 XLT', 'E350 Super Duty XLT', 'Ranger Sport SuperCab', 'Bronco Sport Outer Banks', 'Bronco Sport Big Bend', 'Bronco Raptor', 'Bronco', 'Maverick Lariat', 'C-Max Energi SE', 'Focus RS Base', 'Mustang Mach-E Select', 'Mustang Mach-E Premium', 'Mustang Mach-E California Route 1', 'Mustang Base', 'Mustang V6', 'Mustang EcoBoost Premium', 'Mustang GT'],
             'Hyundai' => ['Palisade SEL', 'Elantra N Base', 'Tucson SE', 'Santa Fe SEL', 'Sonata Hybrid Limited', 'Kona N Base', 'Veloster Base', 'Veloster Turbo R-Spec', 'Genesis Coupe 3.8 Grand Touring', 'Genesis Coupe 3.8 R-Spec', 'Equus Signature', 'Santa Cruz 2.5T Limited', 'IONIQ Plug-In Hybrid SEL', 'Genesis 3.8', 'Genesis 4.6', 'Elantra GLS', 'Santa Fe SE', 'Santa Fe SEL Plus 2.4', 'Tucson Limited', 'Tucson Hybrid SEL Convenience', 'Elantra N Base'],
